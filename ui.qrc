@@ -1,0 +1,21 @@
+<RCC>
+    <qresource prefix="/new/prefix1">
+        <file>resource/final_score_win.png</file>
+        <file>resource/final_score_lose.png</file>
+        <file>resource/o_deck.png</file>
+        <file>resource/o_round_circle.png</file>
+        <file>resource/background.png</file>
+        <file>resource/massagebox.png</file>
+        <file>resource/m_round_circle.png</file>
+        <file>resource/m_round.png</file>
+        <file>resource/button.png</file>
+        <file>resource/new_cardset.png</file>
+        <file>resource/gaming_backgound.png</file>
+        <file>resource/m_deck.png</file>
+        <file>resource/cemetery.png</file>
+        <file>resource/edit_cards.png</file>
+        <file>resource/play.png</file>
+        <file>resource/score_lose.png</file>
+        <file>resource/start_bacground.png</file>
+    </qresource>
+</RCC>
