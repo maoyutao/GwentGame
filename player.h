@@ -11,10 +11,10 @@ class Player : public QObject
 {
     Q_OBJECT
 private:
-    int point;
+    int point{0};
     QList<int> allCards;
     QMap<QString, QList<int>> cardSets;
-    QList<int> chosenCards;
+    QString chosenSet;
 public:
     explicit Player(QObject *parent = nullptr);
 

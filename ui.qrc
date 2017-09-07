@@ -23,6 +23,29 @@
         <file>resource/score.png</file>
     </qresource>
     <qresource prefix="/new/cards">
-        <file>resource/card_0.png</file>
+        <file>resource/cards/card_23.png</file>
+        <file>resource/cards/card_22.png</file>
+        <file>resource/cards/card_21.png</file>
+        <file>resource/cards/card_20.png</file>
+        <file>resource/cards/card_19.png</file>
+        <file>resource/cards/card_18.png</file>
+        <file>resource/cards/card_17.png</file>
+        <file>resource/cards/card_16.png</file>
+        <file>resource/cards/card_15.png</file>
+        <file>resource/cards/card_14.png</file>
+        <file>resource/cards/card_13.png</file>
+        <file>resource/cards/card_12.png</file>
+        <file>resource/cards/card_11.png</file>
+        <file>resource/cards/card_10.png</file>
+        <file>resource/cards/card_9.png</file>
+        <file>resource/cards/card_8.png</file>
+        <file>resource/cards/card_0.png</file>
+        <file>resource/cards/card_7.png</file>
+        <file>resource/cards/card_6.png</file>
+        <file>resource/cards/card_4.png</file>
+        <file>resource/cards/card_5.png</file>
+        <file>resource/cards/card_2.png</file>
+        <file>resource/cards/card_3.png</file>
+        <file>resource/cards/card_1.png</file>
     </qresource>
 </RCC>

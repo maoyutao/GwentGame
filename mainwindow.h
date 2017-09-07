@@ -1,7 +1,10 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <global.h>
+#include "global.h"
+#include "cardfactory.h"
+#include "game.h"
+#include "player.h"
 #include <QMainWindow>
 
 namespace Ui {
@@ -29,6 +32,8 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+    Game * game;
+    Player * mPlayer;
 };
 
 #endif // MAINWINDOW_H

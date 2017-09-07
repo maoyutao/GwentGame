@@ -32,7 +32,8 @@ SOURCES += \
     cards.cpp \
     battlefield.cpp \
     cardfactory.cpp \
-    cardbutton.cpp
+    cardbutton.cpp \
+    register.cpp
 
 HEADERS += \
         mainwindow.h \

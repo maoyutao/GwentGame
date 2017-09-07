@@ -3,56 +3,77 @@
 
 #include "global.h"
 #include "battlefield.h"
+#include "cardfactory.h"
 #include <QObject>
 #include <QString>
 #include <QPixmap>
 #include <QVector>
 
+#define DECLARE_CARD(id)\
+class Card_##id : public Card\
+{\
+public:\
+    explicit Card_##id(BattleField * BattleField = nullptr,\
+                  QObject *parent = nullptr);\
+private:\
+};
+
 class CardButton;
+
 class Card : public QObject
 {
     Q_OBJECT
 
-private:
+protected:
     const int id;
     const int basisCombatValue;
     const QString name;
     const QString functionDeclaration;
     const QString iconUrl;
-    const QVector<EPosition>* position;
+    QVector<EPosition> position;
     const EQuality quality;
     const EClassification classification;
-    const QVector<EProperty>* Property;
+    QVector<EProperty> property;
 
     int currentCombatValue;
     int armor{0};
     BattleField * battleField;
-//    virtual void exertAbility();
+//    virtual void exertAbility() = 0;
 public:
     explicit Card(int id,
                   int basisCombatValue,
                   QString name,
                   QString functionDeclaration,
                   QString iconUrl,
-                  QVector<EPosition>* position,
                   EQuality quality,
                   EClassification classification,
-                  QVector<EProperty>* Property,
                   BattleField * battleField = nullptr,
                   QObject *parent = nullptr);
-
-signals:
-
-public slots:
-
 friend class CardButton;
 };
 
-class Card_0 : public Card
-{
-public:
-    explicit Card_0(BattleField * BattleField = nullptr,
-                  QObject *parent = nullptr);
-};
-
+DECLARE_CARD(0)
+DECLARE_CARD(1)
+DECLARE_CARD(2)
+DECLARE_CARD(3)
+DECLARE_CARD(4)
+DECLARE_CARD(5)
+DECLARE_CARD(6)
+DECLARE_CARD(7)
+DECLARE_CARD(8)
+DECLARE_CARD(9)
+DECLARE_CARD(10)
+DECLARE_CARD(11)
+DECLARE_CARD(12)
+DECLARE_CARD(13)
+DECLARE_CARD(14)
+DECLARE_CARD(15)
+DECLARE_CARD(16)
+DECLARE_CARD(17)
+DECLARE_CARD(18)
+DECLARE_CARD(19)
+DECLARE_CARD(20)
+DECLARE_CARD(21)
+DECLARE_CARD(22)
+DECLARE_CARD(23)
 #endif // CARD_H

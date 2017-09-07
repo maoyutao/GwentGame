@@ -7,9 +7,10 @@ CardFactory::CardFactory()
 
 void* CardFactory::CreateObject(int cardId, BattleField * BattleField, QObject *parent)
 {
-    if (cardId < cardList.count())
+    QMap<int, newCardFunctionPtr>::const_iterator it = cardMap.find(cardId);
+    if (it != cardMap.end())
     {
-        newCardFunctionPtr card = cardList[cardId];
+        newCardFunctionPtr card = it.value();
         return card(BattleField, parent);
     }
     return nullptr;
@@ -17,5 +18,5 @@ void* CardFactory::CreateObject(int cardId, BattleField * BattleField, QObject *
 
 void CardFactory::RegisterClass(int cardId, newCardFunctionPtr np)
 {
-    cardList[cardId] = np;
+    cardMap[cardId] = np;
 }

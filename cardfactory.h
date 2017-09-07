@@ -4,7 +4,7 @@
 #include "global.h"
 #include "battlefield.h"
 #include <QObject>
-#include <QList>
+#include <QMap>
 
 typedef void* (*newCardFunctionPtr)(BattleField * BattleField, QObject *parent);
 
@@ -14,10 +14,16 @@ public:
     CardFactory();
     static void* CreateObject(int cardId, BattleField * BattleField = nullptr, QObject *parent = nullptr);
     static void RegisterClass(int cardId, newCardFunctionPtr np);
-private:
-    static QList<newCardFunctionPtr> cardList;
+//private:
+    static QMap<int, newCardFunctionPtr> cardMap;
 };
 
-QList<newCardFunctionPtr> CardFactory::cardList;
-
+class Register
+{
+public:
+    Register(int cardId, newCardFunctionPtr np)
+    {
+       CardFactory::RegisterClass(cardId, np);
+    }
+};
 #endif // CARDFACTORY_H

@@ -1,6 +1,6 @@
 #include "battlefield.h"
 
-BattleField::BattleField(QObject *parent) : QObject(parent)
+BattleField::BattleField(QList<int> mCardSet, QObject *parent) : QObject(parent), mCardSet(mCardSet)
 {
 
 }

@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "cardbutton.h"
 #include <QMetaObject>
 #include <QDebug>
 #include <QFont>
@@ -11,6 +12,10 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     ui->start->installEventFilter(this);
     ui->finalScore->installEventFilter(this);
+    qDebug() << CardFactory::cardMap;
+
+    mPlayer = new Player(this);
+    game = new game()
 }
 
 MainWindow::~MainWindow()
@@ -52,6 +57,8 @@ void MainWindow::on_returnToChoose_clicked()
 void MainWindow::on_cardSet_2_clicked()
 {
     ui->stackedWidget->setCurrentIndex(PEditCardsIndex);
+    CardFactory::CreateObject(0,)
+    CardButton *card0 = new CardButton()
     // todo
 }
 

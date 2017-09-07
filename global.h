@@ -11,14 +11,6 @@
 #define PScore 7
 #define PFinalScore 8
 
-#define REGISTER_CARD(id) \
-void* createCard##id(BattleField * BattleField = nullptr, QObject *parent = nullptr)\
-{\
-    return new card##id;\
-}\
-CardFactory::RegisterClass(id, createCard##id);
-
-
 enum class EPosition
 {
     mFront,
@@ -46,6 +38,22 @@ enum class EClassification
 
 enum class EProperty
 {
-    Special,
+    Special, // 特殊
+    Weather, // 天气
+    Organisms, // 生物
+    Strategy, // 谋略
+    Magic, // 法术
+    Hunter, // 猎魔人
+    Aquatic, // 水生
+    Officer, // 军官
+    WildHunt, // 狂猎
+    Beast, // 野兽
+    Waste, // 残物
+    Tectosome, // 构造体
+    Spy, // 密探
+    Vampire, // 吸血鬼
+    Worm, // 类虫
+    Drake, //龙兽
+    Scavengers, // 食腐
 };
 #endif // GLOBAL_H

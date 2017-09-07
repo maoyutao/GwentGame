@@ -3,6 +3,7 @@
 
 #include "global.h"
 #include "player.h"
+#include "battlefield.h"
 #include "cards.h"
 #include <QtNetwork>
 #include <QHostAddress>
@@ -21,13 +22,13 @@ private:
     int mScore[3];
     int oScore[3];
 
-    Player* mPlayer;
-    BattleField* battleField;
-    QList<Card*> mAllCard;
-    QList<Card*> oVisibleCard;
+    Player* mPlayer = nullptr;
+    BattleField* battleField = nullptr;
+    QList<Card*> mDrawnCard; // 我抽到的牌才需要被实例化，牌组里的不需要
+    QList<Card*> oVisibleCard; // 对方只有被打出来的才需要被实例化
 
 public:
-    explicit Game(QObject *parent = nullptr);
+    explicit Game(Player * player, QObject *parent = nullptr);
 
 signals:
 
