@@ -1,6 +1,24 @@
 #ifndef GLOBAL_H
 #define GLOBAL_H
 
+#define PStartIndex 0
+#define PChooseIndex 1
+#define PChooseEditCcardsIndex 2
+#define PEditCardsIndex 3
+#define PGameReadyIndex 4
+#define PDispacthCardsIndex 5
+#define PGamingIndex 6
+#define PScore 7
+#define PFinalScore 8
+
+#define REGISTER_CARD(id) \
+void* createCard##id(BattleField * BattleField = nullptr, QObject *parent = nullptr)\
+{\
+    return new card##id;\
+}\
+CardFactory::RegisterClass(id, createCard##id);
+
+
 enum class EPosition
 {
     mFront,
@@ -28,6 +46,6 @@ enum class EClassification
 
 enum class EProperty
 {
-
+    Special,
 };
 #endif // GLOBAL_H

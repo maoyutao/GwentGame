@@ -30,7 +30,9 @@ SOURCES += \
     player.cpp \
     game.cpp \
     cards.cpp \
-    battlefield.cpp
+    battlefield.cpp \
+    cardfactory.cpp \
+    cardbutton.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -38,7 +40,9 @@ HEADERS += \
     game.h \
     global.h \
     cards.h \
-    battlefield.h
+    battlefield.h \
+    cardfactory.h \
+    cardbutton.h
 
 FORMS += \
         mainwindow.ui

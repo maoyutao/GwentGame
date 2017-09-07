@@ -26,6 +26,7 @@ private:
     int mStrenth[4];
     int oStrenth[4];
 
+//    move(QString from, int cardIndex, QString to);
 public:
     explicit BattleField(QObject *parent = nullptr);
 
@@ -33,8 +34,6 @@ signals:
 
 public slots:
     friend class Card;
-
-
 
 };
 

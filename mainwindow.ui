@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>569</width>
-    <height>348</height>
+    <width>550</width>
+    <height>350</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -20,7 +20,7 @@
    <string>gwent</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <layout class="QVBoxLayout" name="verticalLayout">
+   <layout class="QVBoxLayout" name="verticalLayout_2">
     <property name="leftMargin">
      <number>0</number>
     </property>
@@ -56,16 +56,61 @@ border-image:url(:/new/prefix1/resource/background.png)
 border-image:url();
 }</string>
        </property>
-       <layout class="QGridLayout" name="gridLayout_3" rowstretch="2,6,1" columnstretch="1,4,4,1">
-        <item row="1" column="0">
-         <spacer name="horizontalSpacer">
+       <layout class="QGridLayout" name="gridLayout_3" rowstretch="2,5,1" columnstretch="1,4,4,1">
+        <item row="1" column="3">
+         <spacer name="horizontalSpacer_2">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
           </property>
           <property name="sizeHint" stdset="0">
            <size>
+            <width>48</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="1" column="0">
+         <spacer name="horizontalSpacer">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::Preferred</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
             <width>49</width>
             <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="2" column="1">
+         <spacer name="verticalSpacer">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>25</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="0" column="1">
+         <spacer name="verticalSpacer_2">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::Preferred</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>80</height>
            </size>
           </property>
          </spacer>
@@ -79,7 +124,7 @@ border-image:url();
            <number>-1</number>
           </property>
           <item row="0" column="0">
-           <widget class="QPushButton" name="pushButton_2">
+           <widget class="QPushButton" name="toPlay">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
               <horstretch>0</horstretch>
@@ -102,7 +147,7 @@ border-image:url();
            </widget>
           </item>
           <item row="0" column="1">
-           <widget class="QPushButton" name="pushButton">
+           <widget class="QPushButton" name="toEditCard">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
               <horstretch>0</horstretch>
@@ -143,57 +188,325 @@ border-image:url();
           </item>
          </layout>
         </item>
-        <item row="1" column="3">
-         <spacer name="horizontalSpacer_2">
+       </layout>
+       <zorder>horizontalSpacer</zorder>
+       <zorder>verticalSpacer</zorder>
+       <zorder>horizontalSpacer_2</zorder>
+       <zorder>verticalSpacer_2</zorder>
+      </widget>
+      <widget class="QWidget" name="chooseEditCards">
+       <property name="styleSheet">
+        <string notr="true">#chooseEditCards { 
+border-image:url(:/new/prefix1/resource/background.png)
+}
+
+#chooseEditCards * {
+border-image:url();
+}</string>
+       </property>
+       <layout class="QGridLayout" name="gridLayout_4" rowstretch="5,1" columnstretch="1,5,1">
+        <property name="topMargin">
+         <number>20</number>
+        </property>
+        <item row="0" column="0">
+         <spacer name="horizontalSpacer_3">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
           </property>
           <property name="sizeHint" stdset="0">
            <size>
-            <width>48</width>
+            <width>69</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="0" column="1">
+         <layout class="QVBoxLayout" name="verticalLayout" stretch="1,1,5">
+          <item>
+           <widget class="QLabel" name="label_3">
+            <property name="minimumSize">
+             <size>
+              <width>130</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>22</pointsize>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">border-image: url(:/new/prefix1/resource/title_edit_cards.png)</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="scaledContents">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="verticalSpacer_3">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout">
+            <property name="spacing">
+             <number>20</number>
+            </property>
+            <item>
+             <widget class="QPushButton" name="newCardSet">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">border-image: url(:/new/prefix1/resource/new_cardset.png)</string>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="cardSet_1">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">border-image: url(:/new/prefix1/resource/cardset_2.png)</string>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="cardSet_2">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">border-image: url(:/new/prefix1/resource/cardset_1.png)</string>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </item>
+        <item row="0" column="2">
+         <spacer name="horizontalSpacer_4">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>69</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="1" column="1">
+         <spacer name="verticalSpacer_5">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="1" column="2">
+         <widget class="QPushButton" name="returnToChoose">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>50</width>
+            <height>20</height>
+           </size>
+          </property>
+          <property name="autoFillBackground">
+           <bool>true</bool>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">border-image: url(:/new/prefix1/resource/button.png);</string>
+          </property>
+          <property name="text">
+           <string>return</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="editCards">
+       <property name="styleSheet">
+        <string notr="true">#editCards { 
+border-image:url(:/new/prefix1/resource/edit_card.png)
+}
+
+#editCards * {
+border-image:url();
+}</string>
+       </property>
+      </widget>
+      <widget class="QWidget" name="gameReady">
+       <property name="styleSheet">
+        <string notr="true">#gameReady { 
+border-image: url(:/new/prefix1/resource/background.png)
+}
+
+#gameReady * {
+border-image:url();
+}</string>
+       </property>
+      </widget>
+      <widget class="QWidget" name="dispatchCards">
+       <property name="styleSheet">
+        <string notr="true">#dispatchCards { 
+border-image: url(:/new/prefix1/resource/background.png)
+}
+
+#dispatchCards * {
+border-image:url();
+}</string>
+       </property>
+      </widget>
+      <widget class="QWidget" name="gaming">
+       <property name="styleSheet">
+        <string notr="true">#gaming {
+border-image: url(:/new/prefix1/resource/gaming_backgound.png)
+}
+#gaming * {
+border-image: 
+}</string>
+       </property>
+      </widget>
+      <widget class="QWidget" name="score">
+       <property name="styleSheet">
+        <string notr="true">#score {
+border-image: url(:/new/prefix1/resource/score.png)
+}
+
+#score *{
+border-image:
+}</string>
+       </property>
+      </widget>
+      <widget class="QWidget" name="finalScore">
+       <property name="styleSheet">
+        <string notr="true">#finalScore {
+border-image: url(:/new/prefix1/resource/final_score_win.png)
+}
+
+#finalScore *{
+border-image:
+}</string>
+       </property>
+       <layout class="QGridLayout" name="gridLayout_5" rowstretch="16,1,1" columnstretch="3,1,3">
+        <property name="bottomMargin">
+         <number>12</number>
+        </property>
+        <item row="0" column="1">
+         <spacer name="verticalSpacer_4">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>203</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="1" column="0">
+         <spacer name="horizontalSpacer_5">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>221</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="1" column="1">
+         <widget class="QPushButton" name="pushButton">
+          <property name="maximumSize">
+           <size>
+            <width>50</width>
+            <height>20</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">border-image: url(:/new/prefix1/resource/button.png)</string>
+          </property>
+          <property name="text">
+           <string>return</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="2">
+         <spacer name="horizontalSpacer_6">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>221</width>
             <height>20</height>
            </size>
           </property>
          </spacer>
         </item>
         <item row="2" column="1">
-         <spacer name="verticalSpacer">
+         <spacer name="verticalSpacer_6">
           <property name="orientation">
            <enum>Qt::Vertical</enum>
           </property>
           <property name="sizeHint" stdset="0">
            <size>
             <width>20</width>
-            <height>25</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item row="0" column="2">
-         <spacer name="verticalSpacer_2">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-          <property name="sizeType">
-           <enum>QSizePolicy::Preferred</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>20</width>
-            <height>80</height>
+            <height>10</height>
            </size>
           </property>
          </spacer>
         </item>
        </layout>
-       <zorder>label</zorder>
-       <zorder>label_2</zorder>
-       <zorder>pushButton</zorder>
-       <zorder>pushButton_2</zorder>
-       <zorder>horizontalSpacer</zorder>
-       <zorder>verticalSpacer</zorder>
-       <zorder>horizontalSpacer_2</zorder>
-       <zorder>verticalSpacer_2</zorder>
       </widget>
      </widget>
     </item>
@@ -204,7 +517,7 @@ border-image:url();
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>569</width>
+     <width>550</width>
      <height>22</height>
     </rect>
    </property>

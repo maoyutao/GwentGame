@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 #include <QMetaObject>
 #include <QDebug>
+#include <QFont>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -9,6 +10,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->start->installEventFilter(this);
+    ui->finalScore->installEventFilter(this);
 }
 
 MainWindow::~MainWindow()
@@ -35,4 +37,32 @@ bool MainWindow::eventFilter(QObject *watched, QEvent *event)
         }
     }
     return QMainWindow::eventFilter(watched, event);
+}
+
+void MainWindow::on_toEditCard_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(PChooseEditCcardsIndex);
+}
+
+void MainWindow::on_returnToChoose_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(PChooseIndex);
+}
+
+void MainWindow::on_cardSet_2_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(PEditCardsIndex);
+    // todo
+}
+
+void MainWindow::on_cardSet_1_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(PEditCardsIndex);
+    // todo
+}
+
+void MainWindow::on_newCardSet_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(PEditCardsIndex);
+    // todo
 }
