@@ -64,17 +64,18 @@ void MainWindow::on_cardSet_2_clicked()
     Card * card2 = static_cast<Card*>(CardFactory::CreateObject(2, game->battleField, game->battleField));
     CardButton *card2but = new CardButton(card2, ui->editCardFrontPage1);
     Card * card3 = static_cast<Card*>(CardFactory::CreateObject(3, game->battleField, game->battleField));
-    CardButton *card3but = new CardButton(card3, ui->editCardFrontPage1);
+    CardButton *card3but = new CardButton(card3, ui->editCardBackPage1);
     Card * card4 = static_cast<Card*>(CardFactory::CreateObject(4, game->battleField, game->battleField));
-    CardButton *card4but = new CardButton(card4, ui->editCardFrontPage1);
-    Card * card5 = static_cast<Card*>(CardFactory::CreateObject(5, game->battleField, game->battleField));
+    CardButton *card4but = new CardButton(card4, ui->editCardMiddlePage1);
     CardButton *card5but = new CardButton(card4, ui->editCardFrontPage1);
-    ui->editCardFrontPage1->mlayout->addWidget(card0but, 0, Qt::AlignHCenter);
-    ui->editCardFrontPage1->mlayout->addWidget(card1but, 0, Qt::AlignHCenter);
-    ui->editCardFrontPage1->mlayout->addWidget(card2but, 0, Qt::AlignHCenter);
-    ui->editCardFrontPage1->mlayout->addWidget(card3but, 0, Qt::AlignHCenter);
-    ui->editCardFrontPage1->mlayout->addWidget(card4but, 0, Qt::AlignHCenter);
-    ui->editCardALLPage1->mlayout->addWidget(card5but, 0, Qt::AlignHCenter);
+    CardButton *card6but = new CardButton(card4, ui->editCardFrontPage1);
+    ui->editCardFrontPage1->mlayout->addWidget(card0but, 0, Qt::AlignCenter);
+    ui->editCardFrontPage1->mlayout->addWidget(card1but, 0, Qt::AlignCenter);
+    ui->editCardFrontPage1->mlayout->addWidget(card2but, 0, Qt::AlignCenter);
+    ui->editCardBackPage1->mlayout->addWidget(card3but, 0, Qt::AlignCenter);
+    ui->editCardMiddlePage1->mlayout->addWidget(card4but, 0, Qt::AlignCenter);
+    ui->editCardALLPage1->mlayout->addWidget(card5but, 0, Qt::AlignTop);
+    ui->editCardALLPage1->mlayout->addWidget(card6but, 0, Qt::AlignTop);
 }
 
 void MainWindow::on_cardSet_1_clicked()

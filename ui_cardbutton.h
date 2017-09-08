@@ -16,8 +16,6 @@ signals:
 public slots:
 private:
     void paintEvent(QPaintEvent *event) override;
-    int width;
-    int height;
     Card * card;
 };
 #endif // CARDBUTTON_H

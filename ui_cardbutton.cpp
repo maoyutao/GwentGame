@@ -10,9 +10,10 @@ CardButton::CardButton(Card * card, QWidget *parent) : QPushButton(parent), card
 
 void CardButton::paintEvent(QPaintEvent *event)
 {
-    height = this->parentWidget()->height() * 0.9;
-    width = height * 0.7;
-    this->setFixedHeight(height);
-    this->setFixedWidth(width);
+    int height = this->parentWidget()->height();
+    int width = height * 0.7;
+    this->resize(QSize(width, height));
+    this->move(QPoint(this->pos().rx(), 0));
+    qDebug() << this->geometry();
     QPushButton::paintEvent(event);
 }

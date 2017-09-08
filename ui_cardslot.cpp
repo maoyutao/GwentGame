@@ -5,18 +5,18 @@
 CardSlot::CardSlot(QWidget *parent) : QWidget(parent), mlayout(new QHBoxLayout())
 {
     qDebug() << this->layout();
-    mlayout->setMargin(5);
+    mlayout->setMargin(2);
     mlayout->setSpacing(2);
+    mlayout->addSpacing(20);
     this->setLayout(mlayout);
     qDebug() << this->layout();
-    qDebug() << this->styleSheet();
 }
 
-void CardSlot::paintEvent(QPaintEvent *event)
-{
-    this->setLayout(mlayout);
-    this->setFixedSize(this->parentWidget()->width(), this->parentWidget()->height());
-    this->move(QPoint(0,0));
-    qDebug() << this->geometry();
-    QWidget::paintEvent(event);
-}
+//void CardSlot::paintEvent(QPaintEvent *event)
+//{
+//    this->setLayout(mlayout);
+//    this->resize(QSize(this->parentWidget()->width(), this->parentWidget()->height()));
+//    this->move(QPoint(0,0));
+//    qDebug() << this->geometry();
+//    QWidget::paintEvent(event);
+//}

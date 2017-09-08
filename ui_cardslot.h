@@ -14,7 +14,7 @@ signals:
 
 public slots:
 private:
-    void paintEvent(QPaintEvent *event) override;
+//    void paintEvent(QPaintEvent *event) override;
 };
 
 #endif // UI_CARDSLOT_H
