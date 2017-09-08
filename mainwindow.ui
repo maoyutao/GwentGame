@@ -569,7 +569,7 @@ border-image:url();
               <property name="styleSheet">
                <string notr="true">border-image:url(:/new/prefix1/resource/editCardFront.png)</string>
               </property>
-              <widget class="QWidget" name="editCardFrontPage1">
+              <widget class="CardSlot" name="editCardFrontPage1">
                <widget class="CardSlot" name="editCardFrontSlot1" native="true">
                 <property name="geometry">
                  <rect>
@@ -589,7 +589,7 @@ border-image:url();
               <property name="styleSheet">
                <string notr="true">border-image: url(:/new/prefix1/resource/editCardMiddle.png)</string>
               </property>
-              <widget class="QWidget" name="editCardMiddlePage1">
+              <widget class="CardSlot" name="editCardMiddlePage1">
                <widget class="CardSlot" name="editCardMiddleSlot1" native="true">
                 <property name="geometry">
                  <rect>
@@ -608,7 +608,7 @@ border-image:url();
               <property name="styleSheet">
                <string notr="true">border-image:url(:/new/prefix1/resource/editCardBack.png)</string>
               </property>
-              <widget class="QWidget" name="editCardBackPage1">
+              <widget class="CardSlot" name="editCardBackPage1">
                <widget class="CardSlot" name="editCardBackSlot1" native="true">
                 <property name="geometry">
                  <rect>
@@ -642,7 +642,18 @@ border-image:url();
                 <property name="styleSheet">
                  <string notr="true">border-image: url(:/new/prefix1/resource/editCardEvent.png)</string>
                 </property>
-                <widget class="QWidget" name="editCardEventPage1"/>
+                <widget class="QWidget" name="editCardEventPage1">
+                 <widget class="CardSlot" name="editCardEventSlot1" native="true">
+                  <property name="geometry">
+                   <rect>
+                    <x>30</x>
+                    <y>10</y>
+                    <width>120</width>
+                    <height>80</height>
+                   </rect>
+                  </property>
+                 </widget>
+                </widget>
                </widget>
               </item>
               <item>
@@ -674,14 +685,24 @@ border-image:url();
              </spacer>
             </item>
             <item>
-             <widget class="QStackedWidget" name="stackedWidget_4">
+             <widget class="QStackedWidget" name="editCardALL">
               <property name="styleSheet">
                <string notr="true">border-image:url(:/new/prefix1/resource/editCardEvent.png)</string>
               </property>
-              <widget class="QWidget" name="stackedWidget_4Page1">
+              <widget class="CardSlot" name="editCardALLPage1">
                <property name="styleSheet">
                 <string notr="true">border-image: url(:/new/prefix1/resource/editCardEvent.png)</string>
                </property>
+               <widget class="CardSlot" name="editCardALLSlot1" native="true">
+                <property name="geometry">
+                 <rect>
+                  <x>220</x>
+                  <y>0</y>
+                  <width>120</width>
+                  <height>80</height>
+                 </rect>
+                </property>
+               </widget>
               </widget>
              </widget>
             </item>
