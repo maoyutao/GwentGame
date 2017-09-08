@@ -35,6 +35,8 @@ protected:
     const EClassification classification;
     QVector<EProperty> property;
 
+    int index;
+
     int currentCombatValue;
     int armor{0};
     BattleField * battleField;

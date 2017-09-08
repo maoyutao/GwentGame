@@ -6,11 +6,13 @@
 #include <QList>
 #include <QMap>
 
+class Card;
+
 class BattleField : public QObject
 {
     Q_OBJECT
 private:
-    QList<int> mCardSet; // 这里卡牌的索引就是本场游戏中卡的索引？？
+    QList<int> mCardSet; //参赛的我的全部的牌
     QList<int> mFront;
     QList<int> mMiddle;
     QList<int> mBack;
@@ -26,6 +28,8 @@ private:
     // 012 front middle back  3-all
     int mStrenth[4];
     int oStrenth[4];
+
+    QList<Card*> allCards; // 这里卡牌的索引就是本场游戏中卡的索引 起到编号和保存卡的实例的作用 卡牌具体位置信息在上面的list里保存
 
 //    move(QString from, int cardIndex, QString to);
 public:

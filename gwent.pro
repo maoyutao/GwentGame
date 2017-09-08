@@ -32,8 +32,10 @@ SOURCES += \
     cards.cpp \
     battlefield.cpp \
     cardfactory.cpp \
-    cardbutton.cpp \
-    register.cpp
+    register.cpp \
+    ui_cardbutton.cpp \
+    ui_standardbutton.cpp \
+    ui_cardslot.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -43,7 +45,9 @@ HEADERS += \
     cards.h \
     battlefield.h \
     cardfactory.h \
-    cardbutton.h
+    ui_cardbutton.h \
+    ui_standardbutton.h \
+    ui_cardslot.h
 
 FORMS += \
         mainwindow.ui

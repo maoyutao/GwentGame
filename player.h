@@ -13,11 +13,10 @@ class Player : public QObject
 private:
     int point{0};
     QList<int> allCards;
-    QMap<QString, QList<int>> cardSets;
-    QString chosenSet;
 public:
     explicit Player(QObject *parent = nullptr);
-
+    QMap<QString, QList<int>> cardSets;
+    QString chosenSet;
 signals:
 
 public slots:

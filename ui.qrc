@@ -21,6 +21,11 @@
         <file>resource/title_edit_cards.png</file>
         <file>resource/edit_card.png</file>
         <file>resource/score.png</file>
+        <file>resource/editCardTip.png</file>
+        <file>resource/editCardEvent.png</file>
+        <file>resource/editCardBack.png</file>
+        <file>resource/editCardMiddle.png</file>
+        <file>resource/editCardFront.png</file>
     </qresource>
     <qresource prefix="/new/cards">
         <file>resource/cards/card_23.png</file>

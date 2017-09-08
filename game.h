@@ -19,16 +19,14 @@ private:
     int mPort;
     int oPort;
 
+public:
+    explicit Game(Player * player, QObject *parent = nullptr);
+
     int mScore[3];
     int oScore[3];
 
     Player* mPlayer = nullptr;
     BattleField* battleField = nullptr;
-    QList<Card*> mDrawnCard; // 我抽到的牌才需要被实例化，牌组里的不需要
-    QList<Card*> oVisibleCard; // 对方只有被打出来的才需要被实例化
-
-public:
-    explicit Game(Player * player, QObject *parent = nullptr);
 
 signals:
 
