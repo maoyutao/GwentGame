@@ -35,7 +35,9 @@ SOURCES += \
     register.cpp \
     ui_cardbutton.cpp \
     ui_standardbutton.cpp \
-    ui_cardslot.cpp
+    ui_cardslot.cpp \
+    ui_tonextpagebutton.cpp \
+    ui_toprepagebutton.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -47,10 +49,16 @@ HEADERS += \
     cardfactory.h \
     ui_cardbutton.h \
     ui_standardbutton.h \
-    ui_cardslot.h
+    ui_cardslot.h \
+    ui_tonextpagebutton.h \
+    ui_toprepagebutton.h
 
 FORMS += \
         mainwindow.ui
 
 RESOURCES += \
     ui.qrc
+
+DISTFILES += \
+    resource/preview.jpg \
+    resource/next.jpg

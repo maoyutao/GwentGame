@@ -16,6 +16,5 @@ void CardButton::paintEvent(QPaintEvent *event)
     if (this->pos().ry()){
         this->move(QPoint(this->pos().rx(), 0));
     }
-    qDebug() << this->geometry();
     QPushButton::paintEvent(event);
 }

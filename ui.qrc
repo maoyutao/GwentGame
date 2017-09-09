@@ -26,6 +26,8 @@
         <file>resource/editCardBack.png</file>
         <file>resource/editCardMiddle.png</file>
         <file>resource/editCardFront.png</file>
+        <file>resource/next.png</file>
+        <file>resource/preview.png</file>
     </qresource>
     <qresource prefix="/new/cards">
         <file>resource/cards/card_23.png</file>
