@@ -1,7 +1,7 @@
 #ifndef BATTLEFIELD_H
 #define BATTLEFIELD_H
 
-#include "global.h"
+#include "cardEnum.h"
 #include <QObject>
 #include <QList>
 #include <QMap>

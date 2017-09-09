@@ -37,13 +37,14 @@ SOURCES += \
     ui_standardbutton.cpp \
     ui_cardslot.cpp \
     ui_tonextpagebutton.cpp \
-    ui_toprepagebutton.cpp
+    ui_toprepagebutton.cpp \
+    w_play.cpp \
+    w_edit.cpp
 
 HEADERS += \
         mainwindow.h \
     player.h \
     game.h \
-    global.h \
     cards.h \
     battlefield.h \
     cardfactory.h \
@@ -51,7 +52,10 @@ HEADERS += \
     ui_standardbutton.h \
     ui_cardslot.h \
     ui_tonextpagebutton.h \
-    ui_toprepagebutton.h
+    ui_toprepagebutton.h \
+    cardEnum.h \
+    w_play.h \
+    w_edit.h
 
 FORMS += \
         mainwindow.ui

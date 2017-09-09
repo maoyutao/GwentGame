@@ -1,15 +1,5 @@
-#ifndef GLOBAL_H
-#define GLOBAL_H
-
-#define PStartIndex 0
-#define PChooseIndex 1
-#define PChooseEditCcardsIndex 2
-#define PEditCardsIndex 3
-#define PGameReadyIndex 4
-#define PDispacthCardsIndex 5
-#define PGamingIndex 6
-#define PScore 7
-#define PFinalScore 8
+#ifndef CARDENUM_H
+#define CARDENUM_H
 
 enum class EPosition
 {
@@ -56,4 +46,4 @@ enum class EProperty
     Drake, //龙兽
     Scavengers, // 食腐
 };
-#endif // GLOBAL_H
+#endif // CARDENUM_H

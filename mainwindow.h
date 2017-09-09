@@ -1,9 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include "global.h"
 #include "cardfactory.h"
-#include "game.h"
 #include "player.h"
 #include <QMainWindow>
 
@@ -18,21 +16,17 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+
+    // 按任意键或点击鼠标 主页面进入下一页
     bool eventFilter(QObject *watched, QEvent *event) override;
+
 private slots:
     void on_toEditCard_clicked();
-
     void on_returnToChoose_clicked();
-
-    void on_cardSet_2_clicked();
-
-    void on_cardSet_1_clicked();
-
-    void on_newCardSet_clicked();
+    void on_toPlay_clicked();
 
 private:
     Ui::MainWindow *ui;
-    Game * game;
     Player * mPlayer;
 };
 

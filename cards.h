@@ -1,7 +1,7 @@
 #ifndef CARD_H
 #define CARD_H
 
-#include "global.h"
+#include "cardEnum.h"
 #include "battlefield.h"
 #include "cardfactory.h"
 #include <QObject>

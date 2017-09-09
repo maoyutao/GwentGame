@@ -1,7 +1,6 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include "global.h"
 #include <QObject>
 #include <QString>
 #include <QList>

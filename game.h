@@ -1,7 +1,6 @@
 #ifndef GAME_H
 #define GAME_H
 
-#include "global.h"
 #include "player.h"
 #include "battlefield.h"
 #include "cards.h"
