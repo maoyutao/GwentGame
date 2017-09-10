@@ -1,0 +1,32 @@
+#include "w_play.h"
+#include "ui_mainwindow.h"
+#include "ui_standarddialog.h"
+#include <QStringList>
+#include <QHostAddress>
+
+Play::Play(QWidget *parent) : QStackedWidget(parent)
+{
+
+}
+
+void Play::init(Player *aPlayer, Ui::MainWindow *aui)
+{
+    ui = aui;
+    player = aPlayer;
+    game = new Game(player, this);
+    this->setCurrentIndex(0);
+    connect(ui->asClientButton, SIGNAL(clicked()), this, SLOT(asClient()), Qt::UniqueConnection);
+    connect(ui->asSeverButton, SIGNAL(clicked()), this, SLOT(asSever()), Qt::UniqueConnection);
+}
+
+void Play::asClient()
+{
+    Dialog dlg("invitation code:", true, this);
+    if (QDialog::accept() == dlg.exec())
+    {
+        QStringList list = dlg.content.split('&');
+        game->Address = QHostAddress(list.at(0));
+        game->Port = list.at(1).toInt();
+        game->
+    }
+}

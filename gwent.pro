@@ -28,7 +28,6 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
     player.cpp \
-    game.cpp \
     cards.cpp \
     battlefield.cpp \
     cardfactory.cpp \
@@ -38,16 +37,15 @@ SOURCES += \
     ui_cardslot.cpp \
     ui_tonextpagebutton.cpp \
     ui_toprepagebutton.cpp \
-    w_play.cpp \
     w_edit.cpp \
     cardset.cpp \
     ui_cardsetbutton.cpp \
-    ui_standarddialog.cpp
+    ui_standarddialog.cpp \
+    w_game.cpp
 
 HEADERS += \
         mainwindow.h \
     player.h \
-    game.h \
     cards.h \
     battlefield.h \
     cardfactory.h \
@@ -57,11 +55,11 @@ HEADERS += \
     ui_tonextpagebutton.h \
     ui_toprepagebutton.h \
     cardEnum.h \
-    w_play.h \
     w_edit.h \
     cardset.h \
     ui_cardsetbutton.h \
-    ui_standarddialog.h
+    ui_standarddialog.h \
+    w_game.h
 
 FORMS += \
         mainwindow.ui \

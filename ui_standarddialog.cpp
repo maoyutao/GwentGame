@@ -21,6 +21,12 @@ Dialog::~Dialog()
     qDebug() << "delete dialog";
 }
 
+void Dialog::setText(QString str)
+{
+    ui->lineEdit->setText(str);
+    ui->lineEdit->setReadOnly(true);
+}
+
 void Dialog::on_lineEdit_textChanged(const QString &arg1)
 {
     content = arg1;

@@ -5,10 +5,10 @@
 #include <QDebug>
 #include <QFont>
 
-#define PStartIndex 0
-#define PChooseIndex 1
-#define PEditIndex 2
-#define PPlayIndex 3
+#define PSTART 0
+#define PCHOOSE 1
+#define PEDIT 2
+#define PGAME 3
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -48,18 +48,19 @@ bool MainWindow::eventFilter(QObject *watched, QEvent *event)
 void MainWindow::on_toEditCard_clicked()
 {
     ui->editStackWidget->init(mPlayer, ui);
-    ui->mainStackedWidget->setCurrentIndex(PEditIndex);
+    ui->mainStackedWidget->setCurrentIndex(PEDIT);
 }
 
 void MainWindow::on_returnToChoose_clicked()
 {
     ui->editStackWidget->clear();
-    ui->mainStackedWidget->setCurrentIndex(PChooseIndex);
+    ui->mainStackedWidget->setCurrentIndex(PCHOOSE);
 }
 
 void MainWindow::on_toPlay_clicked()
 {
-    ui->mainStackedWidget->setCurrentIndex(PPlayIndex);
+    ui->gameStackWidget->init(mPlayer, ui);
+    ui->mainStackedWidget->setCurrentIndex(PGAME);
 }
 
 

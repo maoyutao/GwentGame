@@ -11,6 +11,7 @@ class Player : public QObject
     Q_OBJECT
 private:
     int point{0};
+    QString name{"Warrior"};
 public:
     explicit Player(QObject *parent = nullptr);
     QList<int> allCards;

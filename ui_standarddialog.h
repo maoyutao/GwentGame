@@ -16,9 +16,9 @@ public:
     explicit Dialog(QString str, bool haveText, QWidget *parent = 0);
     ~Dialog();
     QString content;
+    void setText(QString str);
 private slots:
     void on_lineEdit_textChanged(const QString &arg1);
-
 private:
     Ui::Dialog *ui;
 };
