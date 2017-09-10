@@ -9,6 +9,11 @@ CardButton::CardButton(int cardID, BattleField * battleField, QWidget *parent) :
     this->setStyleSheet("border-image: url(" % card->iconUrl % ")");
 }
 
+CardButton::~CardButton()
+{
+    qDebug() << "delete cardButton" << card->id;
+}
+
 void CardButton::paintEvent(QPaintEvent *event)
 {
     int height = this->parentWidget()->height();
@@ -18,4 +23,10 @@ void CardButton::paintEvent(QPaintEvent *event)
         this->move(QPoint(this->pos().rx(), 0));
     }
     QPushButton::paintEvent(event);
+}
+
+void CardButton::mousePressEvent(QMouseEvent *event)
+{
+    emit seletced(this);
+    QPushButton::mousePressEvent(event);
 }

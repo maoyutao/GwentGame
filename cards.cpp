@@ -24,6 +24,11 @@ Card::Card(int id,
 
 }
 
+Card::~Card()
+{
+    qDebug() << "delete Card" <<id;
+}
+
 Card_0::Card_0(BattleField *battleField, QObject *parent):
     Card(0, 0, "First Light", "生成“晴空”或“重整”。", ":/new/cards/resource/cards/card_0.png", EQuality::Copper,
          EClassification::Event, battleField, parent)

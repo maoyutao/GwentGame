@@ -15,7 +15,6 @@ public:
     explicit Player(QObject *parent = nullptr);
     QList<int> allCards;
     QList<CardSet*> cardSets;
-    CardSet* chosenSet{nullptr};
 signals:
 
 public slots:

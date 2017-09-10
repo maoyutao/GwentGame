@@ -9,5 +9,4 @@ Player::Player(QObject *parent) : QObject(parent)
 //    QList<int> UnseenElderSetCards;
 //    UnseenElderSetCards<< 4 << 5 << 6 << 7 << 8 << 9 << 10;
 //    cardSets.append(new CardSet("UnseenElderSet", UnseenElderSetCards));
-    chosenSet = cardSets.at(0);
 }

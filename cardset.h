@@ -13,8 +13,6 @@ public:
     QString cover{":/new/cards/resource/cards/card_20.png"};
 
     bool isValidate();
-    void addCard(int id);
-    void removeCard(int id);
 };
 
 #endif // CARDSET_H

@@ -1,7 +1,7 @@
 #include "game.h"
 
-Game::Game(Player * player, QObject *parent) : QObject(parent), mPlayer(player),
-    battleField(new BattleField(player->chosenSet->allCards, this))
+Game::Game(Player * player, CardSet* cardSet, QObject *parent) : QObject(parent), mPlayer(player),
+    battleField(new BattleField(cardSet->allCards, this))
 {
 
 }

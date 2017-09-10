@@ -43,13 +43,45 @@ void CardSlot::addCard(QWidget * widget, int index)
     {
          index = mlayout->count() - 4;
     }
-    mlayout->insertWidget(index + 2, widget);
+    mlayout->insertWidget(index + 2, widget, 0, Qt::AlignCenter);
     mlayout->insertStretch(index + 3);
 }
 
 void CardSlot::removeCard(QWidget *widget)
 {
-    this->currentWidget()->layout()->removeWidget(widget);
+    int count = this->count();
+    QHBoxLayout * mlayout;
+    for (int i = 0; i < count; i++)
+    {
+        this->setCurrentIndex(i);
+        mlayout = static_cast<QHBoxLayout*>(this->currentWidget()->layout());
+        int windex = mlayout->indexOf(widget);
+        if (windex != -1)
+        {
+            auto strenth = mlayout->itemAt(windex + 1);
+            mlayout->removeItem(strenth);
+            mlayout->removeWidget(widget);
+            break;
+        }
+    }
+    // 如果一页里没有了就删除这页
+    if (mlayout->count() == 4)
+    {
+        if (this->count() <= 1)
+        {
+            return;
+        }
+        QWidget* i = this->currentWidget();
+        int index = this->currentIndex();
+        index--;
+        if (index < 0)
+        {
+            index = this->count() - 1;
+        }
+        this->setCurrentIndex(index);
+        i->deleteLater();
+    }
+    // 整理 todo
 }
 
 void CardSlot::showButton()

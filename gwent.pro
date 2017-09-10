@@ -41,7 +41,8 @@ SOURCES += \
     w_play.cpp \
     w_edit.cpp \
     cardset.cpp \
-    ui_cardsetbutton.cpp
+    ui_cardsetbutton.cpp \
+    ui_standarddialog.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -59,10 +60,12 @@ HEADERS += \
     w_play.h \
     w_edit.h \
     cardset.h \
-    ui_cardsetbutton.h
+    ui_cardsetbutton.h \
+    ui_standarddialog.h
 
 FORMS += \
-        mainwindow.ui
+        mainwindow.ui \
+    dialog.ui
 
 RESOURCES += \
     ui.qrc

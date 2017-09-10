@@ -51,6 +51,7 @@ public:
                   EClassification classification,
                   BattleField * battleField = nullptr,
                   QObject *parent = nullptr);
+    ~Card();
 friend class CardButton;
 };
 

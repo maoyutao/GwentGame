@@ -23,3 +23,9 @@ void CardSetButton::paintEvent(QPaintEvent *event)
     }
     QPushButton::paintEvent(event);
 }
+
+void CardSetButton::mousePressEvent(QMouseEvent *event)
+{
+    emit seletced(cardSet);
+    QPushButton::mousePressEvent(event);
+}

@@ -4,6 +4,7 @@
 #include "player.h"
 #include "battlefield.h"
 #include "cards.h"
+#include "cardset.h"
 #include <QtNetwork>
 #include <QHostAddress>
 #include <QObject>
@@ -19,7 +20,7 @@ private:
     int oPort;
 
 public:
-    explicit Game(Player * player, QObject *parent = nullptr);
+    explicit Game(Player * player, CardSet* cardSet, QObject *parent = nullptr);
 
     int mScore[3];
     int oScore[3];
