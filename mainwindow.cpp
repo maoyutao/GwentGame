@@ -47,11 +47,13 @@ bool MainWindow::eventFilter(QObject *watched, QEvent *event)
 
 void MainWindow::on_toEditCard_clicked()
 {
+    ui->editStackWidget->init(mPlayer, ui);
     ui->mainStackedWidget->setCurrentIndex(PEditIndex);
 }
 
 void MainWindow::on_returnToChoose_clicked()
 {
+    ui->editStackWidget->clear();
     ui->mainStackedWidget->setCurrentIndex(PChooseIndex);
 }
 

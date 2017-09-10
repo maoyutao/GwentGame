@@ -13,14 +13,18 @@ class CardSlot : public QStackedWidget
     Q_OBJECT
 public:
     explicit CardSlot(QWidget *parent = nullptr);
-public:
+
     void addCard(QWidget * widget, int index = -1);
     void removeCard(QWidget * widget);
+    void setLimit(int newLimit);
+    void clear();
 private:
+    int limit{10};
     void showButton();
     void addPage();
 private slots:
     void createLayout();
+    void hideButtonIfNeeded();
 };
 
 #endif // UI_CARDSLOT_H

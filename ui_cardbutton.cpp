@@ -3,7 +3,8 @@
 #include <QSize>
 #include <QDebug>
 
-CardButton::CardButton(Card * card, QWidget *parent) : QPushButton(parent), card(card)
+CardButton::CardButton(int cardID, BattleField * battleField, QWidget *parent) : QPushButton(parent),
+    card(static_cast<Card*>(CardFactory::CreateObject(cardID, battleField, this)))
 {
     this->setStyleSheet("border-image: url(" % card->iconUrl % ")");
 }

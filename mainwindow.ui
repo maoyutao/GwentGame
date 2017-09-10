@@ -20,6 +20,70 @@
    <string>gwent</string>
   </property>
   <widget class="QWidget" name="centralWidget">
+   <property name="palette">
+    <palette>
+     <active>
+      <colorrole role="BrightText">
+       <brush brushstyle="SolidPattern">
+        <color alpha="255">
+         <red>229</red>
+         <green>229</green>
+         <blue>229</blue>
+        </color>
+       </brush>
+      </colorrole>
+      <colorrole role="ButtonText">
+       <brush brushstyle="SolidPattern">
+        <color alpha="202">
+         <red>162</red>
+         <green>162</green>
+         <blue>162</blue>
+        </color>
+       </brush>
+      </colorrole>
+     </active>
+     <inactive>
+      <colorrole role="BrightText">
+       <brush brushstyle="SolidPattern">
+        <color alpha="255">
+         <red>229</red>
+         <green>229</green>
+         <blue>229</blue>
+        </color>
+       </brush>
+      </colorrole>
+      <colorrole role="ButtonText">
+       <brush brushstyle="SolidPattern">
+        <color alpha="202">
+         <red>162</red>
+         <green>162</green>
+         <blue>162</blue>
+        </color>
+       </brush>
+      </colorrole>
+     </inactive>
+     <disabled>
+      <colorrole role="BrightText">
+       <brush brushstyle="SolidPattern">
+        <color alpha="255">
+         <red>229</red>
+         <green>229</green>
+         <blue>229</blue>
+        </color>
+       </brush>
+      </colorrole>
+      <colorrole role="ButtonText">
+       <brush brushstyle="SolidPattern">
+        <color alpha="255">
+         <red>148</red>
+         <green>148</green>
+         <blue>148</blue>
+        </color>
+       </brush>
+      </colorrole>
+     </disabled>
+    </palette>
+   </property>
    <layout class="QVBoxLayout" name="verticalLayout_3">
     <property name="spacing">
      <number>0</number>
@@ -232,7 +296,7 @@ border-image:url(:/new/prefix1/resource/background.png)
 border-image:url();
 }</string>
            </property>
-           <layout class="QGridLayout" name="gridLayout_25" rowstretch="5,1" columnstretch="1,5,1">
+           <layout class="QGridLayout" name="gridLayout_25" rowstretch="5,1" columnstretch="1,16,1">
             <property name="topMargin">
              <number>20</number>
             </property>
@@ -240,6 +304,9 @@ border-image:url();
              <spacer name="horizontalSpacer_47">
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeType">
+               <enum>QSizePolicy::Preferred</enum>
               </property>
               <property name="sizeHint" stdset="0">
                <size>
@@ -294,51 +361,8 @@ border-image:url();
                  <number>20</number>
                 </property>
                 <item>
-                 <widget class="QPushButton" name="newCardSet">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
-                  <property name="styleSheet">
-                   <string notr="true">border-image: url(:/new/prefix1/resource/new_cardset.png)</string>
-                  </property>
-                  <property name="text">
-                   <string/>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QPushButton" name="cardSet_1">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
-                  <property name="styleSheet">
-                   <string notr="true">border-image: url(:/new/prefix1/resource/cardset_2.png)</string>
-                  </property>
-                  <property name="text">
-                   <string/>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QPushButton" name="cardSet_2">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
-                  <property name="styleSheet">
-                   <string notr="true">border-image: url(:/new/prefix1/resource/cardset_1.png)</string>
-                  </property>
-                  <property name="text">
-                   <string/>
-                  </property>
+                 <widget class="CardSlot" name="cardSet">
+                  <widget class="QWidget" name="page"/>
                  </widget>
                 </item>
                </layout>
@@ -384,6 +408,13 @@ border-image:url();
                 <width>50</width>
                 <height>20</height>
                </size>
+              </property>
+              <property name="palette">
+               <palette>
+                <active/>
+                <inactive/>
+                <disabled/>
+               </palette>
               </property>
               <property name="autoFillBackground">
                <bool>false</bool>
@@ -449,6 +480,13 @@ border-image:url();
                   <width>50</width>
                   <height>50</height>
                  </size>
+                </property>
+                <property name="palette">
+                 <palette>
+                  <active/>
+                  <inactive/>
+                  <disabled/>
+                 </palette>
                 </property>
                 <property name="text">
                  <string>return</string>

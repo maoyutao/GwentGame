@@ -9,7 +9,7 @@ class CardButton : public QPushButton
 {
     Q_OBJECT
 public:
-    explicit CardButton(Card * card, QWidget *parent = nullptr);
+    explicit CardButton(int cardID, BattleField * battleField, QWidget *parent = nullptr);
 
 signals:
 

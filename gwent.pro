@@ -39,7 +39,9 @@ SOURCES += \
     ui_tonextpagebutton.cpp \
     ui_toprepagebutton.cpp \
     w_play.cpp \
-    w_edit.cpp
+    w_edit.cpp \
+    cardset.cpp \
+    ui_cardsetbutton.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -55,7 +57,9 @@ HEADERS += \
     ui_toprepagebutton.h \
     cardEnum.h \
     w_play.h \
-    w_edit.h
+    w_edit.h \
+    cardset.h \
+    ui_cardsetbutton.h
 
 FORMS += \
         mainwindow.ui
@@ -63,6 +67,3 @@ FORMS += \
 RESOURCES += \
     ui.qrc
 
-DISTFILES += \
-    resource/preview.jpg \
-    resource/next.jpg

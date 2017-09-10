@@ -24,7 +24,7 @@ class Card : public QObject
 {
     Q_OBJECT
 
-protected:
+public:
     const int id;
     const int basisCombatValue;
     const QString name;
