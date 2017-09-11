@@ -14,6 +14,11 @@ CardSetButton::CardSetButton(CardSet* cardSet, QWidget *parent) : QPushButton(pa
     this->setToolTip(cardSet->info);
 }
 
+CardSetButton::~CardSetButton()
+{
+    qDebug() << "delete CardSetButton";
+}
+
 QString CardSetButton::borderimage(QString url)
 {
     return "#" % this->objectName() % " {border-image: url(" % url %")}"
@@ -35,5 +40,4 @@ void CardSetButton::paintEvent(QPaintEvent *event)
 void CardSetButton::mousePressEvent(QMouseEvent *event)
 {
     emit seletced(cardSet);
-    QPushButton::mousePressEvent(event);
 }

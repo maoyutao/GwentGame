@@ -7,6 +7,8 @@
 #include <QStackedWidget>
 #include <QLayout>
 #include <QHBoxLayout>
+#include <QList>
+#include <QPushButton>
 
 class CardSlot : public QStackedWidget
 {
@@ -14,22 +16,18 @@ class CardSlot : public QStackedWidget
 public:
     explicit CardSlot(QWidget *parent = nullptr);
 
-    void addCard(QWidget * widget, int index = -1); // 这里的index是牌的index （经过计算的）
-    void addPCard(QWidget * widget, int index); // 这里的index是原始的index （算上左右箭头和strenth）
-    void removeCard(QWidget * widget);
+    void addCard(QPushButton * widget, int index = -1); // 这里的index是牌的index （经过计算的）
+    void addCard(QList<QPushButton*> widgets);
+    void removeCard(QPushButton * widget);
     void setLimit(int newLimit);
-    void clear();
-    int getIndex(QWidget * widget);
-    int getPIndex(QWidget *widget);
+    void replaceCard(QPushButton * toBeReplaced, QPushButton* replace);
     void setAllEnabled(bool enabled);
-    bool empty{true};
+    void clear();
+    QList<QPushButton*> allButtons;
 private:
     int limit{10};
-    void showButton();
-    void addPage();
+    void repaint();
 private slots:
-    void createLayout();
-    void hideButtonIfNeeded();
 };
 
 #endif // UI_CARDSLOT_H

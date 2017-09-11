@@ -21,22 +21,19 @@ void BattleField::init(CardSet *cardset, Ui::MainWindow *aui)
     mCardSet = cardset;
     ui = aui;
     mleader = new CardButton(mCardSet->leader, this, ui->gamingMLeader);
-    mleader->show();
     mDeck = mCardSet->allCards;
     mDeck.removeOne(mCardSet->leader);
     shuffle();
-    signalTimesLimit = 4;
-    ui->gamingChooseSlot->setLimit(5);
+    signalTimesLimit = 3;
     showToBechosen(drawCards(10), &BattleField::dispatchCard);
 }
 
 void BattleField::dispatchCard(CardButton * card)
 {
     ui->gamingChooseSlot->setAllEnabled(false);
-    int index = ui->gamingChooseSlot->getPIndex(card);
-    qDebug() << "index" << index;
-    ui->gamingChooseSlot->removeCard(card);
-    ui->gamingChooseSlot->addPCard(drawCards().first(), index);
+    CardButton * newCard = drawCards().first();
+    ui->gamingChooseSlot->replaceCard(card, newCard);
+    connect(newCard, SIGNAL(seletced(CardButton*)), this, SLOT(dispatchCard(CardButton*)));
     mDeck.append(card->card->id);
     signalTimes++;
     if (signalTimes < signalTimesLimit)
@@ -48,13 +45,19 @@ void BattleField::dispatchCard(CardButton * card)
     timer->setSingleShot(true);
     connect(timer, SIGNAL(timeout()), this, SLOT(changePageToGaming()), Qt::UniqueConnection);
     connect(timer, SIGNAL(timeout()), timer, SLOT(deleteLater()), Qt::UniqueConnection);
-    timer->start(1000);
+    timer->start(800);
 }
 
 void BattleField::changePageToGaming()
 {
-    ui->gamingChooseSlot->clear();
+    QList<QPushButton*> list = ui->gamingChooseSlot->allButtons;
+    for (auto it: list)
+    {
+        ui->mHandSlot->addCard(&*it);
+    }
     ui->gameStackWidget->setCurrentIndex(PGAMING);
+    ui->gamingChooseSlot->clear();
+
 }
 
 void BattleField::shuffle()
@@ -92,5 +95,6 @@ void BattleField::showToBechosen(QList<CardButton *> list, standardSlot slot)
         ui->gamingChooseSlot->addCard(&*it);
         connect(&*it, &CardButton::seletced, this, slot);
     }
+    ui->gamingChooseSlot->setCurrentIndex(0);
     ui->gameStackWidget->setCurrentIndex(PCHOOSE);
 }
