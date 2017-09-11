@@ -43,8 +43,8 @@ void CardSlot::addCard(QWidget * widget, int index)
     {
          index = mlayout->count() - 4;
     }
-    mlayout->insertWidget(index + 2, widget, 0, Qt::AlignCenter);
-    mlayout->insertStretch(index + 3);
+    mlayout->insertWidget(index * 2 + 2, widget, 0, Qt::AlignCenter);
+    mlayout->insertStretch(index * 2 + 3);
 }
 
 void CardSlot::removeCard(QWidget *widget)
@@ -53,8 +53,7 @@ void CardSlot::removeCard(QWidget *widget)
     QHBoxLayout * mlayout;
     for (int i = 0; i < count; i++)
     {
-        this->setCurrentIndex(i);
-        mlayout = static_cast<QHBoxLayout*>(this->currentWidget()->layout());
+        mlayout = static_cast<QHBoxLayout*>(this->widget(i)->layout());
         int windex = mlayout->indexOf(widget);
         if (windex != -1)
         {
@@ -119,6 +118,34 @@ void CardSlot::clear()
         it->deleteLater();
     }
     addPage();
+}
+
+int CardSlot::getIndex(QWidget *widget)
+{
+    int i = this->currentWidget()->layout()->indexOf(widget);
+    if (i == -1) {
+        return -1;
+    }
+    return (i - 1) / 2 - 1;
+}
+
+void CardSlot::setAllEnabled(bool enabled)
+{
+    int count = this->count();
+    QHBoxLayout * mlayout;
+    for (int i = 0; i < count; i++)
+    {
+        mlayout = static_cast<QHBoxLayout*>(this->widget(i)->layout());
+        int layoutcount = mlayout->count();
+        for (int k = 0; k < layoutcount; k++)
+        {
+            auto w = mlayout->itemAt(k)->widget();
+            if (w->inherits("QPushButton"))
+            {
+                w->setEnabled(enabled);
+            }
+        }
+    }
 }
 
 void CardSlot::hideButtonIfNeeded()

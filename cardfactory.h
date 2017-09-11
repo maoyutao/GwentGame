@@ -1,7 +1,7 @@
 #ifndef CARDFACTORY_H
 #define CARDFACTORY_H
 
-#include "battlefield.h"
+#include "w_battlefield.h"
 #include <QObject>
 #include <QMap>
 

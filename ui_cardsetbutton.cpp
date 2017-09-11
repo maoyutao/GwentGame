@@ -4,12 +4,22 @@
 
 CardSetButton::CardSetButton(CardSet* cardSet, QWidget *parent) : QPushButton(parent), cardSet(cardSet)
 {
+    this->setObjectName("cardSetButton" % QString::number(unique++));
     if (!cardSet)
     {
-        this->setStyleSheet("border-image: url(:/new/prefix1/resource/new_cardset.png)");
+        this->setStyleSheet(borderimage(":/new/prefix1/resource/new_cardset.png"));
         return;
     }
-    this->setStyleSheet("border-image: url(" % cardSet->cover % ")");
+    this->setStyleSheet(borderimage(cardSet->cover));
+    qDebug() << cardSet->info;
+    this->setToolTip(cardSet->info);
+    qDebug() << borderimage(cardSet->cover);
+}
+
+QString CardSetButton::borderimage(QString url)
+{
+    return "#" % this->objectName() % " {border-image: url(" % url %")}"
+            % "#" % this->objectName() % " *" % " {border-image: url()}";
 }
 
 void CardSetButton::paintEvent(QPaintEvent *event)

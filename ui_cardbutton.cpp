@@ -11,7 +11,7 @@ CardButton::CardButton(int cardID, BattleField * battleField, QWidget *parent) :
 
 CardButton::~CardButton()
 {
-    qDebug() << "delete cardButton" << card->id;
+//    qDebug() << "delete cardButton" << card->id;
 }
 
 void CardButton::paintEvent(QPaintEvent *event)

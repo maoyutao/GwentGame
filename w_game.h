@@ -3,7 +3,7 @@
 
 #include "w_game.h"
 #include "player.h"
-#include "battlefield.h"
+#include "w_battlefield.h"
 #include <QWidget>
 #include <QStackedWidget>
 #include <QHostAddress>
@@ -29,7 +29,6 @@ private slots:
     void onConnect();
     void onNewConnection();
     void chooseCardSet();
-    void dispatchCard();
     void start(CardSet* cardSet);
 private:
     Ui::MainWindow *ui{nullptr};
@@ -38,9 +37,7 @@ private:
     QTcpServer* server{nullptr};
     int mScore[3];
     int oScore[3];
-    BattleField* battleField = nullptr;
-    QList<Card*> cardList;
-
+    QList<CardButton*> cardList;
 };
 
 #endif // W_GAME_H

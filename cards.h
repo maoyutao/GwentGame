@@ -2,7 +2,7 @@
 #define CARD_H
 
 #include "cardEnum.h"
-#include "battlefield.h"
+#include "w_battlefield.h"
 #include "cardfactory.h"
 #include <QObject>
 #include <QString>

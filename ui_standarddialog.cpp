@@ -12,13 +12,13 @@ Dialog::Dialog(QString str, bool haveText, QWidget *parent) :
     {
         ui->lineEdit->hide();
     }
-    qDebug() << "dialog";
+//    qDebug() << "dialog";
 }
 
 Dialog::~Dialog()
 {
     delete ui;
-    qDebug() << "delete dialog";
+//    qDebug() << "delete dialog";
 }
 
 void Dialog::setText(QString str)

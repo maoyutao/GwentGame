@@ -29,7 +29,6 @@ SOURCES += \
         mainwindow.cpp \
     player.cpp \
     cards.cpp \
-    battlefield.cpp \
     cardfactory.cpp \
     register.cpp \
     ui_cardbutton.cpp \
@@ -41,13 +40,13 @@ SOURCES += \
     cardset.cpp \
     ui_cardsetbutton.cpp \
     ui_standarddialog.cpp \
-    w_game.cpp
+    w_game.cpp \
+    w_battlefield.cpp
 
 HEADERS += \
         mainwindow.h \
     player.h \
     cards.h \
-    battlefield.h \
     cardfactory.h \
     ui_cardbutton.h \
     ui_standardbutton.h \
@@ -59,7 +58,8 @@ HEADERS += \
     cardset.h \
     ui_cardsetbutton.h \
     ui_standarddialog.h \
-    w_game.h
+    w_game.h \
+    w_battlefield.h
 
 FORMS += \
         mainwindow.ui \
@@ -67,4 +67,6 @@ FORMS += \
 
 RESOURCES += \
     ui.qrc
+
+DISTFILES +=
 

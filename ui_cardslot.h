@@ -18,6 +18,8 @@ public:
     void removeCard(QWidget * widget);
     void setLimit(int newLimit);
     void clear();
+    int getIndex(QWidget * widget);
+    void setAllEnabled(bool enabled);
 private:
     int limit{10};
     void showButton();

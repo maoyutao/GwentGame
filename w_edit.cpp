@@ -12,7 +12,6 @@ Edit::Edit(QWidget *parent) : QStackedWidget(parent)
 
 void Edit::init(Player *player, Ui::MainWindow *aui)
 {
-    qDebug() << "init" <<cardList;
     ui = aui;
     mplayer = player;
     clear();
@@ -33,24 +32,20 @@ void Edit::init(Player *player, Ui::MainWindow *aui)
 
 void Edit::clear()
 {
-    qDebug() << "before clear" <<cardList;
     ui->cardSet->clear();
     ui->editCardALL->clear();
     ui->editCardBack->clear();
     ui->editCardEvent->clear();
     ui->editCardFront->clear();
     ui->editCardMiddle->clear();
-    qDebug() << "after clear1" <<cardList;
     cardList.clear();
     cardSetList.clear();
     currentSet = nullptr;
     tempSet.clear();
-//    qDebug() << "after clear2" <<cardList;
 }
 
 void Edit::enterEdit(CardSet * cardSet)
 {
-    qDebug() << "enteredit" << cardList;
     ui->cardSet->clear();
     for (auto it: mplayer->allCards)
     {
@@ -73,7 +68,6 @@ void Edit::enterEdit(CardSet * cardSet)
         return;
     }
     currentSet = cardSet;
-    qDebug() << "after edit" << cardList;
     for (auto card: cardSet->allCards) // 卡组里的卡要显示到上方
     {
         for (auto w: cardList)
@@ -125,7 +119,6 @@ void Edit::removeFromSet(CardButton *card)
 
 void Edit::returnToChoose()
 {
-    qDebug() << "return";
     Dialog dlg("save?", false, this);
     if (QDialog::Accepted == dlg.exec())
     {

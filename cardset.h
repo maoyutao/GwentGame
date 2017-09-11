@@ -10,9 +10,14 @@ public:
     CardSet(QString name);
     QString name;
     QList<int> allCards;
-    QString cover{":/new/cards/resource/cards/card_20.png"};
-
-    bool isValidate();
+    int leader{-1};
+    QString leaderName;
+    QString cover{":/new/prefix1/resource/cardSet.png"};
+    QString info;
+    bool isValid{false};
+private:
+    void updateInfo();
+    void update();
 };
 
 #endif // CARDSET_H

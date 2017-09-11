@@ -28,6 +28,7 @@
         <file>resource/preview.png</file>
         <file>resource/asSever.png</file>
         <file>resource/asClient.png</file>
+        <file>resource/cardSet.png</file>
     </qresource>
     <qresource prefix="/new/cards">
         <file>resource/cards/card_23.png</file>

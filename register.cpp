@@ -1,4 +1,5 @@
 #include "cards.h"
+#include "ui_cardsetbutton.h"
 
 #define REGISTER_CARD(id) \
 class RegisterCard##id\
@@ -15,6 +16,7 @@ Register RegisterCard##id::reg = Register(id, RegisterCard##id::createCard);
 
 // 静态成员初始化
 QMap<int, newCardFunctionPtr> CardFactory::cardMap;
+int CardSetButton::unique = 0;
 
 // 注册卡牌
 REGISTER_CARD(0)

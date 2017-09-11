@@ -1,6 +1,7 @@
 #include "w_game.h"
 #include "ui_mainwindow.h"
 #include "ui_standarddialog.h"
+#include "cardset.h"
 #include <QStringList>
 #include <QDialog>
 #include <QDebug>
@@ -81,7 +82,9 @@ void Game::onConnect()
 {
     ui->msg->setText(QApplication::translate("MainWindow", "<html><head/><body><p align=\"center\"><span style=\" font-size:24pt; color:#b7b7b7;\">Connect successfully!</span></p></body></html>", Q_NULLPTR));
     QTimer *timer = new QTimer(this);
-    connect(timer, SIGNAL(timeout()), this, SLOT(chooseCardSet()));
+    timer->setSingleShot(true);
+    connect(timer, SIGNAL(timeout()), this, SLOT(chooseCardSet()), Qt::UniqueConnection);
+    connect(timer, SIGNAL(timeout()), timer, SLOT(deleteLater()), Qt::UniqueConnection);
     timer->start(1200);
 }
 
@@ -105,12 +108,18 @@ void Game::onNewConnection()
 
 void Game::chooseCardSet()
 {
-    ui->gamingChooseSet->setLimit(3); // 设置一页最多几张
+    qDebug() << "choose";
+    ui->gamingChooseSlot->setLimit(3); // 设置一页最多几张
     for (auto it: player->cardSets)
     {
-        CardSetButton* set = new CardSetButton(&*it, ui->gamingChooseSet); // 实例化按钮
-        ui->gamingChooseSet->addCard(set); // 显示
-        connect(set, SIGNAL(seletced(CardSet*)), this, SLOT(start(CardSet*)));
+        qDebug() << "in";
+        CardSetButton* set = new CardSetButton(&*it, ui->gamingChooseSlot); // 实例化按钮
+        ui->gamingChooseSlot->addCard(set); // 显示
+        if (it->isValid) {
+            connect(set, SIGNAL(seletced(CardSet*)), this, SLOT(start(CardSet*)));
+        } else {
+            set->setEnabled(false);
+        }
     }
     this->setCurrentIndex(PCHOOSE);
 }
@@ -118,7 +127,6 @@ void Game::chooseCardSet()
 void Game::start(CardSet *cardSet)
 {
     this->setCurrentIndex(PWAITING);
-    ui->gamingChooseSet->clear();
-    battleField = new BattleField(cardSet->allCards, this);
-
+    ui->gamingChooseSlot->clear();
+    ui->battleField->init(cardSet, ui);
 }

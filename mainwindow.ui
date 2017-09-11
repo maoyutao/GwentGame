@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>622</width>
-    <height>456</height>
+    <width>557</width>
+    <height>425</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -106,7 +106,7 @@
        </sizepolicy>
       </property>
       <property name="currentIndex">
-       <number>3</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="start">
        <property name="styleSheet">
@@ -996,11 +996,11 @@ border-image:url();
           </widget>
           <widget class="QWidget" name="gamingChoose">
            <property name="styleSheet">
-            <string notr="true">#dispatchCards { 
+            <string notr="true">#gamingChoose { 
 border-image: url(:/new/prefix1/resource/background.png)
 }
 
-#dispatchCards * {
+#gamingChoose * {
 border-image:url();
 }</string>
            </property>
@@ -1010,7 +1010,7 @@ border-image:url();
               <item>
                <widget class="QLabel" name="label_5">
                 <property name="text">
-                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:24pt; color:#e7e7e7;&quot;&gt;choose your card set&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:24pt; color:#e7e7e7;&quot;&gt;choose&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                 </property>
                </widget>
               </item>
@@ -1028,7 +1028,7 @@ border-image:url();
                </spacer>
               </item>
               <item>
-               <widget class="CardSlot" name="gamingChooseSet">
+               <widget class="CardSlot" name="gamingChooseSlot">
                 <widget class="QWidget" name="page_3"/>
                </widget>
               </item>
@@ -1075,13 +1075,13 @@ border-image:url();
             </item>
            </layout>
           </widget>
-          <widget class="QWidget" name="gaming">
+          <widget class="BattleField" name="battleField">
            <property name="styleSheet">
-            <string notr="true">#gaming {
+            <string notr="true">#battleField {
 border-image: url(:/new/prefix1/resource/gaming_backgound.png)
 }
-#gaming * {
-border-image: 
+#battleField * {
+border-image: url()
 }</string>
            </property>
            <layout class="QGridLayout" name="gridLayout_28" rowstretch="2,11,0,2" columnstretch="2,7">
@@ -1189,9 +1189,8 @@ border-image:
                </spacer>
               </item>
               <item row="1" column="3">
-               <widget class="QStackedWidget" name="stackedWidget_10">
+               <widget class="QStackedWidget" name="ohand">
                 <widget class="QWidget" name="page_27"/>
-                <widget class="QWidget" name="page_28"/>
                </widget>
               </item>
               <item row="1" column="2">
@@ -1460,6 +1459,9 @@ border-image:
               </item>
               <item>
                <layout class="QVBoxLayout" name="verticalLayout_11">
+                <property name="spacing">
+                 <number>0</number>
+                </property>
                 <item>
                  <layout class="QGridLayout" name="gridLayout_34">
                   <item row="1" column="2">
@@ -2260,7 +2262,7 @@ border-image:
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>622</width>
+     <width>557</width>
      <height>22</height>
     </rect>
    </property>
@@ -2298,6 +2300,12 @@ border-image:
    <class>Game</class>
    <extends>QStackedWidget</extends>
    <header>w_game.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>BattleField</class>
+   <extends>QWidget</extends>
+   <header>w_battlefield.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

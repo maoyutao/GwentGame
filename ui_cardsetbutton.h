@@ -14,11 +14,13 @@ public:
 
 signals:
     void seletced(CardSet* cardSet);
-public slots:
+private slots:
 private:
     void paintEvent(QPaintEvent *event) override;
     CardSet* cardSet{nullptr};
     void mousePressEvent(QMouseEvent* event) override;
+    QString borderimage(QString url);
+    static int unique;
 };
 
 #endif // UI_CARDSETBUTTON_H
