@@ -25,8 +25,7 @@ void BattleField::init(CardSet *cardset, Ui::MainWindow *aui)
     mDeck = mCardSet->allCards;
     mDeck.removeOne(mCardSet->leader);
     shuffle();
-    signalTimesLimit = 4;
-    ui->gamingChooseSlot->setLimit(5);
+    signalTimesLimit = 3;
     showToBechosen(drawCards(10), &BattleField::dispatchCard);
 }
 
@@ -36,8 +35,10 @@ void BattleField::dispatchCard(CardButton * card)
     int index = ui->gamingChooseSlot->getPIndex(card);
     qDebug() << "index" << index;
     ui->gamingChooseSlot->removeCard(card);
-    ui->gamingChooseSlot->addPCard(drawCards().first(), index);
+    auto newCard = drawCards().first();
+    ui->gamingChooseSlot->addPCard(newCard, index);
     mDeck.append(card->card->id);
+    connect(newCard, SIGNAL(seletced(CardButton*)), this, SLOT(dispatchCard(CardButton*)));
     signalTimes++;
     if (signalTimes < signalTimesLimit)
     {
@@ -48,7 +49,7 @@ void BattleField::dispatchCard(CardButton * card)
     timer->setSingleShot(true);
     connect(timer, SIGNAL(timeout()), this, SLOT(changePageToGaming()), Qt::UniqueConnection);
     connect(timer, SIGNAL(timeout()), timer, SLOT(deleteLater()), Qt::UniqueConnection);
-    timer->start(1000);
+    timer->start(800);
 }
 
 void BattleField::changePageToGaming()
@@ -93,4 +94,5 @@ void BattleField::showToBechosen(QList<CardButton *> list, standardSlot slot)
         connect(&*it, &CardButton::seletced, this, slot);
     }
     ui->gameStackWidget->setCurrentIndex(PCHOOSE);
+    ui->gamingChooseSlot->setCurrentIndex(0);
 }

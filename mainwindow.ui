@@ -106,7 +106,7 @@
        </sizepolicy>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>3</number>
       </property>
       <widget class="QWidget" name="start">
        <property name="styleSheet">
@@ -1157,7 +1157,7 @@ border-image: url()
               <item row="1" column="1">
                <widget class="QLabel" name="label_19">
                 <property name="text">
-                 <string>TextLabel</string>
+                 <string/>
                 </property>
                </widget>
               </item>
@@ -1189,7 +1189,7 @@ border-image: url()
                </spacer>
               </item>
               <item row="1" column="3">
-               <widget class="QStackedWidget" name="ohand">
+               <widget class="CardSlot" name="oHandSlot">
                 <widget class="QWidget" name="page_27"/>
                </widget>
               </item>
@@ -2129,7 +2129,7 @@ border-image: url()
               <item row="1" column="1">
                <widget class="QLabel" name="label_28">
                 <property name="text">
-                 <string>TextLabel</string>
+                 <string/>
                 </property>
                </widget>
               </item>
@@ -2200,8 +2200,7 @@ border-image: url()
                </spacer>
               </item>
               <item row="1" column="3">
-               <widget class="QStackedWidget" name="stackedWidget_11">
-                <widget class="QWidget" name="page_29"/>
+               <widget class="CardSlot" name="mHandSlot">
                 <widget class="QWidget" name="page_30"/>
                </widget>
               </item>

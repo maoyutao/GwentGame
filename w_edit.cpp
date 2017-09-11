@@ -61,6 +61,8 @@ void Edit::enterEdit(CardSet * cardSet)
         if (QDialog::Accepted == dlg.exec())
         {
             name = dlg.content;
+        } else {
+            return;
         }
         currentSet = new CardSet(name);
         mplayer->cardSets.append(currentSet);
