@@ -11,7 +11,7 @@ class CardSetButton : public QPushButton
     Q_OBJECT
 public:
     explicit CardSetButton(CardSet* cardSet, QWidget *parent = nullptr);
-    ~CardSetButton();
+
 signals:
     void seletced(CardSet* cardSet);
 private slots:

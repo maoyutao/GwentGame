@@ -1,197 +1,122 @@
 #include "ui_cardslot.h"
-#include "ui_cardbutton.h"
 #include <QDebug>
-
 
 CardSlot::CardSlot(QWidget *parent) : QStackedWidget(parent)
 {
-//    connect(this, SIGNAL(currentChanged(int)), this, SLOT(createLayout()));
-//    connect(this, SIGNAL(widgetRemoved(int)), this, SLOT(hideButtonIfNeeded()));
+    connect(this, SIGNAL(currentChanged(int)), this, SLOT(createLayout()));
+    connect(this, SIGNAL(widgetRemoved(int)), this, SLOT(hideButtonIfNeeded()));
 }
 
-//void CardSlot::createLayout()
-//{
-//    if ((!this->currentWidget()) || this->currentWidget()->layout())
-//    {
-//        return;
-//    }
-//    ToNextPageButton* next = new ToNextPageButton(this->currentWidget());
-//    ToPrePageButton* pre = new ToPrePageButton(this->currentWidget());
-//    QHBoxLayout * mlayout = new QHBoxLayout();
-//    mlayout->setMargin(2);
-//    mlayout->setSpacing(2);
-//    mlayout->addWidget(pre, 0, Qt::AlignLeft);
-//    pre->raise();
-//    mlayout->addStretch();
-//    mlayout->addStretch();
-//    mlayout->addWidget(next, 0, Qt::AlignRight);
-//    next->raise();
-//    if (this->count() == 1)
-//    {
-//        next->hide();
-//        pre->hide();
-//    }
-//    this->currentWidget()->setLayout(mlayout);
-//}
-
-void CardSlot::addCard(QPushButton * widget, int index)
+void CardSlot::createLayout()
 {
-    qDebug() << this->allButtons;
-    if (index == -1)
+    if (this->currentWidget()->layout())
     {
-        allButtons.append(widget);
-        repaint();
         return;
     }
-    allButtons.insert(index, widget);
-    qDebug() << allButtons;
-    repaint();
-
-//    QHBoxLayout * mlayout = static_cast<QHBoxLayout*>(this->currentWidget()->layout());
-
-//    if (index == -1)
-//    {
-//        if (mlayout->count() >= 4 + limit * 2)
-//        {
-//            addPage();
-//            addCard(widget, index);
-//            return;
-//        }
-//         index = (mlayout->count() - 4) / 2;
-//    }
-//    mlayout->insertWidget(index * 2 + 2, widget, 0, Qt::AlignCenter);
-//    mlayout->insertStretch(index * 2 + 3);
-//    widget->raise();
-
-}
-
-void CardSlot::addCard(QList<QPushButton *> widgets)
-{
-    allButtons.append(widgets);
-    repaint();
-}
-
-void CardSlot::removeCard(QPushButton *widget)
-{
-    if (allButtons.removeOne(widget))
+    ToNextPageButton* next = new ToNextPageButton(this->currentWidget());
+    ToPrePageButton* pre = new ToPrePageButton(this->currentWidget());
+    QHBoxLayout * mlayout = new QHBoxLayout();
+    mlayout->setMargin(2);
+    mlayout->setSpacing(2);
+    mlayout->addWidget(pre, 0, Qt::AlignLeft);
+    mlayout->addStretch();
+    mlayout->addStretch();
+    mlayout->addWidget(next, 0, Qt::AlignRight);
+    if (this->count() == 1)
     {
-        repaint();
+        next->hide();
+        pre->hide();
     }
-//    int count = this->count();
-//    QHBoxLayout * mlayout;
-//    for (int i = 0; i < count; i++)
-//    {
-//        mlayout = static_cast<QHBoxLayout*>(this->widget(i)->layout());
-
-//        int windex = mlayout->indexOf(widget);
-//        if (windex != -1)
-//        {
-//            auto strenth = mlayout->itemAt(windex + 1);
-//            mlayout->removeItem(strenth);
-//            mlayout->removeWidget(widget);
-//            break;
-//        }
-//    }
-
-//    // 如果一页里没有了就删除这页
-//    if (mlayout->count() == 4)
-//    {
-//        if (this->count() <= 1)
-//        {
-//            return;
-//        }
-//        QWidget* i = this->currentWidget();
-//        int index = this->currentIndex();
-//        index--;
-//        if (index < 0)
-//        {
-//            index = this->count() - 1;
-//        }
-//        this->setCurrentIndex(index);
-//        i->deleteLater();
-//    }
-//    // 整理 todo
+    this->currentWidget()->setLayout(mlayout);
 }
 
-//void CardSlot::showButton()
-//{
-//    QHBoxLayout* mlayout = static_cast<QHBoxLayout*>(this->currentWidget()->layout());
+void CardSlot::addCard(QWidget * widget, int index)
+{   
+    QHBoxLayout * mlayout = static_cast<QHBoxLayout*>(this->currentWidget()->layout());
+    if (index == -1)
+    {
+        if (mlayout->count() >= 4 + limit * 2)
+        {
+            addPage();
+            addCard(widget, index);
+            return;
+        }
+         index = (mlayout->count() - 4) / 2;
+    }
+    mlayout->insertWidget(index * 2 + 2, widget, 0, Qt::AlignCenter);
+    mlayout->insertStretch(index * 2 + 3);
+
 //    for (int i = 0; i < mlayout->count(); i++)
 //    {
-//        auto w = mlayout->itemAt(i)->widget() ;
-//        if (w && w->inherits("StandardButton"))
-//        {
-//            w->show();
-//        }
+//        qDebug() << mlayout->itemAt(i)->widget();
 //    }
-//}
 
-//void CardSlot::addPage()
-//{
-//    if (this->currentIndex() != -1)
-//    {
-//        showButton();
-//    }
-//    QWidget * next = new QWidget();
-//    int index = this->addWidget(next);
-//    this->setCurrentIndex(index);
-//    createLayout();
-//}
+}
 
-void CardSlot::repaint()
+void CardSlot::addPCard(QWidget *widget, int index)
 {
-    int current = this->currentIndex();
-    QList<QPushButton*> toBeFreed;
-    for (auto it: this->children())
-    {
-        if (it->inherits("QStackedLayout"))
+    QHBoxLayout * mlayout = static_cast<QHBoxLayout*>(this->currentWidget()->layout());
+    mlayout->insertWidget(index, widget, 0, Qt::AlignCenter);
+    mlayout->insertStretch(index+1);
+        for (int i = 0; i < mlayout->count(); i++)
         {
-            continue;
+            qDebug() << mlayout->itemAt(i)->geometry();
         }
-        toBeFreed.append(static_cast<QPushButton*>(&*it));
-    }
-    int total = allButtons.count();
-    int count = total / limit + 1;
-    for (int k = 0; k < count; k++)
+}
+
+void CardSlot::removeCard(QWidget *widget)
+{
+    int count = this->count();
+    QHBoxLayout * mlayout;
+    for (int i = 0; i < count; i++)
     {
-        QWidget* newpage = new QWidget();
-        int index = this->addWidget(newpage);
+        mlayout = static_cast<QHBoxLayout*>(this->widget(i)->layout());
+        int windex = mlayout->indexOf(widget);
+        if (windex != -1)
+        {
+            auto strenth = mlayout->itemAt(windex + 1);
+            mlayout->removeItem(strenth);
+            mlayout->removeWidget(widget);
+            break;
+        }
+    }
+    // 如果一页里没有了就删除这页
+    if (mlayout->count() == 4)
+    {
+        if (this->count() <= 1)
+        {
+            return;
+        }
+        QWidget* i = this->currentWidget();
+        int index = this->currentIndex();
+        index--;
+        if (index < 0)
+        {
+            index = this->count() - 1;
+        }
         this->setCurrentIndex(index);
-        ToNextPageButton* next = new ToNextPageButton(this->currentWidget());
-        ToPrePageButton* pre = new ToPrePageButton(this->currentWidget());
-        QHBoxLayout * mlayout = new QHBoxLayout();
-        mlayout->setMargin(2);
-        mlayout->setSpacing(2);
-        mlayout->addWidget(pre, 0, Qt::AlignLeft);
-        pre->raise();
-        mlayout->addStretch();
-        int start =  k * limit;
-        int end = (k + 1) * limit;
-        for (int i = start; i < end; i++)
-        {
-            if (i == total)
-            {
-                break;
-            }
-            mlayout->addWidget(allButtons.at(i));
-            mlayout->addStretch();
-            allButtons.at(i)->raise();
-        }
-        mlayout->addStretch();
-        mlayout->addWidget(next, 0, Qt::AlignRight);
-        next->raise();
-        if (count == 1)
-        {
-            pre->hide();
-            next->hide();
-        }
-        this->currentWidget()->setLayout(mlayout);
+        i->deleteLater();
     }
-    if (current < count)
+    // 整理 todo
+}
+
+void CardSlot::showButton()
+{
+    this->currentWidget()->layout()->itemAt(0)->widget()->show();
+    int count = this->currentWidget()->layout()->count();
+    this->currentWidget()->layout()->itemAt(count - 1)->widget()->show();
+}
+
+void CardSlot::addPage()
+{
+    if (this->currentIndex() != -1)
     {
-        this->setCurrentIndex(current);
+        showButton();
     }
-    qDeleteAll(toBeFreed);
+    QWidget * next = new QWidget();
+    int index = this->addWidget(next);
+    this->setCurrentIndex(index);
+    createLayout();
 }
 
 void CardSlot::setLimit(int newLimit)
@@ -199,46 +124,49 @@ void CardSlot::setLimit(int newLimit)
     limit = newLimit;
 }
 
-void CardSlot::replaceCard(QPushButton *toBeReplaced, QPushButton *replace)
+void CardSlot::clear()
 {
-    int index = allButtons.indexOf(toBeReplaced);
-    allButtons.replace(index, replace);
-    int page = index / limit + 1;
-    this->setCurrentIndex(page);
-    QHBoxLayout * mlayout = static_cast<QHBoxLayout*>(this->currentWidget()->layout());
-    int pindex = mlayout->indexOf(toBeReplaced);
-    mlayout->insertWidget(pindex, replace);
-    toBeReplaced->hide();
-    toBeReplaced->deleteLater();
+    for (auto it: this->children())
+    {
+        if (it->inherits("QStackedLayout"))
+        {
+            continue;
+        }
+        it->deleteLater();
+    }
+    addPage();
 }
 
+int CardSlot::getPIndex(QWidget *widget)
+{
+    return this->currentWidget()->layout()->indexOf(widget);
+}
 
 void CardSlot::setAllEnabled(bool enabled)
 {
-    for (auto it: allButtons)
+    int count = this->count();
+    QHBoxLayout * mlayout;
+    for (int i = 0; i < count; i++)
     {
-        it->setEnabled(enabled);
+        mlayout = static_cast<QHBoxLayout*>(this->widget(i)->layout());
+        int layoutcount = mlayout->count();
+        for (int k = 0; k < layoutcount; k++)
+        {
+            auto w = mlayout->itemAt(k)->widget();
+            if (w && w->inherits("QPushButton"))
+            {
+                w->setEnabled(enabled);
+            }
+        }
     }
 }
 
-void CardSlot::clear()
+void CardSlot::hideButtonIfNeeded()
 {
-    allButtons.clear();
-    repaint();
+    if (this->count() == 1)
+    {
+        this->currentWidget()->layout()->itemAt(0)->widget()->hide();
+        int count = this->currentWidget()->layout()->count();
+        this->currentWidget()->layout()->itemAt(count - 1)->widget()->hide();
+    }
 }
-
-//void CardSlot::hideButtonIfNeeded()
-//{
-//    if (this->count() == 1)
-//    {
-//        QHBoxLayout* mlayout = static_cast<QHBoxLayout*>(this->currentWidget()->layout());
-//        for (int i = 0; i < mlayout->count(); i++)
-//        {
-//            auto w = mlayout->itemAt(i)->widget() ;
-//            if (w && w->inherits("StandardButton"))
-//            {
-//                w->hide();
-//            }
-//        }
-//    }
-//}

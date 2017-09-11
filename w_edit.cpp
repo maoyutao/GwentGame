@@ -18,15 +18,15 @@ void Edit::init(Player *player, Ui::MainWindow *aui)
     connect(ui->returnToChooseEditCards, SIGNAL(clicked()), this, SLOT(returnToChoose()), Qt::UniqueConnection);
     this->setCurrentIndex(0);
     ui->cardSet->setLimit(3); // 设置一页最多几张
-    CardSetButton* newSet = new CardSetButton(nullptr, nullptr); // 新建牌组的选项
+    CardSetButton* newSet = new CardSetButton(nullptr, ui->cardSet); // 新建牌组的选项
     connect(newSet, SIGNAL(seletced(CardSet*)), this, SLOT(enterEdit(CardSet*)));
     ui->cardSet->addCard(newSet); // 显示
     for (auto it: mplayer->cardSets)
     {
-        CardSetButton* set = new CardSetButton(&*it, nullptr); // 实例化按钮
+        CardSetButton* set = new CardSetButton(&*it, ui->cardSet); // 实例化按钮
         cardSetList.append(&*it); // 每new都要保存指针
+        ui->cardSet->addCard(set); // 显示
         connect(set, SIGNAL(seletced(CardSet*)), this, SLOT(enterEdit(CardSet*)));// 连接  结束的时候按钮都没了所以不用disconnect
-        ui->cardSet->addCard(static_cast<QPushButton*>(set)); // 显示
     }
 }
 
@@ -47,6 +47,13 @@ void Edit::clear()
 void Edit::enterEdit(CardSet * cardSet)
 {
     ui->cardSet->clear();
+    for (auto it: mplayer->allCards)
+    {
+        CardButton* card = new CardButton(it, nullptr, ui->editCardALL);
+        cardList.append(card); // 全部的卡（的按钮）都实例化 存在cardlist里
+        ui->editCardALL->addCard(card);
+        connect(card, SIGNAL(seletced(CardButton*)), this, SLOT(addToSet(CardButton*)));
+    }
     if (!cardSet)
     {
         QString name;
@@ -54,80 +61,24 @@ void Edit::enterEdit(CardSet * cardSet)
         if (QDialog::Accepted == dlg.exec())
         {
             name = dlg.content;
-        } else {
-            return;
         }
         currentSet = new CardSet(name);
         mplayer->cardSets.append(currentSet);
         this->setCurrentIndex(1);
         return;
     }
-    QList<int> tempAll = cardSet->allCards;
-    QList<int> tempM;
-    QList<int> tempF;
-    QList<int> tempB;
-    QList<int> tempE;
+    currentSet = cardSet;
     for (auto card: cardSet->allCards) // 卡组里的卡要显示到上方
     {
-        tempAll.removeOne(card);
-        Card* mcard = static_cast<Card*>(CardFactory::CreateObject(card, nullptr, nullptr));
-        switch(mcard->position.at(0))
+        for (auto w: cardList)
         {
-        case EPosition::mBack:
-        case EPosition::oBack:
-            tempB.append(card);
-            break;
-        case EPosition::mFront:
-        case EPosition::oFront:
-            tempF.append(card);
-            break;
-        case EPosition::mMiddle:
-        case EPosition::oMiddle:
-            tempM.append(card);
-            break;
-        case EPosition::Null:
-            tempE.append(card);
-            break;
+            if (w->card->id == card) //找到一样的卡
+            {
+                addToSet(&*w);
+                break;
+            }
         }
-        delete mcard;
     }
-    QList<QPushButton*> tempCardList;
-    for (auto it: tempAll)
-    {
-        CardButton* card = new CardButton(it, nullptr, nullptr);
-        tempCardList.append(static_cast<QPushButton*>(card));
-        cardList.append(card); // 全部的卡（的按钮）都实例化 存在cardlist里
-        connect(card, SIGNAL(seletced(CardButton*)), this, SLOT(addToSet(CardButton*)));
-    }
-    ui->editCardALL->addCard(tempCardList);
-    tempCardList.clear();
-    for (auto it: tempF)
-    {
-        CardButton* card = new CardButton(it, nullptr, nullptr);
-        tempCardList.append(card);
-        cardList.append(card); // 全部的卡（的按钮）都实例化 存在cardlist里
-        connect(card, SIGNAL(seletced(CardButton*)), this, SLOT(addToSet(CardButton*)));
-    }
-    ui->editCardFront->addCard(tempCardList);
-    tempCardList.clear();
-    for (auto it: tempM)
-    {
-        CardButton* card = new CardButton(it, nullptr, nullptr);
-        tempCardList.append(card);
-        cardList.append(card); // 全部的卡（的按钮）都实例化 存在cardlist里
-        connect(card, SIGNAL(seletced(CardButton*)), this, SLOT(addToSet(CardButton*)));
-    }
-    ui->editCardMiddle->addCard(tempCardList);
-    tempCardList.clear();
-    for (auto it: tempE)
-    {
-        CardButton* card = new CardButton(it, nullptr, nullptr);
-        tempCardList.append(card);
-        cardList.append(card); // 全部的卡（的按钮）都实例化 存在cardlist里
-        connect(card, SIGNAL(seletced(CardButton*)), this, SLOT(addToSet(CardButton*)));
-    }
-    ui->editCardEvent->addCard(tempCardList);
-    currentSet = cardSet;
     this->setCurrentIndex(1);
 }
 

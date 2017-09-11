@@ -1157,7 +1157,7 @@ border-image: url()
               <item row="1" column="1">
                <widget class="QLabel" name="label_19">
                 <property name="text">
-                 <string/>
+                 <string>TextLabel</string>
                 </property>
                </widget>
               </item>
@@ -1189,7 +1189,7 @@ border-image: url()
                </spacer>
               </item>
               <item row="1" column="3">
-               <widget class="CardSlot" name="oHandSlot">
+               <widget class="QStackedWidget" name="ohand">
                 <widget class="QWidget" name="page_27"/>
                </widget>
               </item>
@@ -2129,7 +2129,7 @@ border-image: url()
               <item row="1" column="1">
                <widget class="QLabel" name="label_28">
                 <property name="text">
-                 <string/>
+                 <string>TextLabel</string>
                 </property>
                </widget>
               </item>
@@ -2200,7 +2200,7 @@ border-image: url()
                </spacer>
               </item>
               <item row="1" column="3">
-               <widget class="CardSlot" name="mHandSlot">
+               <widget class="QStackedWidget" name="stackedWidget_11">
                 <widget class="QWidget" name="page_29"/>
                 <widget class="QWidget" name="page_30"/>
                </widget>

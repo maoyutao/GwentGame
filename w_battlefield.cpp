@@ -21,19 +21,22 @@ void BattleField::init(CardSet *cardset, Ui::MainWindow *aui)
     mCardSet = cardset;
     ui = aui;
     mleader = new CardButton(mCardSet->leader, this, ui->gamingMLeader);
+    mleader->show();
     mDeck = mCardSet->allCards;
     mDeck.removeOne(mCardSet->leader);
     shuffle();
-    signalTimesLimit = 3;
+    signalTimesLimit = 4;
+    ui->gamingChooseSlot->setLimit(5);
     showToBechosen(drawCards(10), &BattleField::dispatchCard);
 }
 
 void BattleField::dispatchCard(CardButton * card)
 {
     ui->gamingChooseSlot->setAllEnabled(false);
-    CardButton * newCard = drawCards().first();
-    ui->gamingChooseSlot->replaceCard(card, newCard);
-    connect(newCard, SIGNAL(seletced(CardButton*)), this, SLOT(dispatchCard(CardButton*)));
+    int index = ui->gamingChooseSlot->getPIndex(card);
+    qDebug() << "index" << index;
+    ui->gamingChooseSlot->removeCard(card);
+    ui->gamingChooseSlot->addPCard(drawCards().first(), index);
     mDeck.append(card->card->id);
     signalTimes++;
     if (signalTimes < signalTimesLimit)
@@ -45,19 +48,13 @@ void BattleField::dispatchCard(CardButton * card)
     timer->setSingleShot(true);
     connect(timer, SIGNAL(timeout()), this, SLOT(changePageToGaming()), Qt::UniqueConnection);
     connect(timer, SIGNAL(timeout()), timer, SLOT(deleteLater()), Qt::UniqueConnection);
-    timer->start(800);
+    timer->start(1000);
 }
 
 void BattleField::changePageToGaming()
 {
-    QList<QPushButton*> list = ui->gamingChooseSlot->allButtons;
-    for (auto it: list)
-    {
-        ui->mHandSlot->addCard(&*it);
-    }
-    ui->gameStackWidget->setCurrentIndex(PGAMING);
     ui->gamingChooseSlot->clear();
-
+    ui->gameStackWidget->setCurrentIndex(PGAMING);
 }
 
 void BattleField::shuffle()
@@ -95,6 +92,5 @@ void BattleField::showToBechosen(QList<CardButton *> list, standardSlot slot)
         ui->gamingChooseSlot->addCard(&*it);
         connect(&*it, &CardButton::seletced, this, slot);
     }
-    ui->gamingChooseSlot->setCurrentIndex(0);
     ui->gameStackWidget->setCurrentIndex(PCHOOSE);
 }
