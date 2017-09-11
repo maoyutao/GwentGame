@@ -31,7 +31,6 @@ void Game::init(Player *aPlayer, Ui::MainWindow *aui)
 
 void Game::asClient()
 {
-    qDebug() << "client";
     Dialog dlg("invitation code:", true, this);
     if (QDialog::Accepted == dlg.exec())
     {
@@ -112,7 +111,7 @@ void Game::chooseCardSet()
     ui->gamingChooseSlot->setLimit(3); // 设置一页最多几张
     for (auto it: player->cardSets)
     {
-        qDebug() << "in";
+        qDebug() << "createSetButton";
         CardSetButton* set = new CardSetButton(&*it, ui->gamingChooseSlot); // 实例化按钮
         ui->gamingChooseSlot->addCard(set); // 显示
         if (it->isValid) {
@@ -126,6 +125,7 @@ void Game::chooseCardSet()
 
 void Game::start(CardSet *cardSet)
 {
+    ui->msg->setText(QApplication::translate("MainWindow", "<html><head/><body><p align=\"center\"><span style=\" font-size:24pt; color:#b7b7b7;\">Please wait patiently.</span></p></body></html>", Q_NULLPTR));
     this->setCurrentIndex(PWAITING);
     ui->gamingChooseSlot->clear();
     ui->battleField->init(cardSet, ui);

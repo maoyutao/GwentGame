@@ -16,6 +16,9 @@ public:
     QString info;
     bool isValid{false};
 private:
+    QList<int> gold;
+    QList<int> silver;
+    QList<int> copper;
     void updateInfo();
     void update();
 };

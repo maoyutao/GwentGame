@@ -3,21 +3,25 @@
 #include "cardEnum.h"
 #include "cardfactory.h"
 #include <QStringBuilder>
+#include <QDebug>
 
 CardSet::CardSet(QString name, QList<int> allCards): name(name), allCards(allCards)
 {
-    updateInfo();
     update();
+    updateInfo();
 }
 
 CardSet::CardSet(QString name): name(name)
 {
-    updateInfo();
     update();
+    updateInfo();
 }
 
 void CardSet::update()
 {
+    copper.clear();
+    silver.clear();
+    gold.clear();
     if (allCards.count() > 40) {
         isValid = false;
         return;
@@ -26,9 +30,6 @@ void CardSet::update()
         isValid = false;
         return;
     }
-    QList<int> gold;
-    QList<int> silver;
-    QList<int> copper;
     QList<int> leaders;
     for (auto it: allCards)
     {
@@ -53,6 +54,13 @@ void CardSet::update()
         }
         delete card;
     }
+    if (leaders.count() != 1) {
+        isValid = false;
+        return;
+    } else {
+        leader = leaders.at(0);
+        updateInfo();
+    }
     if (gold.count() > 4) {
         isValid = false;
         return;
@@ -60,13 +68,6 @@ void CardSet::update()
     if (silver.count() > 6) {
         isValid = false;
         return;
-    }
-    if (leaders.count() != 1) {
-        isValid = false;
-        return;
-    } else {
-        leader = leaders.at(0);
-        updateInfo();
     }
     for (auto it: gold)
     {
@@ -99,6 +100,9 @@ void CardSet::updateInfo()
     QString mv = isValid ? "valid" : "invalid";
     info = "name: " % name % "\r\n"
             % "leader: " % mleader % "\r\n"
+            % "gold:" % QString::number(gold.count()) % "\r\n"
+            % "silver:" % QString::number(silver.count()) % "\r\n"
+            % "copper:" % QString::number(copper.count()) % "\r\n"
             % mv;
 }
 

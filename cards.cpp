@@ -26,7 +26,7 @@ Card::Card(int id,
 
 Card::~Card()
 {
-    qDebug() << "delete Card" <<id;
+//    qDebug() << "delete Card" <<id;
 }
 
 Card_0::Card_0(BattleField *battleField, QObject *parent):
@@ -35,7 +35,6 @@ Card_0::Card_0(BattleField *battleField, QObject *parent):
 {
     position.append(EPosition::Null);
     property.append(EProperty::Special);
-    qDebug() << "card_0";
 }
 
 Card_1::Card_1(BattleField *battleField, QObject *parent):
@@ -46,9 +45,9 @@ Card_1::Card_1(BattleField *battleField, QObject *parent):
     position.append(EPosition::oFront);
     position.append(EPosition::oMiddle);
     position.append(EPosition::oBack);
+
     property.append(EProperty::Special);
     property.append(EProperty::Weather);
-    qDebug() << "card_1";
 }
 
 Card_2::Card_2(BattleField *battleField, QObject *parent):
@@ -60,7 +59,6 @@ Card_2::Card_2(BattleField *battleField, QObject *parent):
     position.append(EPosition::oBack);
     property.append(EProperty::Special);
     property.append(EProperty::Weather);
-    qDebug() << "card_2";
 }
 
 Card_3::Card_3(BattleField *battleField, QObject *parent):
@@ -72,7 +70,6 @@ Card_3::Card_3(BattleField *battleField, QObject *parent):
     position.append(EPosition::oBack);
     property.append(EProperty::Special);
     property.append(EProperty::Weather);
-    qDebug() << "card_3";
 }
 
 Card_4::Card_4(BattleField *battleField, QObject *parent):
@@ -84,7 +81,6 @@ Card_4::Card_4(BattleField *battleField, QObject *parent):
     position.append(EPosition::oBack);
     property.append(EProperty::Organisms);
     property.append(EProperty::Special);
-    qDebug() << "card_4";
 }
 
 Card_5::Card_5(BattleField *battleField, QObject *parent):
@@ -94,7 +90,6 @@ Card_5::Card_5(BattleField *battleField, QObject *parent):
     position.append(EPosition::Null);
     property.append(EProperty::Strategy);
     property.append(EProperty::Special);
-    qDebug() << "card_5";
 }
 
 Card_6::Card_6(BattleField *battleField, QObject *parent):
@@ -105,18 +100,16 @@ Card_6::Card_6(BattleField *battleField, QObject *parent):
     position.append(EPosition::Null);
     property.append(EProperty::Magic);
     property.append(EProperty::Special);
-    qDebug() << "card_6";
 }
 
 Card_7::Card_7(BattleField *battleField, QObject *parent):
     Card(7, 5, "Geralt: Igni", "部署：若对方同排总战力不低于 25 ，则摧毁其上所有最强的单位。", ":/new/cards/resource/cards/card_7.png",
-         EQuality::Gold, EClassification::Leader, battleField, parent)
+         EQuality::Gold, EClassification::Unit, battleField, parent)
 {
     position.append(EPosition::mFront);
     position.append(EPosition::mMiddle);
     position.append(EPosition::mBack);
     property.append(EProperty::Hunter);
-    qDebug() << "card_7";
 }
 
 Card_8::Card_8(BattleField *battleField, QObject *parent):
@@ -127,7 +120,6 @@ Card_8::Card_8(BattleField *battleField, QObject *parent):
     position.append(EPosition::mMiddle);
     position.append(EPosition::mBack);
     property.append(EProperty::Aquatic);
-    qDebug() << "card_8";
 }
 
 Card_9::Card_9(BattleField *battleField, QObject *parent):
@@ -139,7 +131,6 @@ Card_9::Card_9(BattleField *battleField, QObject *parent):
     position.append(EPosition::mMiddle);
     position.append(EPosition::mBack);
     property.append(EProperty::Scavengers);
-    qDebug() << "card_9";
 }
 
 Card_10::Card_10(BattleField *battleField, QObject *parent):
@@ -152,7 +143,6 @@ Card_10::Card_10(BattleField *battleField, QObject *parent):
     position.append(EPosition::mBack);
     property.append(EProperty::Officer);
     property.append(EProperty::WildHunt);
-    qDebug() << "card_10";
 }
 
 Card_11::Card_11(BattleField *battleField, QObject *parent):
@@ -164,7 +154,6 @@ Card_11::Card_11(BattleField *battleField, QObject *parent):
     position.append(EPosition::mMiddle);
     position.append(EPosition::mBack);
     property.append(EProperty::Beast);
-    qDebug() << "card_11";
 }
 
 Card_12::Card_12(BattleField *battleField, QObject *parent):
@@ -176,7 +165,6 @@ Card_12::Card_12(BattleField *battleField, QObject *parent):
     position.append(EPosition::mMiddle);
     position.append(EPosition::mBack);
     property.append(EProperty::Beast);
-    qDebug() << "card_12";
 }
 
 Card_13::Card_13(BattleField *battleField, QObject *parent):
@@ -186,7 +174,6 @@ Card_13::Card_13(BattleField *battleField, QObject *parent):
 {
     position.append(EPosition::mFront);
     property.append(EProperty::Tectosome);
-    qDebug() << "card_13";
 }
 
 Card_14::Card_14(BattleField *battleField, QObject *parent):
@@ -197,7 +184,6 @@ Card_14::Card_14(BattleField *battleField, QObject *parent):
     position.append(EPosition::mBack);
     property.append(EProperty::Magic);
     property.append(EProperty::Waste);
-    qDebug() << "card_14";
 }
 
 Card_15::Card_15(BattleField *battleField, QObject *parent):
@@ -208,7 +194,6 @@ Card_15::Card_15(BattleField *battleField, QObject *parent):
     position.append(EPosition::mBack);
     property.append(EProperty::Magic);
     property.append(EProperty::Waste);
-    qDebug() << "card_15";
 }
 
 Card_16::Card_16(BattleField *battleField, QObject *parent):
@@ -219,7 +204,6 @@ Card_16::Card_16(BattleField *battleField, QObject *parent):
     position.append(EPosition::mBack);
     property.append(EProperty::Magic);
     property.append(EProperty::Waste);
-    qDebug() << "card_16";
 }
 
 Card_17::Card_17(BattleField *battleField, QObject *parent):
@@ -231,7 +215,6 @@ Card_17::Card_17(BattleField *battleField, QObject *parent):
     position.append(EPosition::mMiddle);
     position.append(EPosition::mBack);
     property.append(EProperty::Beast);
-    qDebug() << "card_17";
 }
 
 Card_18::Card_18(BattleField *battleField, QObject *parent):
@@ -244,7 +227,6 @@ Card_18::Card_18(BattleField *battleField, QObject *parent):
     position.append(EPosition::mBack);
     property.append(EProperty::Magic);
     property.append(EProperty::WildHunt);
-    qDebug() << "card_18";
 }
 
 Card_19::Card_19(BattleField *battleField, QObject *parent):
@@ -257,7 +239,6 @@ Card_19::Card_19(BattleField *battleField, QObject *parent):
     position.append(EPosition::oBack);
     property.append(EProperty::Spy);
     property.append(EProperty::Tectosome);
-    qDebug() << "card_19";
 }
 
 Card_20::Card_20(BattleField *battleField, QObject *parent):
@@ -269,37 +250,33 @@ Card_20::Card_20(BattleField *battleField, QObject *parent):
     position.append(EPosition::mMiddle);
     position.append(EPosition::mBack);
     property.append(EProperty::Vampire);
-    qDebug() << "card_20";
 }
 
 Card_21::Card_21(BattleField *battleField, QObject *parent):
     Card(21, 3, "Arachas", "部署：从牌组打出所有“蟹蜘蛛”。",
          ":/new/cards/resource/cards/card_21.png",
-         EQuality::Copper, EClassification::Leader, battleField, parent)
+         EQuality::Copper, EClassification::Unit, battleField, parent)
 {
     position.append(EPosition::mBack);
     property.append(EProperty::Worm);
-    qDebug() << "card_21";
 }
 
 Card_22::Card_22(BattleField *battleField, QObject *parent):
     Card(22, 6, "Vran Warrior", "部署：吞噬右侧单位。每 2 回合，己方回合开始时，吞噬右侧单位。",
          ":/new/cards/resource/cards/card_22.png",
-         EQuality::Copper, EClassification::Leader, battleField, parent)
+         EQuality::Copper, EClassification::Unit, battleField, parent)
 {
     position.append(EPosition::mFront);
     position.append(EPosition::mMiddle);
     position.append(EPosition::mBack);
     property.append(EProperty::Drake);
-    qDebug() << "card_22";
 }
 
 Card_23::Card_23(BattleField *battleField, QObject *parent):
     Card(23, 6, "Arachas Behemoth", "每当有友军单位吞噬 1 张牌，便生成 1 只“蟹蜘蛛幼虫”，随后受到 1 点伤害（无视护甲）。部署：获得 2 点护甲。",
          ":/new/cards/resource/cards/card_23.png",
-         EQuality::Copper, EClassification::Leader, battleField, parent)
+         EQuality::Copper, EClassification::Unit, battleField, parent)
 {
     position.append(EPosition::mBack);
     property.append(EProperty::Worm);
-    qDebug() << "card_23";
 }

@@ -11,9 +11,7 @@ CardSetButton::CardSetButton(CardSet* cardSet, QWidget *parent) : QPushButton(pa
         return;
     }
     this->setStyleSheet(borderimage(cardSet->cover));
-    qDebug() << cardSet->info;
     this->setToolTip(cardSet->info);
-    qDebug() << borderimage(cardSet->cover);
 }
 
 QString CardSetButton::borderimage(QString url)

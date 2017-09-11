@@ -25,18 +25,24 @@ void BattleField::init(CardSet *cardset, Ui::MainWindow *aui)
     mDeck = mCardSet->allCards;
     mDeck.removeOne(mCardSet->leader);
     shuffle();
-
+    signalTimesLimit = 4;
+    ui->gamingChooseSlot->setLimit(5);
+    showToBechosen(drawCards(10), &BattleField::dispatchCard);
 }
 
 void BattleField::dispatchCard(CardButton * card)
 {
     ui->gamingChooseSlot->setAllEnabled(false);
-    int index = ui->gamingChooseSlot->getIndex(card);
-    ui->gamingChooseSlot->addCard(drawCards().first(), index);
+    int index = ui->gamingChooseSlot->getPIndex(card);
+    qDebug() << "index" << index;
+    ui->gamingChooseSlot->removeCard(card);
+    ui->gamingChooseSlot->addPCard(drawCards().first(), index);
+    mDeck.append(card->card->id);
     signalTimes++;
     if (signalTimes < signalTimesLimit)
     {
         ui->gamingChooseSlot->setAllEnabled(true);
+        return;
     }
     QTimer *timer = new QTimer(this);
     timer->setSingleShot(true);

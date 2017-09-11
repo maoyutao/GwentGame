@@ -31,20 +31,37 @@ void CardSlot::createLayout()
 }
 
 void CardSlot::addCard(QWidget * widget, int index)
-{
+{   
     QHBoxLayout * mlayout = static_cast<QHBoxLayout*>(this->currentWidget()->layout());
-    if (mlayout->count() > 4 + limit * 2)
-    {
-        addPage();
-        addCard(widget, index);
-        return;
-    }
     if (index == -1)
     {
-         index = mlayout->count() - 4;
+        if (mlayout->count() >= 4 + limit * 2)
+        {
+            addPage();
+            addCard(widget, index);
+            return;
+        }
+         index = (mlayout->count() - 4) / 2;
     }
     mlayout->insertWidget(index * 2 + 2, widget, 0, Qt::AlignCenter);
     mlayout->insertStretch(index * 2 + 3);
+
+//    for (int i = 0; i < mlayout->count(); i++)
+//    {
+//        qDebug() << mlayout->itemAt(i)->widget();
+//    }
+
+}
+
+void CardSlot::addPCard(QWidget *widget, int index)
+{
+    QHBoxLayout * mlayout = static_cast<QHBoxLayout*>(this->currentWidget()->layout());
+    mlayout->insertWidget(index, widget, 0, Qt::AlignCenter);
+    mlayout->insertStretch(index+1);
+        for (int i = 0; i < mlayout->count(); i++)
+        {
+            qDebug() << mlayout->itemAt(i)->geometry();
+        }
 }
 
 void CardSlot::removeCard(QWidget *widget)
@@ -120,13 +137,9 @@ void CardSlot::clear()
     addPage();
 }
 
-int CardSlot::getIndex(QWidget *widget)
+int CardSlot::getPIndex(QWidget *widget)
 {
-    int i = this->currentWidget()->layout()->indexOf(widget);
-    if (i == -1) {
-        return -1;
-    }
-    return (i - 1) / 2 - 1;
+    return this->currentWidget()->layout()->indexOf(widget);
 }
 
 void CardSlot::setAllEnabled(bool enabled)
@@ -140,7 +153,7 @@ void CardSlot::setAllEnabled(bool enabled)
         for (int k = 0; k < layoutcount; k++)
         {
             auto w = mlayout->itemAt(k)->widget();
-            if (w->inherits("QPushButton"))
+            if (w && w->inherits("QPushButton"))
             {
                 w->setEnabled(enabled);
             }
