@@ -14,6 +14,10 @@ namespace Ui {
 class MainWindow;
 }
 
+class Game;
+
+typedef void (Game::*standardSlot)(CardButton*);
+
 class Game : public QStackedWidget
 {
     Q_OBJECT
@@ -30,14 +34,21 @@ private slots:
     void onNewConnection();
     void chooseCardSet();
     void start(CardSet* cardSet);
+    void dispatchCard(CardButton* card);
+    void changePageToGaming();
+    void showToBechosen(QList<CardButton*> list, standardSlot slot); // 在choose槽里展示list里的button  并为这些button的selected绑定这个类中的标准槽
+
 private:
     Ui::MainWindow *ui{nullptr};
+    BattleField* battleField;
     Player* player{nullptr};
     QTcpSocket* socket{nullptr};
     QTcpServer* server{nullptr};
     int mScore[3];
     int oScore[3];
-    QList<CardButton*> cardList;
+
+    int signalTimes{0};
+    int signalTimesLimit{0};
 };
 
 #endif // W_GAME_H

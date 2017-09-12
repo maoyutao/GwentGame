@@ -16,43 +16,17 @@ BattleField::BattleField(QWidget *parent) : QWidget(parent)
 {
 }
 
-void BattleField::init(CardSet *cardset, Ui::MainWindow *aui)
+void BattleField::initForFirst(CardSet *cardset, Ui::MainWindow *aui)
 {
     mCardSet = cardset;
     ui = aui;
     mleader = new CardButton(mCardSet->leader, this, ui->gamingMLeader);
-    mleader->show();
     mDeck = mCardSet->allCards;
     mDeck.removeOne(mCardSet->leader);
     shuffle();
-    signalTimesLimit = 3;
-    showToBechosen(drawCards(10), &BattleField::dispatchCard);
 }
 
-void BattleField::dispatchCard(CardButton * card)
-{
-    ui->gamingChooseSlot->setAllEnabled(false);
-    int index = ui->gamingChooseSlot->getPIndex(card);
-    qDebug() << "index" << index;
-    ui->gamingChooseSlot->removeCard(card);
-    auto newCard = drawCards().first();
-    ui->gamingChooseSlot->addPCard(newCard, index);
-    mDeck.append(card->card->id);
-    connect(newCard, SIGNAL(seletced(CardButton*)), this, SLOT(dispatchCard(CardButton*)));
-    signalTimes++;
-    if (signalTimes < signalTimesLimit)
-    {
-        ui->gamingChooseSlot->setAllEnabled(true);
-        return;
-    }
-    QTimer *timer = new QTimer(this);
-    timer->setSingleShot(true);
-    connect(timer, SIGNAL(timeout()), this, SLOT(changePageToGaming()), Qt::UniqueConnection);
-    connect(timer, SIGNAL(timeout()), timer, SLOT(deleteLater()), Qt::UniqueConnection);
-    timer->start(800);
-}
-
-void BattleField::changePageToGaming()
+void BattleField::init()
 {
     // init my hand slot
     for (auto it: ui->gamingChooseSlot->cardList)
@@ -71,9 +45,7 @@ void BattleField::changePageToGaming()
 
     CardButton* oleader = new CardButton(-1, nullptr, ui->gamingOLeader);
     oleader->raise();
-
-    ui->gamingChooseSlot->clear();
-    ui->gameStackWidget->setCurrentIndex(PGAMING);
+    mleader->show();
 }
 
 void BattleField::shuffle()
@@ -105,12 +77,8 @@ QList<CardButton*> BattleField::drawCards(int count)
     return drawnCards;
 }
 
-void BattleField::showToBechosen(QList<CardButton *> list, standardSlot slot)
+void BattleField::addCardToMDeck(int id)
 {
-    for (auto it: list) {
-        ui->gamingChooseSlot->addCard(&*it);
-        connect(&*it, &CardButton::seletced, this, slot);
-    }
-    ui->gameStackWidget->setCurrentIndex(PCHOOSE);
-    ui->gamingChooseSlot->setCurrentIndex(0);
+    mDeck.append(id);
 }
+

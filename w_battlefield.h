@@ -11,7 +11,6 @@
 class BattleField;
 class CardButton;
 class CardSet;
-typedef void (BattleField::*standardSlot)(CardButton*);
 
 namespace Ui {
 class MainWindow;
@@ -22,6 +21,9 @@ class BattleField : public QWidget
     Q_OBJECT
 public:
     explicit BattleField(QWidget *parent = nullptr);
+    QList<CardButton*> drawCards(int count = 1);
+
+    void addCardToMDeck(int id);
 
 private:
     CardSet* mCardSet; //参赛的卡组
@@ -46,22 +48,17 @@ private:
 
     QList<CardButton*> allCards; // 这里卡牌的索引就是本场游戏中卡的索引 起到编号和保存卡的实例的作用 卡牌具体位置信息在上面的list里保存
 
-    int signalTimes{0};
-    int signalTimesLimit{0};
 signals:
 
 public slots:
-    void init(CardSet* cardset, Ui::MainWindow *aui);
+    void initForFirst(CardSet* cardset, Ui::MainWindow *aui);
+    void init();
 
 private slots:
-    void dispatchCard(CardButton* card);
-    void changePageToGaming();
 
 private:
     void shuffle();
     void swapInt(int &a, int &b);
-    QList<CardButton*> drawCards(int count = 1);
-    void showToBechosen(QList<CardButton*> list, standardSlot slot); // 在choose槽里展示list里的button  并为这些button的selected绑定这个类中的标准槽
 
     friend class Card;
 };

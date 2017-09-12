@@ -20,8 +20,7 @@ public:
     void removeCard(QWidget * widget);
     void setLimit(int newLimit);
     void clear();
-    int getIndex(QWidget * widget);
-    int getPIndex(QWidget *widget);
+    void replaceCard(QWidget * toBeReplaced, QWidget * replace);
     void setAllEnabled(bool enabled);
     bool empty{true};
     QList<QPushButton *> cardList;

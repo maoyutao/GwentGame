@@ -24,6 +24,7 @@ void Game::init(Player *aPlayer, Ui::MainWindow *aui)
 {
     ui = aui;
     player = aPlayer;
+    battleField = ui->battleField;
     this->setCurrentIndex(PGAMEREADY);
     qDebug() << this->currentWidget()->styleSheet();
     connect(ui->asClientButton, SIGNAL(clicked()), this, SLOT(asClient()), Qt::UniqueConnection);
@@ -129,5 +130,46 @@ void Game::start(CardSet *cardSet)
     ui->msg->setText(QApplication::translate("MainWindow", "<html><head/><body><p align=\"center\"><span style=\" font-size:24pt; color:#b7b7b7;\">Please wait patiently.</span></p></body></html>", Q_NULLPTR));
     this->setCurrentIndex(PWAITING);
     ui->gamingChooseSlot->clear();
-    ui->battleField->init(cardSet, ui);
+    battleField->initForFirst(cardSet, ui);
+    signalTimesLimit = 3;
+    showToBechosen(battleField->drawCards(10), &Game::dispatchCard);
+}
+
+void Game::showToBechosen(QList<CardButton *> list, standardSlot slot)
+{
+    for (auto it: list) {
+        ui->gamingChooseSlot->addCard(&*it);
+        connect(&*it, &CardButton::seletced, this, slot);
+    }
+    this->setCurrentIndex(PCHOOSE);
+    ui->gamingChooseSlot->setCurrentIndex(0);
+}
+
+void Game::dispatchCard(CardButton * card)
+{
+    ui->gamingChooseSlot->setAllEnabled(false);
+    auto newCard = battleField->drawCards().first();
+    ui->gamingChooseSlot->replaceCard(card, newCard);
+
+
+    battleField->addCardToMDeck(card->card->id);
+    connect(newCard, SIGNAL(seletced(CardButton*)), this, SLOT(dispatchCard(CardButton*)));
+    signalTimes++;
+    if (signalTimes < signalTimesLimit)
+    {
+        ui->gamingChooseSlot->setAllEnabled(true);
+        return;
+    }
+    QTimer *timer = new QTimer(this);
+    timer->setSingleShot(true);
+    connect(timer, SIGNAL(timeout()), this, SLOT(changePageToGaming()), Qt::UniqueConnection);
+    connect(timer, SIGNAL(timeout()), timer, SLOT(deleteLater()), Qt::UniqueConnection);
+    timer->start(800);
+}
+
+void Game::changePageToGaming()
+{
+    battleField->init();
+    ui->gamingChooseSlot->clear();
+    ui->gameStackWidget->setCurrentIndex(PGAMING);
 }

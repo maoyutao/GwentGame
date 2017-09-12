@@ -54,14 +54,6 @@ void CardSlot::addCard(QWidget * widget, int index)
 
 }
 
-void CardSlot::addPCard(QWidget *widget, int index)
-{
-    QHBoxLayout * mlayout = static_cast<QHBoxLayout*>(this->currentWidget()->layout());
-    mlayout->insertWidget(index, widget, 0, Qt::AlignCenter);
-    mlayout->insertStretch(index+1);
-    cardList.append(dynamic_cast<QPushButton*>(widget));
-}
-
 void CardSlot::removeCard(QWidget *widget)
 {
     cardList.removeOne(dynamic_cast<QPushButton*>(widget));
@@ -137,9 +129,14 @@ void CardSlot::clear()
     cardList.clear();
 }
 
-int CardSlot::getPIndex(QWidget *widget)
+void CardSlot::replaceCard(QWidget *toBeReplaced, QWidget *replace)
 {
-    return this->currentWidget()->layout()->indexOf(widget);
+    QHBoxLayout * mlayout = static_cast<QHBoxLayout*>(this->currentWidget()->layout());
+    int index = mlayout->indexOf(toBeReplaced);
+    mlayout->insertWidget(index, replace, 0, Qt::AlignCenter);
+    toBeReplaced->deleteLater();
+    cardList.append(dynamic_cast<QPushButton*>(replace));
+    cardList.removeOne(dynamic_cast<QPushButton*>(toBeReplaced));
 }
 
 void CardSlot::setAllEnabled(bool enabled)
