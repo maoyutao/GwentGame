@@ -54,6 +54,24 @@ void BattleField::dispatchCard(CardButton * card)
 
 void BattleField::changePageToGaming()
 {
+    // init my hand slot
+    for (auto it: ui->gamingChooseSlot->cardList)
+    {
+        ui->mHandSlot->addCard(&*it);
+        allCards.append(dynamic_cast<CardButton*>(&*it));
+    }
+    ui->mHandSlot->setCurrentIndex(0);
+
+    // init opponent's hand slot
+    for (int i = 0; i < 10; i++)
+    {
+        ui->oHandSlot->addCard(new CardButton(-1, nullptr, ui->oHandSlot));
+    }
+    ui->oHandSlot->setCurrentIndex(0);
+
+    CardButton* oleader = new CardButton(-1, nullptr, ui->gamingOLeader);
+    oleader->raise();
+
     ui->gamingChooseSlot->clear();
     ui->gameStackWidget->setCurrentIndex(PGAMING);
 }

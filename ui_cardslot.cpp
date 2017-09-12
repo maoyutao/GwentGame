@@ -31,7 +31,7 @@ void CardSlot::createLayout()
 }
 
 void CardSlot::addCard(QWidget * widget, int index)
-{   
+{
     QHBoxLayout * mlayout = static_cast<QHBoxLayout*>(this->currentWidget()->layout());
     if (index == -1)
     {
@@ -45,6 +45,7 @@ void CardSlot::addCard(QWidget * widget, int index)
     }
     mlayout->insertWidget(index * 2 + 2, widget, 0, Qt::AlignCenter);
     mlayout->insertStretch(index * 2 + 3);
+    cardList.append(dynamic_cast<QPushButton*>(widget));
 
 //    for (int i = 0; i < mlayout->count(); i++)
 //    {
@@ -58,14 +59,12 @@ void CardSlot::addPCard(QWidget *widget, int index)
     QHBoxLayout * mlayout = static_cast<QHBoxLayout*>(this->currentWidget()->layout());
     mlayout->insertWidget(index, widget, 0, Qt::AlignCenter);
     mlayout->insertStretch(index+1);
-        for (int i = 0; i < mlayout->count(); i++)
-        {
-            qDebug() << mlayout->itemAt(i)->geometry();
-        }
+    cardList.append(dynamic_cast<QPushButton*>(widget));
 }
 
 void CardSlot::removeCard(QWidget *widget)
 {
+    cardList.removeOne(dynamic_cast<QPushButton*>(widget));
     int count = this->count();
     QHBoxLayout * mlayout;
     for (int i = 0; i < count; i++)
@@ -135,6 +134,7 @@ void CardSlot::clear()
         it->deleteLater();
     }
     addPage();
+    cardList.clear();
 }
 
 int CardSlot::getPIndex(QWidget *widget)
@@ -144,21 +144,25 @@ int CardSlot::getPIndex(QWidget *widget)
 
 void CardSlot::setAllEnabled(bool enabled)
 {
-    int count = this->count();
-    QHBoxLayout * mlayout;
-    for (int i = 0; i < count; i++)
+    for (auto it: cardList)
     {
-        mlayout = static_cast<QHBoxLayout*>(this->widget(i)->layout());
-        int layoutcount = mlayout->count();
-        for (int k = 0; k < layoutcount; k++)
-        {
-            auto w = mlayout->itemAt(k)->widget();
-            if (w && w->inherits("QPushButton"))
-            {
-                w->setEnabled(enabled);
-            }
-        }
+        dynamic_cast<QWidget*>(&*it)->setEnabled(enabled);
     }
+//    int count = this->count();
+//    QHBoxLayout * mlayout;
+//    for (int i = 0; i < count; i++)
+//    {
+//        mlayout = static_cast<QHBoxLayout*>(this->widget(i)->layout());
+//        int layoutcount = mlayout->count();
+//        for (int k = 0; k < layoutcount; k++)
+//        {
+//            auto w = mlayout->itemAt(k)->widget();
+//            if (w && w->inherits("QPushButton") && !(w->inherits("ToPrePageButton")) && !(w->inherits("ToNextPageButton")))
+//            {
+//                w->setEnabled(enabled);
+//            }
+//        }
+//    }
 }
 
 void CardSlot::hideButtonIfNeeded()

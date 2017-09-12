@@ -1170,7 +1170,7 @@ border-image: url()
              </layout>
             </item>
             <item row="0" column="1">
-             <layout class="QGridLayout" name="gridLayout_30" columnstretch="2,2,1,16,0,10" rowminimumheight="1,5,1">
+             <layout class="QGridLayout" name="gridLayout_30" rowstretch="1,5,1" columnstretch="2,2,1,16,0,10" rowminimumheight="0,0,0">
               <property name="spacing">
                <number>0</number>
               </property>
@@ -2145,7 +2145,7 @@ border-image: url()
              </layout>
             </item>
             <item row="3" column="1">
-             <layout class="QGridLayout" name="gridLayout_43" columnstretch="2,2,1,16,0,10" rowminimumheight="1,5,1">
+             <layout class="QGridLayout" name="gridLayout_43" rowstretch="1,5,1" columnstretch="2,2,1,16,0,10" rowminimumheight="0,0,0">
               <property name="spacing">
                <number>0</number>
               </property>

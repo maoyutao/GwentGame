@@ -7,6 +7,7 @@
 #include <QStackedWidget>
 #include <QLayout>
 #include <QHBoxLayout>
+#include <QList>
 
 class CardSlot : public QStackedWidget
 {
@@ -23,8 +24,9 @@ public:
     int getPIndex(QWidget *widget);
     void setAllEnabled(bool enabled);
     bool empty{true};
+    QList<QPushButton *> cardList;
 private:
-    int limit{10};
+    int limit{7};
     void showButton();
     void addPage();
 private slots:

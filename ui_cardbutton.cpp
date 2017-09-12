@@ -6,6 +6,11 @@
 CardButton::CardButton(int cardID, BattleField * battleField, QWidget *parent) : QPushButton(parent),
     card(static_cast<Card*>(CardFactory::CreateObject(cardID, battleField, this)))
 {
+    if (cardID < 0)
+    {
+        this->setStyleSheet("border-image: url(:/new/prefix1/resource/o_deck.png)");
+        return;
+    }
     this->setStyleSheet("border-image: url(" % card->iconUrl % ")");
 }
 

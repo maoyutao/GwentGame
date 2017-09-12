@@ -28,6 +28,11 @@ void Edit::init(Player *player, Ui::MainWindow *aui)
         ui->cardSet->addCard(set); // 显示
         connect(set, SIGNAL(seletced(CardSet*)), this, SLOT(enterEdit(CardSet*)));// 连接  结束的时候按钮都没了所以不用disconnect
     }
+    ui->editCardALL->setCurrentIndex(0);
+    ui->editCardBack->setCurrentIndex(0);
+    ui->editCardEvent->setCurrentIndex(0);
+    ui->editCardFront->setCurrentIndex(0);
+    ui->editCardMiddle->setCurrentIndex(0);
 }
 
 void Edit::clear()
