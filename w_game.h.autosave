@@ -52,7 +52,7 @@ private:
     int signalTimesLimit{0};
 
     bool myRound{false};
-    bool ready[2]{false, false};
+    bool ready[2]{false, false}; // 0是我 1是对方
 
 private:
     void sendMsg(QMap<QString, QString> msgMap);

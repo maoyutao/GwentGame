@@ -259,7 +259,7 @@ void Game::hReady(QMap<QString, QString> msgMap)
                 msg["first"] = "me";
             }
             sendMsg(msg);
-
+            
         }
     }
 }

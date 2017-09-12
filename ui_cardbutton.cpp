@@ -8,6 +8,7 @@ CardButton::CardButton(int cardID, BattleField * battleField, QWidget *parent) :
 {
     if (cardID < 0)
     {
+        this->setEnabled(false);
         this->setStyleSheet("border-image: url(:/new/prefix1/resource/o_deck.png)");
         return;
     }

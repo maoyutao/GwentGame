@@ -32,7 +32,9 @@ void BattleField::init()
     for (auto it: ui->gamingChooseSlot->cardList)
     {
         ui->mHandSlot->addCard(&*it);
+        dynamic_cast<CardButton*>(&*it)->card->index = allCards.count();
         allCards.append(dynamic_cast<CardButton*>(&*it));
+        it->setEnabled(false);
     }
     ui->mHandSlot->setCurrentIndex(0);
 
