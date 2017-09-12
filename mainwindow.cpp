@@ -18,6 +18,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     ui->start->installEventFilter(this);
     ui->finalScore->installEventFilter(this);
+    ui->mainStackedWidget->setCurrentIndex(PSTART);
 //    qDebug() << CardFactory::cardMap;
 }
 

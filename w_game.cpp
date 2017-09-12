@@ -25,6 +25,7 @@ void Game::init(Player *aPlayer, Ui::MainWindow *aui)
     ui = aui;
     player = aPlayer;
     this->setCurrentIndex(PGAMEREADY);
+    qDebug() << this->currentWidget()->styleSheet();
     connect(ui->asClientButton, SIGNAL(clicked()), this, SLOT(asClient()), Qt::UniqueConnection);
     connect(ui->asServerButton, SIGNAL(clicked()), this, SLOT(asServer()), Qt::UniqueConnection);
 }

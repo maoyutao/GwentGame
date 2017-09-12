@@ -10,7 +10,6 @@
         <file>resource/m_round.png</file>
         <file>resource/button.png</file>
         <file>resource/new_cardset.png</file>
-        <file>resource/gaming_backgound.png</file>
         <file>resource/m_deck.png</file>
         <file>resource/cemetery.png</file>
         <file>resource/edit_cards.png</file>
@@ -29,6 +28,8 @@
         <file>resource/asSever.png</file>
         <file>resource/asClient.png</file>
         <file>resource/cardSet.png</file>
+        <file>resource/battle.png</file>
+        <file>resource/gaming_backgound.png</file>
     </qresource>
     <qresource prefix="/new/cards">
         <file>resource/cards/card_23.png</file>
