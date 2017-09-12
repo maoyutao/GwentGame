@@ -19,14 +19,14 @@ void Edit::init(Player *player, Ui::MainWindow *aui)
     this->setCurrentIndex(0);
     ui->cardSet->setLimit(3); // 设置一页最多几张
     CardSetButton* newSet = new CardSetButton(nullptr, ui->cardSet); // 新建牌组的选项
-    connect(newSet, SIGNAL(seletced(CardSet*)), this, SLOT(enterEdit(CardSet*)));
+    connect(newSet, SIGNAL(selected(CardSet*)), this, SLOT(enterEdit(CardSet*)));
     ui->cardSet->addCard(newSet); // 显示
     for (auto it: mplayer->cardSets)
     {
         CardSetButton* set = new CardSetButton(&*it, ui->cardSet); // 实例化按钮
         cardSetList.append(&*it); // 每new都要保存指针
         ui->cardSet->addCard(set); // 显示
-        connect(set, SIGNAL(seletced(CardSet*)), this, SLOT(enterEdit(CardSet*)));// 连接  结束的时候按钮都没了所以不用disconnect
+        connect(set, SIGNAL(selected(CardSet*)), this, SLOT(enterEdit(CardSet*)));// 连接  结束的时候按钮都没了所以不用disconnect
     }
     ui->editCardALL->setCurrentIndex(0);
     ui->editCardBack->setCurrentIndex(0);
@@ -57,7 +57,7 @@ void Edit::enterEdit(CardSet * cardSet)
         CardButton* card = new CardButton(it, nullptr, ui->editCardALL);
         cardList.append(card); // 全部的卡（的按钮）都实例化 存在cardlist里
         ui->editCardALL->addCard(card);
-        connect(card, SIGNAL(seletced(CardButton*)), this, SLOT(addToSet(CardButton*)));
+        connect(card, SIGNAL(selected(CardButton*)), this, SLOT(addToSet(CardButton*)));
     }
     if (!cardSet)
     {
@@ -91,8 +91,8 @@ void Edit::enterEdit(CardSet * cardSet)
 
 void Edit::addToSet(CardButton *card)
 {
-    disconnect(card, SIGNAL(seletced(CardButton*)), this, SLOT(addToSet(CardButton*)));
-    connect(card, SIGNAL(seletced(CardButton*)), this, SLOT(removeFromSet(CardButton*)));
+    disconnect(card, SIGNAL(selected(CardButton*)), this, SLOT(addToSet(CardButton*)));
+    connect(card, SIGNAL(selected(CardButton*)), this, SLOT(removeFromSet(CardButton*)));
     tempSet.append(card->card->id);
     ui->editCardALL->removeCard(card);
     switch(card->card->position.at(0))
@@ -117,8 +117,8 @@ void Edit::addToSet(CardButton *card)
 
 void Edit::removeFromSet(CardButton *card)
 {
-    disconnect(card, SIGNAL(seletced(CardButton*)), this, SLOT(removeFromSet(CardButton*)));
-    connect(card, SIGNAL(seletced(CardButton*)), this, SLOT(addToSet(CardButton*)));
+    disconnect(card, SIGNAL(selected(CardButton*)), this, SLOT(removeFromSet(CardButton*)));
+    connect(card, SIGNAL(selected(CardButton*)), this, SLOT(addToSet(CardButton*)));
     tempSet.removeOne(card->card->id);
     static_cast<CardSlot*>(card->parentWidget()->parentWidget())->removeCard(card);
     ui->editCardALL->addCard(card);

@@ -54,6 +54,20 @@ void CardSlot::addCard(QWidget * widget, int index)
 
 }
 
+void CardSlot::removeCard()
+{
+    if (cardList.isEmpty())
+    {
+        return;
+    }
+    cardList.removeFirst();
+    QHBoxLayout* mlayout = static_cast<QHBoxLayout*>(this->widget(0)->layout());
+    auto firstcard = mlayout->itemAt(2);
+    auto strenth = mlayout->itemAt(3);
+    firstcard->deleteLater();
+    strenth->deleteLater();
+}
+
 void CardSlot::removeCard(QWidget *widget)
 {
     cardList.removeOne(dynamic_cast<QPushButton*>(widget));
@@ -110,6 +124,14 @@ void CardSlot::addPage()
     createLayout();
 }
 
+void CardSlot::mousePressEvent(QMouseEvent *event)
+{
+    if (chooseable)
+    {
+        emit selectd(this);
+    }
+}
+
 void CardSlot::setLimit(int newLimit)
 {
     limit = newLimit;
@@ -159,7 +181,18 @@ void CardSlot::setAllEnabled(bool enabled)
 //                w->setEnabled(enabled);
 //            }
 //        }
-//    }
+    //    }
+}
+
+void CardSlot::setChooseable(bool mchooseable)
+{
+    chooseable = mchooseable;
+    if (chooseable)
+    {
+        this->setStyleSheet("border: 2px solid rgb(131, 219, 255)");
+    } else {
+        this->setStyleSheet("border: ");
+    }
 }
 
 void CardSlot::hideButtonIfNeeded()

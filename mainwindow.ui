@@ -1177,7 +1177,7 @@ border-image: url()
               <item row="1" column="1">
                <widget class="QLabel" name="gamingOLeader">
                 <property name="text">
-                 <string>2</string>
+                 <string/>
                 </property>
                </widget>
               </item>
@@ -1322,22 +1322,115 @@ border-image: url()
                   </item>
                   <item row="1" column="2">
                    <widget class="QLabel" name="gamingOSum">
+                    <property name="palette">
+                     <palette>
+                      <active>
+                       <colorrole role="WindowText">
+                        <brush brushstyle="SolidPattern">
+                         <color alpha="255">
+                          <red>183</red>
+                          <green>183</green>
+                          <blue>183</blue>
+                         </color>
+                        </brush>
+                       </colorrole>
+                      </active>
+                      <inactive>
+                       <colorrole role="WindowText">
+                        <brush brushstyle="SolidPattern">
+                         <color alpha="255">
+                          <red>183</red>
+                          <green>183</green>
+                          <blue>183</blue>
+                         </color>
+                        </brush>
+                       </colorrole>
+                      </inactive>
+                      <disabled>
+                       <colorrole role="WindowText">
+                        <brush brushstyle="SolidPattern">
+                         <color alpha="255">
+                          <red>127</red>
+                          <green>127</green>
+                          <blue>127</blue>
+                         </color>
+                        </brush>
+                       </colorrole>
+                      </disabled>
+                     </palette>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>37</pointsize>
+                     </font>
+                    </property>
                     <property name="text">
-                     <string>44</string>
+                     <string>0</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
                     </property>
                    </widget>
                   </item>
                  </layout>
                 </item>
                 <item>
-                 <layout class="QGridLayout" name="gridLayout_32" rowstretch="1,7,1" columnstretch="1,7,0,0,1">
+                 <layout class="QGridLayout" name="gridLayout_32" rowstretch="1,3,1" columnstretch="1,3,0,0,1">
                   <property name="spacing">
                    <number>0</number>
                   </property>
                   <item row="1" column="1" colspan="3">
-                   <widget class="QLabel" name="gamingRound">
+                   <widget class="TimerRound" name="gamingRound">
+                    <property name="palette">
+                     <palette>
+                      <active>
+                       <colorrole role="WindowText">
+                        <brush brushstyle="SolidPattern">
+                         <color alpha="255">
+                          <red>203</red>
+                          <green>203</green>
+                          <blue>203</blue>
+                         </color>
+                        </brush>
+                       </colorrole>
+                      </active>
+                      <inactive>
+                       <colorrole role="WindowText">
+                        <brush brushstyle="SolidPattern">
+                         <color alpha="255">
+                          <red>203</red>
+                          <green>203</green>
+                          <blue>203</blue>
+                         </color>
+                        </brush>
+                       </colorrole>
+                      </inactive>
+                      <disabled>
+                       <colorrole role="WindowText">
+                        <brush brushstyle="SolidPattern">
+                         <color alpha="255">
+                          <red>127</red>
+                          <green>127</green>
+                          <blue>127</blue>
+                         </color>
+                        </brush>
+                       </colorrole>
+                      </disabled>
+                     </palette>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>66</pointsize>
+                     </font>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">border-image:url(:/new/prefix1/resource/o_round_circle.png)</string>
+                    </property>
                     <property name="text">
-                     <string>44</string>
+                     <string>60</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
                     </property>
                    </widget>
                   </item>
@@ -1428,8 +1521,53 @@ border-image: url()
                   </item>
                   <item row="1" column="1" colspan="3">
                    <widget class="QLabel" name="gamingMSum">
+                    <property name="palette">
+                     <palette>
+                      <active>
+                       <colorrole role="WindowText">
+                        <brush brushstyle="SolidPattern">
+                         <color alpha="255">
+                          <red>199</red>
+                          <green>199</green>
+                          <blue>199</blue>
+                         </color>
+                        </brush>
+                       </colorrole>
+                      </active>
+                      <inactive>
+                       <colorrole role="WindowText">
+                        <brush brushstyle="SolidPattern">
+                         <color alpha="255">
+                          <red>199</red>
+                          <green>199</green>
+                          <blue>199</blue>
+                         </color>
+                        </brush>
+                       </colorrole>
+                      </inactive>
+                      <disabled>
+                       <colorrole role="WindowText">
+                        <brush brushstyle="SolidPattern">
+                         <color alpha="255">
+                          <red>127</red>
+                          <green>127</green>
+                          <blue>127</blue>
+                         </color>
+                        </brush>
+                       </colorrole>
+                      </disabled>
+                     </palette>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>37</pointsize>
+                     </font>
+                    </property>
                     <property name="text">
-                     <string>44</string>
+                     <string>0</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
                     </property>
                    </widget>
                   </item>
@@ -1523,9 +1661,54 @@ border-image: url()
                    </spacer>
                   </item>
                   <item row="1" column="1">
-                   <widget class="QLabel" name="label_20">
+                   <widget class="QLabel" name="gamingOBS">
+                    <property name="palette">
+                     <palette>
+                      <active>
+                       <colorrole role="WindowText">
+                        <brush brushstyle="SolidPattern">
+                         <color alpha="255">
+                          <red>193</red>
+                          <green>193</green>
+                          <blue>193</blue>
+                         </color>
+                        </brush>
+                       </colorrole>
+                      </active>
+                      <inactive>
+                       <colorrole role="WindowText">
+                        <brush brushstyle="SolidPattern">
+                         <color alpha="255">
+                          <red>193</red>
+                          <green>193</green>
+                          <blue>193</blue>
+                         </color>
+                        </brush>
+                       </colorrole>
+                      </inactive>
+                      <disabled>
+                       <colorrole role="WindowText">
+                        <brush brushstyle="SolidPattern">
+                         <color alpha="255">
+                          <red>127</red>
+                          <green>127</green>
+                          <blue>127</blue>
+                         </color>
+                        </brush>
+                       </colorrole>
+                      </disabled>
+                     </palette>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>24</pointsize>
+                     </font>
+                    </property>
                     <property name="text">
-                     <string>12</string>
+                     <string>0</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
                     </property>
                    </widget>
                   </item>
@@ -1573,9 +1756,54 @@ border-image: url()
                    </spacer>
                   </item>
                   <item row="1" column="1">
-                   <widget class="QLabel" name="label_21">
+                   <widget class="QLabel" name="gamingOMS">
+                    <property name="palette">
+                     <palette>
+                      <active>
+                       <colorrole role="WindowText">
+                        <brush brushstyle="SolidPattern">
+                         <color alpha="255">
+                          <red>194</red>
+                          <green>194</green>
+                          <blue>194</blue>
+                         </color>
+                        </brush>
+                       </colorrole>
+                      </active>
+                      <inactive>
+                       <colorrole role="WindowText">
+                        <brush brushstyle="SolidPattern">
+                         <color alpha="255">
+                          <red>194</red>
+                          <green>194</green>
+                          <blue>194</blue>
+                         </color>
+                        </brush>
+                       </colorrole>
+                      </inactive>
+                      <disabled>
+                       <colorrole role="WindowText">
+                        <brush brushstyle="SolidPattern">
+                         <color alpha="255">
+                          <red>127</red>
+                          <green>127</green>
+                          <blue>127</blue>
+                         </color>
+                        </brush>
+                       </colorrole>
+                      </disabled>
+                     </palette>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>24</pointsize>
+                     </font>
+                    </property>
                     <property name="text">
-                     <string>12</string>
+                     <string>0</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
                     </property>
                    </widget>
                   </item>
@@ -1636,9 +1864,54 @@ border-image: url()
                    </spacer>
                   </item>
                   <item row="1" column="1">
-                   <widget class="QLabel" name="label_22">
+                   <widget class="QLabel" name="gamingOFS">
+                    <property name="palette">
+                     <palette>
+                      <active>
+                       <colorrole role="WindowText">
+                        <brush brushstyle="SolidPattern">
+                         <color alpha="255">
+                          <red>197</red>
+                          <green>197</green>
+                          <blue>197</blue>
+                         </color>
+                        </brush>
+                       </colorrole>
+                      </active>
+                      <inactive>
+                       <colorrole role="WindowText">
+                        <brush brushstyle="SolidPattern">
+                         <color alpha="255">
+                          <red>197</red>
+                          <green>197</green>
+                          <blue>197</blue>
+                         </color>
+                        </brush>
+                       </colorrole>
+                      </inactive>
+                      <disabled>
+                       <colorrole role="WindowText">
+                        <brush brushstyle="SolidPattern">
+                         <color alpha="255">
+                          <red>127</red>
+                          <green>127</green>
+                          <blue>127</blue>
+                         </color>
+                        </brush>
+                       </colorrole>
+                      </disabled>
+                     </palette>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>24</pointsize>
+                     </font>
+                    </property>
                     <property name="text">
-                     <string>12</string>
+                     <string>0</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
                     </property>
                    </widget>
                   </item>
@@ -1712,9 +1985,54 @@ border-image: url()
                    </spacer>
                   </item>
                   <item row="1" column="1">
-                   <widget class="QLabel" name="label_23">
+                   <widget class="QLabel" name="gamingMFS">
+                    <property name="palette">
+                     <palette>
+                      <active>
+                       <colorrole role="WindowText">
+                        <brush brushstyle="SolidPattern">
+                         <color alpha="255">
+                          <red>191</red>
+                          <green>191</green>
+                          <blue>191</blue>
+                         </color>
+                        </brush>
+                       </colorrole>
+                      </active>
+                      <inactive>
+                       <colorrole role="WindowText">
+                        <brush brushstyle="SolidPattern">
+                         <color alpha="255">
+                          <red>191</red>
+                          <green>191</green>
+                          <blue>191</blue>
+                         </color>
+                        </brush>
+                       </colorrole>
+                      </inactive>
+                      <disabled>
+                       <colorrole role="WindowText">
+                        <brush brushstyle="SolidPattern">
+                         <color alpha="255">
+                          <red>127</red>
+                          <green>127</green>
+                          <blue>127</blue>
+                         </color>
+                        </brush>
+                       </colorrole>
+                      </disabled>
+                     </palette>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>24</pointsize>
+                     </font>
+                    </property>
                     <property name="text">
-                     <string>12</string>
+                     <string>0</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
                     </property>
                    </widget>
                   </item>
@@ -1749,9 +2067,54 @@ border-image: url()
                    </spacer>
                   </item>
                   <item row="1" column="1">
-                   <widget class="QLabel" name="label_24">
+                   <widget class="QLabel" name="gamingMMS">
+                    <property name="palette">
+                     <palette>
+                      <active>
+                       <colorrole role="WindowText">
+                        <brush brushstyle="SolidPattern">
+                         <color alpha="255">
+                          <red>193</red>
+                          <green>193</green>
+                          <blue>193</blue>
+                         </color>
+                        </brush>
+                       </colorrole>
+                      </active>
+                      <inactive>
+                       <colorrole role="WindowText">
+                        <brush brushstyle="SolidPattern">
+                         <color alpha="255">
+                          <red>193</red>
+                          <green>193</green>
+                          <blue>193</blue>
+                         </color>
+                        </brush>
+                       </colorrole>
+                      </inactive>
+                      <disabled>
+                       <colorrole role="WindowText">
+                        <brush brushstyle="SolidPattern">
+                         <color alpha="255">
+                          <red>127</red>
+                          <green>127</green>
+                          <blue>127</blue>
+                         </color>
+                        </brush>
+                       </colorrole>
+                      </disabled>
+                     </palette>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>24</pointsize>
+                     </font>
+                    </property>
                     <property name="text">
-                     <string>12</string>
+                     <string>0</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
                     </property>
                    </widget>
                   </item>
@@ -1838,9 +2201,54 @@ border-image: url()
                    </spacer>
                   </item>
                   <item row="1" column="1">
-                   <widget class="QLabel" name="label_25">
+                   <widget class="QLabel" name="gamingMBS">
+                    <property name="palette">
+                     <palette>
+                      <active>
+                       <colorrole role="WindowText">
+                        <brush brushstyle="SolidPattern">
+                         <color alpha="255">
+                          <red>206</red>
+                          <green>206</green>
+                          <blue>206</blue>
+                         </color>
+                        </brush>
+                       </colorrole>
+                      </active>
+                      <inactive>
+                       <colorrole role="WindowText">
+                        <brush brushstyle="SolidPattern">
+                         <color alpha="255">
+                          <red>206</red>
+                          <green>206</green>
+                          <blue>206</blue>
+                         </color>
+                        </brush>
+                       </colorrole>
+                      </inactive>
+                      <disabled>
+                       <colorrole role="WindowText">
+                        <brush brushstyle="SolidPattern">
+                         <color alpha="255">
+                          <red>127</red>
+                          <green>127</green>
+                          <blue>127</blue>
+                         </color>
+                        </brush>
+                       </colorrole>
+                      </disabled>
+                     </palette>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>24</pointsize>
+                     </font>
+                    </property>
                     <property name="text">
-                     <string>12</string>
+                     <string>0</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
                     </property>
                    </widget>
                   </item>
@@ -1880,17 +2288,17 @@ border-image: url()
                  </spacer>
                 </item>
                 <item>
-                 <widget class="CardSlot" name="gamingOBack_2">
+                 <widget class="CardSlot" name="gamingOBack">
                   <widget class="QWidget" name="page_15"/>
                  </widget>
                 </item>
                 <item>
-                 <widget class="CardSlot" name="gamingOMiddle_2">
+                 <widget class="CardSlot" name="gamingOMiddle">
                   <widget class="QWidget" name="page_19"/>
                  </widget>
                 </item>
                 <item>
-                 <widget class="CardSlot" name="gamingOFront_2">
+                 <widget class="CardSlot" name="gamingOFront">
                   <widget class="QWidget" name="page_5"/>
                  </widget>
                 </item>
@@ -1908,12 +2316,15 @@ border-image: url()
                  </spacer>
                 </item>
                 <item>
-                 <widget class="CardSlot" name="gamingMFront_2">
+                 <widget class="CardSlot" name="gamingMFront">
+                  <property name="styleSheet">
+                   <string notr="true"/>
+                  </property>
                   <widget class="QWidget" name="page_17"/>
                  </widget>
                 </item>
                 <item>
-                 <widget class="CardSlot" name="gamingMMiddle_2">
+                 <widget class="CardSlot" name="gamingMMiddle">
                   <widget class="QWidget" name="page_6"/>
                  </widget>
                 </item>
@@ -2003,7 +2414,7 @@ border-image: url()
                    </spacer>
                   </item>
                   <item row="1" column="1">
-                   <widget class="QLabel" name="label_26">
+                   <widget class="QLabel" name="bigBox">
                     <property name="text">
                      <string/>
                     </property>
@@ -2145,19 +2556,17 @@ border-image: url()
              </layout>
             </item>
             <item row="3" column="1">
-             <layout class="QGridLayout" name="gridLayout_43" rowstretch="1,5,1" columnstretch="2,2,1,16,0,10" rowminimumheight="0,0,0">
+             <layout class="QGridLayout" name="gridLayout_43" rowstretch="1,5" columnstretch="2,2,1,16,0,10">
               <property name="spacing">
                <number>0</number>
               </property>
-              <item row="1" column="1">
-               <widget class="QLabel" name="gamingMLeader">
-                <property name="text">
-                 <string>2</string>
-                </property>
+              <item row="1" column="3">
+               <widget class="CardSlot" name="mHandSlot">
+                <widget class="QWidget" name="page_30"/>
                </widget>
               </item>
-              <item row="1" column="2">
-               <spacer name="horizontalSpacer_84">
+              <item row="1" column="5">
+               <spacer name="horizontalSpacer_85">
                 <property name="orientation">
                  <enum>Qt::Horizontal</enum>
                 </property>
@@ -2169,15 +2578,15 @@ border-image: url()
                 </property>
                </spacer>
               </item>
-              <item row="2" column="3">
-               <spacer name="verticalSpacer_89">
+              <item row="1" column="0">
+               <spacer name="horizontalSpacer_86">
                 <property name="orientation">
-                 <enum>Qt::Vertical</enum>
+                 <enum>Qt::Horizontal</enum>
                 </property>
                 <property name="sizeHint" stdset="0">
                  <size>
-                  <width>20</width>
-                  <height>40</height>
+                  <width>40</width>
+                  <height>20</height>
                  </size>
                 </property>
                </spacer>
@@ -2195,26 +2604,15 @@ border-image: url()
                 </property>
                </spacer>
               </item>
-              <item row="1" column="5">
-               <spacer name="horizontalSpacer_85">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
+              <item row="1" column="1">
+               <widget class="QLabel" name="gamingMLeader">
+                <property name="text">
+                 <string/>
                 </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>40</width>
-                  <height>20</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-              <item row="1" column="3">
-               <widget class="CardSlot" name="mHandSlot">
-                <widget class="QWidget" name="page_30"/>
                </widget>
               </item>
-              <item row="1" column="0">
-               <spacer name="horizontalSpacer_86">
+              <item row="1" column="2">
+               <spacer name="horizontalSpacer_84">
                 <property name="orientation">
                  <enum>Qt::Horizontal</enum>
                 </property>
@@ -2230,9 +2628,7 @@ border-image: url()
             </item>
            </layout>
           </widget>
-          <widget class="QWidget" name="page_2">
-           <zorder>asServerButton_2</zorder>
-          </widget>
+          <widget class="QWidget" name="page_2"/>
           <widget class="QWidget" name="score">
            <property name="styleSheet">
             <string notr="true">#score {
@@ -2318,6 +2714,11 @@ border-image:
    <extends>QWidget</extends>
    <header>w_battlefield.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>TimerRound</class>
+   <extends>QLabel</extends>
+   <header>ui_timerround.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

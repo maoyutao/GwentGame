@@ -41,7 +41,8 @@ SOURCES += \
     ui_cardsetbutton.cpp \
     ui_standarddialog.cpp \
     w_game.cpp \
-    w_battlefield.cpp
+    w_battlefield.cpp \
+    ui_timerround.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -59,7 +60,9 @@ HEADERS += \
     ui_cardsetbutton.h \
     ui_standarddialog.h \
     w_game.h \
-    w_battlefield.h
+    w_battlefield.h \
+    ui_timerround.h \
+    messagedefine.h
 
 FORMS += \
         mainwindow.ui \

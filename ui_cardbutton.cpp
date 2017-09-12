@@ -20,6 +20,33 @@ CardButton::~CardButton()
 //    qDebug() << "delete cardButton" << card->id;
 }
 
+void CardButton::setChooseable(bool mchooseable)
+{
+    if (mchooseable)
+    {
+        mclickEffect = clickEffect::select;
+        this->setStyleSheet("border: 2px solid rgb(131, 219, 255)");
+    } else {
+        this->setStyleSheet("border: ");
+    }
+}
+
+void CardButton::stopShowInfo()
+{
+    box->setStyleSheet("border-image: url()");
+}
+
+void CardButton::showInfo(QWidget* box)
+{
+    infoBox = box;
+    box->setStyleSheet("border-image: url(" % card->iconUrl % ")");
+    QTimer *timer = new QTimer(this);
+    timer->setSingleShot(true);
+    connect(timer, SIGNAL(timeout()), this, SLOT(stopShowInfo()), Qt::UniqueConnection);
+    connect(timer, SIGNAL(timeout()), timer, SLOT(deleteLater()), Qt::UniqueConnection);
+    timer->start(1200);
+}
+
 void CardButton::paintEvent(QPaintEvent *event)
 {
     int height = this->parentWidget()->height();
@@ -33,6 +60,19 @@ void CardButton::paintEvent(QPaintEvent *event)
 
 void CardButton::mousePressEvent(QMouseEvent *event)
 {
-    emit seletced(this);
-    QPushButton::mousePressEvent(event);
+    if (mclickEffect == clickEffect::select)
+    {
+        emit selected(this);
+    } else if (mclickEffect == clickEffect::showInfo)
+    {
+        showInfo();
+    }
+}
+
+void CardButton::mouseDoubleClickEvent(QMouseEvent *event)
+{
+    if (exertable)
+    {
+        card->exertAbility();
+    }
 }

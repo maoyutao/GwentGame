@@ -1,0 +1,11 @@
+#ifndef MESSAGEDEFINE_H
+#define MESSAGEDEFINE_H
+
+#define MREADY 0
+#define MSTART 1
+#define MFINISHROUND 2
+#define MMOVE 3
+#define MCHANGESTRENTH 4
+
+
+#endif // MESSAGEDEFINE_H

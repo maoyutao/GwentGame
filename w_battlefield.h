@@ -24,31 +24,32 @@ public:
     QList<CardButton*> drawCards(int count = 1);
 
     void addCardToMDeck(int id);
+    void randomlyExertCard();
 
 private:
     CardSet* mCardSet; //参赛的卡组
     Ui::MainWindow *ui{nullptr};
-    QList<CardButton*> mFront;
-    QList<CardButton*> mMiddle;
-    QList<CardButton*> mBack;
-    QList<CardButton*> mHand;
+    CardSlot* mFront;
+    CardSlot* mMiddle;
+    CardSlot* mBack;
+    CardSlot* mHand;
     CardButton* mleader{nullptr};
     QList<int> mCemetery;
     QList<int> mDeck;
-    QList<CardButton*> oFront;
-    QList<CardButton*> oMiddle;
-    QList<CardButton*> oBack;
-
-    int oHandNum{0};
-    int oDeckNum{0};
+    CardSlot* oFront;
+    CardSlot* oMiddle;
+    CardSlot* oBack;
+    CardSlot* oHand;
+    QMap<CardSlot*, int> strenth;
     QMap<EPosition, int> event;
-    // 012 front middle back  3-all
-    int mStrenth[4];
-    int oStrenth[4];
+    int mStrenth{0};
+    int oStrenth{0};
 
-    QList<CardButton*> allCards; // 这里卡牌的索引就是本场游戏中卡的索引 起到编号和保存卡的实例的作用 卡牌具体位置信息在上面的list里保存
+    QList<CardButton*> cardsOnBoard; // 双方共享的索引
 
 signals:
+    void finishOneRound();
+    void sendMsg(QMap<QString, QString> msg);
 
 public slots:
     void initForFirst(CardSet* cardset, Ui::MainWindow *aui);
@@ -59,6 +60,10 @@ private slots:
 private:
     void shuffle();
     void swapInt(int &a, int &b);
+    void move(CardSlot* from, CardSlot* to, CardButton * card, bool sendmsg = true);
+    void move(CardSlot* from, QString to, CardButton * card, bool sendmsg = true);
+    void changeStrenth(int changeValue, CardButton * target, bool sendmsg = true);
+    void updateStrenthSum();
 
     friend class Card;
 };

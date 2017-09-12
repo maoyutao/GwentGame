@@ -28,6 +28,10 @@ public:
 signals:
 
 public slots:
+    void startNewRound();
+    void timeout();
+    void sendMsg(QMap<QString, QString> msgMap);
+
 private slots:
     void asClient();
     void asServer();
@@ -52,15 +56,16 @@ private:
     int signalTimesLimit{0};
 
     bool myRound{false};
-    bool ready[2]{false, false};
+    bool ready[2]{false, false}; // 0是我 1是对方
 
 private:
-    void sendMsg(QMap<QString, QString> msgMap);
     QMap<QString, QString> parse(QString msg);
     QString stringify(QMap<QString, QString> msgMap);
     void msgHandler(QMap<QString, QString> msgMap);
 
     void hReady(QMap<QString, QString> msgMap);
+    void hStart(QMap<QString, QString> msgMap);
+    void hFinishRound(QMap<QString, QString> msgMap);
 };
 
 #endif // W_GAME_H

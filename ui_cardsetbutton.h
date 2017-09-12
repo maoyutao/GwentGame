@@ -13,7 +13,7 @@ public:
     explicit CardSetButton(CardSet* cardSet, QWidget *parent = nullptr);
 
 signals:
-    void seletced(CardSet* cardSet);
+    void selected(CardSet* cardSet);
 private slots:
 private:
     void paintEvent(QPaintEvent *event) override;
