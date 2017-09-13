@@ -1,5 +1,5 @@
 #include "cardset.h"
-#include "cards.h"
+#include "cards/index.h"
 #include "cardEnum.h"
 #include "cardfactory.h"
 #include <QStringBuilder>

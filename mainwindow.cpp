@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "ui_cardbutton.h"
+#include "cardfactory.h"
 #include <QMetaObject>
 #include <QDebug>
 #include <QFont>

@@ -9,8 +9,8 @@ class Card_9 : public Card
 public:
     explicit Card_9(BattleField * BattleField = nullptr,
                   QObject *parent = nullptr);
-private:
     void exertAbility() override;
+private slots:
 };
 
 #endif // CARD_9_H

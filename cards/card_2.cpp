@@ -1,4 +1,6 @@
 #include "card_2.h"
+#include "ui_cardslot.h"
+#include "w_battlefield.h"
 
 
 Card_2::Card_2(BattleField *battleField, QObject *parent):
@@ -14,5 +16,40 @@ Card_2::Card_2(BattleField *battleField, QObject *parent):
 
 void Card_2::exertAbility()
 {
-
+    if (first)
+    {
+        battleField->setAllHandCardExertable(false);
+        QList<int> positon;
+        positon << SLOTOBACK << SLOTOFRONT << SLOTOMMIDLE;
+        choosePosition(positon);
+        first = false;
+        return;
+    }
+    if (mslot->cardList.empty())
+    {
+        return;
+    }
+    CardButton* but;
+    int strenth = -1;
+    for (auto it: mslot->cardList)
+    {
+        CardButton* i = dynamic_cast<CardButton*>(it);
+        int v = i->card->currentCombatValue;
+        if ((strenth == -1) || v > strenth)
+        {
+            but = i;
+            strenth = v;
+        }
+    }
+    battleField->changeStrenth(-2, but);
 }
+
+void Card_2::afterChoosePosition(CardSlot* slot)
+{
+    basicAfterChoosePosition();
+    battleField->changeSpecialCard(slot, "add", button);
+    mslot = slot;
+    battleField->move(nullptr, button);
+    emit battleField->finishOneRound();
+}
+

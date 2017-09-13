@@ -1,7 +1,7 @@
 #ifndef P_EDIT_H
 #define P_EDIT_H
 
-#include "cards.h"
+#include "cards/index.h"
 #include "cardset.h"
 #include "player.h"
 #include "ui_cardslot.h"

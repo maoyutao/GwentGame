@@ -10,6 +10,11 @@ public:
     explicit Card_2(BattleField * BattleField = nullptr,
                   QObject *parent = nullptr);
     void exertAbility() override;
+private:
+    bool first{true};
+    CardSlot* mslot;
+private slots:
+    void afterChoosePosition(CardSlot * slot) override;
 };
 
 #endif // CARD_2_H

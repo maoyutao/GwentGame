@@ -52,10 +52,13 @@ void CardSlot::addCard(QPushButton * widget, int index)
     mlayout->insertStretch(index * 2 + 3);
     cardList.append(widget);
 
+//    qDebug() << "add";
 //    for (int i = 0; i < mlayout->count(); i++)
 //    {
 //        qDebug() << mlayout->itemAt(i)->widget();
+//        qDebug() << mlayout->itemAt(i)->geometry();
 //    }
+//    qDebug() << "finish add";
 
 }
 
@@ -90,8 +93,8 @@ void CardSlot::removeCard(QPushButton *widget)
         if (windex != -1)
         {
             auto strenth = mlayout->itemAt(windex + 1);
-            delete strenth;
             mlayout->removeWidget(widget);
+            delete strenth;
             break;
         }
     }
@@ -138,7 +141,7 @@ void CardSlot::mousePressEvent(QMouseEvent *event)
 {
     if (chooseable)
     {
-        emit selectd(this);
+        emit selected(this);
     }
 }
 
@@ -217,12 +220,13 @@ void CardSlot::addSpecialCard(CardButton *widget)
     float w = h * 0.6;
     float x = specialCard.count() * w;
     widget->setGeometry(x, 0, w, h);
+    qDebug() << "addSpecialCard" << widget->geometry();
 }
 
 void CardSlot::removeSpecialCard(CardButton *widget)
 {
     specialCard.removeOne(widget);
-    widget>deleteLater();
+    widget->deleteLater();
 }
 
 void CardSlot::clearSpecialCard()

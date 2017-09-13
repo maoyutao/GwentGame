@@ -2,13 +2,21 @@
 #define CARD_H
 
 #include "cardEnum.h"
-#include "w_battlefield.h"
 #include <QObject>
 #include <QString>
 #include <QVector>
 #include <QObject>
 
+#define SLOTMFRONT 0
+#define SLOTMMMIDLE 1
+#define SLOTMBACK 2
+#define SLOTOFRONT 3
+#define SLOTOMMIDLE 4
+#define SLOTOBACK 5
+
 class CardButton;
+class BattleField;
+class CardSlot;
 
 class Card : public QObject
 {
@@ -42,10 +50,17 @@ public:
                   BattleField * battleField = nullptr,
                   QObject *parent = nullptr);
     virtual void exertAbility() = 0;
+    virtual void dyingWish();
     void choosePosition(QList<int> chooseableSlot);
-private slots:
+    void chooseCardOnBoard(QList<int> chooseableCard);
+private:
+    QList<int> mChooseableSlot;
+    QList<int> mChooseableCard;
+protected slots:
     virtual void afterChoosePosition(CardSlot* slot);
-    ~Card();
+    void basicAfterChoosePosition();
+    virtual void afterChooseCard(CardButton* slot);
+    void basicAfterChooseCard();
 friend class CardButton;
 };
 

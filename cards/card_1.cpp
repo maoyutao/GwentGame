@@ -1,4 +1,6 @@
 #include "card_1.h"
+#include "ui_cardslot.h"
+#include "w_battlefield.h"
 
 Card_1::Card_1(BattleField *battleField, QObject *parent):
     Card(1, 0, "Biting Frost", "在对方单排降下“刺骨冰霜”。刺骨冰霜：每当己方回合开始时，对所在排最弱的单位造成 2 点伤害。", ":/new/cards/resource/cards/card_1.png",
@@ -17,26 +19,29 @@ void Card_1::exertAbility()
 {
     if (first)
     {
-        for (int i = 0; i< 3; i++)
-        {
-            CardSlot* slot = battleField->cardSlot[i];
-            slot->setChooseable(true);
-            connect(slot, SIGNAL(selected(CardSlot*)), this, SLOT(afterChoosePosition(CardSlot)));
-        }
+        battleField->setAllHandCardExertable(false);
+        QList<int> positon;
+        positon << SLOTOBACK << SLOTOFRONT << SLOTOMMIDLE;
+        choosePosition(positon);
         first = false;
         return;
     }
     flag++;
     if (flag % 2)
     {
+        if (mslot->cardList.empty())
+        {
+            return;
+        }
         CardButton* but;
         int strenth = -1;
-        for (CardButton* it: mslot->cardList)
+        for (auto it: mslot->cardList)
         {
-            int v = it->card->currentCombatValue;
+            CardButton* i = dynamic_cast<CardButton*>(it);
+            int v = i->card->currentCombatValue;
             if ((strenth == -1) || v < strenth)
             {
-                but = it;
+                but = i;
                 strenth = v;
             }
         }
@@ -46,12 +51,7 @@ void Card_1::exertAbility()
 
 void Card_1::afterChoosePosition(CardSlot* slot)
 {
-    for (int i = 0; i< 3; i++)
-    {
-        CardSlot* slott = battleField->cardSlot[i];
-        slott->setChooseable(false);
-        disconnect(slott, SIGNAL(selected(CardSlot*)), this, SLOT(afterChoosePosition(CardSlot)));
-    }
+    basicAfterChoosePosition();
     battleField->changeSpecialCard(slot, "add", button);
     mslot = slot;
     battleField->move(nullptr, button);

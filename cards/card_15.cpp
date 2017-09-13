@@ -1,16 +1,19 @@
-#ifndef CARD_15_H
-#define CARD_15_H
+#include "card_15.h"
+#include "ui_cardslot.h"
+#include "w_battlefield.h"
 
-#include "card.h"
-#include <QObject>
-
-class Card_15 : public Card
+Card_15::Card_15(BattleField *battleField, QObject *parent):
+    Card(15, 6, "Crone: Whispess", "部署：从牌组打出“煮婆”和“织婆”。",
+         ":/new/cards/resource/cards/card_15.png",
+         EQuality::Silver, EClassification::Unit, battleField, parent)
 {
-public:
-    explicit Card_15(BattleField * BattleField = nullptr,
-                  QObject *parent = nullptr);
-private:
-    void exertAbility() override;
-};
+    position.append(EPosition::mBack);
+    property.append(EProperty::Magic);
+    property.append(EProperty::Waste);
+}
 
-#endif // CARD_15_H
+void Card_15::exertAbility()
+{
+
+
+}

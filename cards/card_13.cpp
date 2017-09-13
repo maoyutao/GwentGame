@@ -1,16 +1,18 @@
-#ifndef CARD_13_H
-#define CARD_13_H
+#include "card_13.h"
+#include "ui_cardslot.h"
+#include "w_battlefield.h"
 
-#include "card.h"
-#include <QObject>
-
-class Card_13 : public Card
+Card_13::Card_13(BattleField *battleField, QObject *parent):
+    Card(13, 6, "Earth Elemental", "部署：获得护盾。遗愿：在该排末位生成 2 个“次级土元素”。",
+         ":/new/cards/resource/cards/card_13.png",
+         EQuality::Copper, EClassification::Unit, battleField, parent)
 {
-public:
-    explicit Card_13(BattleField * BattleField = nullptr,
-                  QObject *parent = nullptr);
-private:
-    void exertAbility() override;
-};
+    position.append(EPosition::mFront);
+    property.append(EProperty::Tectosome);
+}
 
-#endif // CARD_13_H
+void Card_13::exertAbility()
+{
+
+
+}

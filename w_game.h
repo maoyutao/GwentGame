@@ -42,7 +42,7 @@ private slots:
     void chooseCardSet();
     void start(CardSet* cardSet);
     void dispatchCard(CardButton* card);
-    void returnToField();
+    void returnToField(CardButton*);
     void clearChooseSlot();
     void changePageToGaming();
     void showToBechosen(QList<CardButton*> list, standardSlot slot = &Game::returnToField); // 在choose槽里展示list里的button  并为这些button的selected绑定这个类中的标准槽 默认是回战场

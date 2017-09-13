@@ -9,7 +9,6 @@ class Card_6 : public Card
 public:
     explicit Card_6(BattleField * BattleField = nullptr,
                   QObject *parent = nullptr);
-private:
     void exertAbility() override;
 };
 

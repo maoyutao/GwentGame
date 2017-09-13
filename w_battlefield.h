@@ -31,7 +31,7 @@ public:
     void randomlyExertCard();
     void move(CardSlot* to, CardButton * card, bool sendmsg = true);
     void move(QString to, CardButton * card, bool sendmsg = true);
-    void changeStrenth(int changeValue, CardButton * target, bool sendmsg = true);
+    void changeStrenth(int changeValue, CardButton * target, bool sendmsg = true, bool anmror = true);
     void addCardToOhand();
     void removeCardFromOhand();
     void drawCardTohand();
@@ -68,6 +68,7 @@ public slots:
     void initForFirst(Ui::MainWindow *aui);
     void setCardSet(CardSet* cardset);
     void init();
+    void setAllHandCardExertable(bool exertable);
 
 private slots:
 
@@ -76,6 +77,7 @@ private:
     void swapInt(int &a, int &b);
     void updateStrenthSum();
     void doBeforeARound();
+    void addCardToMCemetery(CardButton* card);
 
     friend class Game;
 };

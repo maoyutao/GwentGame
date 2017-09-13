@@ -13,6 +13,7 @@
 #define PSCORE 4
 #define PFINALSCORE 5
 
+
 BattleField::BattleField(QWidget *parent) : QWidget(parent)
 {
 }
@@ -52,7 +53,10 @@ void BattleField::init()
     {
         mHand->addCard(&*it);
         CardButton* p = dynamic_cast<CardButton*>(&*it);
+        p->raise();
         p->exertable = false;
+        p->selectable = false;
+        qDebug() << "enable" << p->isEnabled();
     }
     mHand->setCurrentIndex(0);
 
@@ -77,6 +81,15 @@ void BattleField::init()
     strenth[oFront] = 0;
 
 }
+
+void BattleField::setAllHandCardExertable(bool exertable)
+{
+    for (auto it: mHand->cardList)
+    {
+        dynamic_cast<CardButton*>(it)->exertable = exertable;
+    }
+}
+
 void BattleField::randomlyExertCard()
 {
     qsrand(QTime(0,0,0).secsTo(QTime::currentTime()));
@@ -112,9 +125,6 @@ void BattleField::move(CardSlot *to, CardButton *card, bool sendmsg)
     if (card->slot)
     {
         CardSlot* from = card->slot;
-        qDebug() << from;
-        qDebug() << mHand;
-        qDebug() << oHand;
         from->removeCard(card);
         if (strenth.contains(from))
         {
@@ -178,18 +188,23 @@ void BattleField::move(QString to, CardButton *card, bool sendmsg)
     } else {
         msg["fromEmpty"] = QString::number(1);
     }
-    card->deleteLater();
     if (to == "mcemetery")
     {
-        mCemetery.append(card->card->id);
+        addCardToMCemetery(card);
         msg[to] = "ocemetery";
 
     } else if (to == "mdeck")
     {
         addCardToMDeck(card->card->id);
         msg["to"] = "odeck";
+        card->deleteLater();
+    } else if (to == "ocemetery"){
+        msg["to"] = "mcemetery";
+        card->deleteLater();
+    } else if (to == "odeck"){
+        msg["to"] = "mdeck";
+        card->deleteLater();
     }
-    // 牌放到对方墓地里的暂时还不用 写的话就加在这里
     updateStrenthSum();
     if (sendmsg)
     {
@@ -201,9 +216,13 @@ void BattleField::move(QString to, CardButton *card, bool sendmsg)
     }
 }
 
-void BattleField::changeStrenth(int changeValue, CardButton *target, bool sendmsg)
-{
+void BattleField::changeStrenth(int changeValue, CardButton *target, bool sendmsg, bool anmror)
+{ 
     int now = target->card->currentCombatValue;
+    if (anmror && changeValue < 0)
+    {
+        changeValue +=  target->card->armor;
+    }
     target->card->currentCombatValue += changeValue;
     if (sendmsg)
     {
@@ -253,6 +272,12 @@ void BattleField::doBeforeARound()
     }
 }
 
+void BattleField::addCardToMCemetery(CardButton *card)
+{
+    mCemetery.append(card->card->id);
+    card->card->dyingWish();
+}
+
 void BattleField::addCardToOhand()
 {
     CardButton* c = new CardButton(-1, nullptr, oHand);
@@ -290,10 +315,10 @@ void BattleField::changeSpecialCard(CardSlot *slot, QString way, CardButton *car
         Msg msg;
         msg["type"] = "specialCard";
         msg["way"] = way;
-        msg["to"] = QString::number(cardSlot.indexOf(to));
+        msg["slot"] = QString::number(cardSlot.indexOf(slot));
         msg["id"] = QString::number(card->card->id);
         msg["index"] = QString::number(card->card->index);
-        emit sendmsg(msg);
+        emit sendMsg(msg);
     }
 }
 

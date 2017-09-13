@@ -15,8 +15,7 @@ private:
     int flag = 0;
     CardSlot* mslot;
 private slots:
-    void afterChoosePosition(CardSlot * slot);
+    void afterChoosePosition(CardSlot * slot) override;
 };
-
 
 #endif // CARD_1_H

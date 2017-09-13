@@ -1,16 +1,18 @@
-#ifndef CARD_16_H
-#define CARD_16_H
+#include "card_16.h"
+#include "ui_cardslot.h"
+#include "w_battlefield.h"
 
-#include "card.h"
-#include <QObject>
-
-class Card_16 : public Card
+Card_16::Card_16(BattleField *battleField, QObject *parent):
+    Card(16, 8, "Crone: Brewess", "部署：从牌组打出“呢喃婆”和“织婆”。",
+         ":/new/cards/resource/cards/card_16.png",
+         EQuality::Silver, EClassification::Unit, battleField, parent)
 {
-public:
-    explicit Card_16(BattleField * BattleField = nullptr,
-                  QObject *parent = nullptr);
-private:
-    void exertAbility() override;
-};
+    position.append(EPosition::mBack);
+    property.append(EProperty::Magic);
+    property.append(EProperty::Waste);
+}
 
-#endif // CARD_16_H
+void Card_16::exertAbility()
+{
+
+}

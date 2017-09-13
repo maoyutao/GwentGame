@@ -1,16 +1,21 @@
-#ifndef CARD_19_H
-#define CARD_19_H
+#include "card_19.h"
+#include "ui_cardslot.h"
+#include "w_battlefield.h"
 
-#include "card.h"
-#include <QObject>
-
-class Card_19 : public Card
+Card_19::Card_19(BattleField *battleField, QObject *parent):
+    Card(19, 12, "Frightener", "佚亡。部署：从牌组顶端抽 1 张牌。将所在战场其他排的 1 个单位移至自身的同一排。",
+         ":/new/cards/resource/cards/card_19.png",
+         EQuality::Silver, EClassification::Unit, battleField, parent)
 {
-public:
-    explicit Card_19(BattleField * BattleField = nullptr,
-                  QObject *parent = nullptr);
-private:
-    void exertAbility() override;
-};
+    position.append(EPosition::oFront);
+    position.append(EPosition::oMiddle);
+    position.append(EPosition::oBack);
+    property.append(EProperty::Spy);
+    property.append(EProperty::Tectosome);
+}
 
-#endif // CARD_19_H
+void Card_19::exertAbility()
+{
+
+
+}

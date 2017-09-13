@@ -1,4 +1,4 @@
-#include "cards.h"
+#include "cards/index.h"
 #include "ui_cardsetbutton.h"
 
 #define REGISTER_CARD(id) \

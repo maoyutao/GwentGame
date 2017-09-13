@@ -17,6 +17,8 @@ public:
     QWidget* infoBox{nullptr};
     CardSlot * slot;
 
+
+    bool selectable{true};
     void setChooseable(bool mchooseable);
     void setInfoBox(QWidget* box);
 signals:

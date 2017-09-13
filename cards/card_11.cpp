@@ -1,16 +1,19 @@
-#ifndef CARD_11_H
-#define CARD_11_H
+#include "card_11.h"
+#include "ui_cardslot.h"
+#include "w_battlefield.h"
 
-#include "card.h"
-#include <QObject>
-
-class Card_11 : public Card
+Card_11::Card_11(BattleField *battleField, QObject *parent):
+    Card(11, 5, "Celaeno Harpy", "部署：在自身左侧生成 2 个“鹰身女妖蛋”。",
+         ":/new/cards/resource/cards/card_11.png",
+         EQuality::Copper, EClassification::Unit, battleField, parent)
 {
-public:
-    explicit Card_11(BattleField * BattleField = nullptr,
-                  QObject *parent = nullptr);
-private:
-    void exertAbility() override;
-};
+    position.append(EPosition::mFront);
+    position.append(EPosition::mMiddle);
+    position.append(EPosition::mBack);
+    property.append(EProperty::Beast);
+}
 
-#endif // CARD_11_H
+void Card_11::exertAbility()
+{
+
+}

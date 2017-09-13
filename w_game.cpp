@@ -142,7 +142,7 @@ void Game::start(CardSet *cardSet)
     ui->gamingChooseSlot->clear();
     battleField->setCardSet(cardSet);
     connect(battleField, SIGNAL(sendMsg(QMap<QString,QString>)), this, SLOT(sendMsg(QMap<QString,QString>)));
-    connect(battleField, SIGNAL(showToBechosen(QList<CardButton*> list)), this, SLOT(showToBechosen(QList<CardButton*>,standardSlot)));
+    connect(battleField, SIGNAL(showToBechosen(QList<CardButton*>)), this, SLOT(showToBechosen(QList<CardButton*>)));
     connect(battleField, SIGNAL(clearChooseSlot()), this, SLOT(clearChooseSlot()));
     signalTimesLimit = 3;
     showToBechosen(battleField->drawCards(10), &Game::dispatchCard);
@@ -164,8 +164,6 @@ void Game::dispatchCard(CardButton * card)
     qDebug() << battleField->drawCards(1, card->card->id);
     auto newCard = battleField->drawCards(1, card->card->id).first();
     ui->gamingChooseSlot->replaceCard(card, newCard);
-
-
     battleField->addCardToMDeck(card->card->id);
     connect(newCard, SIGNAL(selected(CardButton*)), this, SLOT(dispatchCard(CardButton*)));
     signalTimes++;
@@ -174,6 +172,11 @@ void Game::dispatchCard(CardButton * card)
         ui->gamingChooseSlot->setAllEnabled(true);
         return;
     }
+    ui->gamingChooseSlot->setAllEnabled(true);
+    for (auto it: ui->gamingChooseSlot->cardList)
+    {
+        disconnect(it, SIGNAL(selected(CardButton*)), this, SLOT(dispatchCard(CardButton*)));
+    }
     QTimer *timer = new QTimer(this);
     timer->setSingleShot(true);
     connect(timer, SIGNAL(timeout()), this, SLOT(changePageToGaming()), Qt::UniqueConnection);
@@ -181,7 +184,7 @@ void Game::dispatchCard(CardButton * card)
     timer->start(1500);
 }
 
-void Game::returnToField()
+void Game::returnToField(CardButton*)
 {
     ui->gameStackWidget->setCurrentIndex(PGAMING);
 }
@@ -277,17 +280,12 @@ void Game::startNewRound()
     ui->gamingRound->change();
     if (myRound)
     {
-        for (auto it: battleField->mHand->cardList)
-        {
-            dynamic_cast<CardButton*>(it)->exertable = true;
-            msg["myRound"] = "0";
-        }
+        msg["myRound"] = "0";
+        battleField->setAllHandCardExertable(true);
     } else {
-        for (auto it: battleField->mHand->cardList)
-        {
-            dynamic_cast<CardButton*>(it)->exertable = false;
-            msg["myRound"] = "1";
-        }
+        msg["myRound"] = "1";
+        // 理论上在牌的双击槽函数里就要有下面这句 但是以防漏了
+        battleField->setAllHandCardExertable(false);
     }
     sendMsg(msg);
     battleField->doBeforeARound();
@@ -298,7 +296,6 @@ void Game::timeout()
     if (myRound)
     {
         battleField->randomlyExertCard();
-        ui->gamingRound->change();
     }
 }
 
@@ -415,7 +412,7 @@ void Game::hohandChange(Msg msgMap)
 void Game::hSpecialCard(Msg msgMap)
 {
     CardButton* card;
-    if (msgMap["way"] == add)
+    if (msgMap["way"] == "add")
     {
         card = new CardButton(msgMap["id"].toInt(), battleField, nullptr);
     } else {

@@ -1,16 +1,21 @@
-#ifndef CARD_18_H
-#define CARD_18_H
+#include "card_18.h"
+#include "ui_cardslot.h"
+#include "w_battlefield.h"
 
-#include "card.h"
-#include <QObject>
 
-class Card_18 : public Card
+Card_18::Card_18(BattleField *battleField, QObject *parent):
+    Card(18, 8, "Caranthir", "部署：将 1 个敌军单位移至其所在半场同排，并在此排降下“刺骨冰霜”。",
+         ":/new/cards/resource/cards/card_18.png",
+         EQuality::Gold, EClassification::Unit, battleField, parent)
 {
-public:
-    explicit Card_18(BattleField * BattleField = nullptr,
-                  QObject *parent = nullptr);
-private:
-    void exertAbility() override;
-};
+    position.append(EPosition::mFront);
+    position.append(EPosition::mMiddle);
+    position.append(EPosition::mBack);
+    property.append(EProperty::Magic);
+    property.append(EProperty::WildHunt);
+}
 
-#endif // CARD_18_H
+void Card_18::exertAbility()
+{
+
+}

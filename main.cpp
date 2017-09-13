@@ -1,4 +1,5 @@
 #include "mainwindow.h"
+#include "cardfactory.h"
 #include "register.cpp"
 #include <QApplication>
 

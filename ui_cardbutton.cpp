@@ -1,4 +1,5 @@
 #include "ui_cardbutton.h"
+#include "cardfactory.h"
 #include <QStringBuilder>
 #include <QSize>
 #include <QDebug>
@@ -73,12 +74,17 @@ void CardButton::paintEvent(QPaintEvent *event)
 
 void CardButton::mousePressEvent(QMouseEvent *event)
 {
-    emit selected(this);
+    qDebug() << "click" << this->card->name;
+    if (selectable)
+    {
+        emit selected(this);
+    }
     showInfo();
 }
 
 void CardButton::mouseDoubleClickEvent(QMouseEvent *event)
 {
+    qDebug() << "dclick" << this->card->name;
     if (exertable)
     {
         card->exertAbility();

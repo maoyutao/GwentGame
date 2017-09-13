@@ -12,6 +12,7 @@ Card_0::Card_0(BattleField *battleField, QObject *parent):
 
 void Card_0::exertAbility()
 {
+    battleField->setAllHandCardExertable(false);
     CardButton* light = new CardButton(24, battleField, nullptr);
     CardButton* re = new CardButton(25, battleField, nullptr);
     list.append(light);
@@ -20,5 +21,5 @@ void Card_0::exertAbility()
     connect(light, SIGNAL(selected(CardButton* card)), light->card, SLOT(exertAbility()));
     connect(re, SIGNAL(selected(CardButton* card)), re->card, SLOT(exertAbility()));
 
-    battleField->move("cemetery", button);
+    battleField->move("mcemetery", button);
 }

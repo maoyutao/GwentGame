@@ -1,16 +1,19 @@
-#ifndef CARD_17_H
-#define CARD_17_H
+#include "card_17.h"
+#include "ui_cardslot.h"
+#include "w_battlefield.h"
 
-#include "card.h"
-#include <QObject>
-
-class Card_17 : public Card
+Card_17::Card_17(BattleField *battleField, QObject *parent):
+    Card(17, 8, "Archgriffin", "部署：移除所在排的天气效果。将 1 张铜色牌从一方墓场置入另一方墓场",
+         ":/new/cards/resource/cards/card_17.png",
+         EQuality::Copper, EClassification::Unit, battleField, parent)
 {
-public:
-    explicit Card_17(BattleField * BattleField = nullptr,
-                  QObject *parent = nullptr);
-private:
-    void exertAbility() override;
-};
+    position.append(EPosition::mFront);
+    position.append(EPosition::mMiddle);
+    position.append(EPosition::mBack);
+    property.append(EProperty::Beast);
+}
 
-#endif // CARD_17_H
+void Card_17::exertAbility()
+{
+
+}

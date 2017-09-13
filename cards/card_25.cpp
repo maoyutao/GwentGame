@@ -1,4 +1,6 @@
 #include "card_25.h"
+#include "w_battlefield.h"
+#include "ui_cardslot.h"
 
 Card_25::Card_25(BattleField *battleField, QObject *parent):
     Card(25, 0, "重整", "从牌组打出1张随机铜色单位牌。", ":/new/cards/resource/cards/card_25.png", EQuality::Copper,

@@ -34,7 +34,7 @@ public:
     bool chooseable{false};
     QList<CardButton *> specialCard;
 signals:
-    void selectd(CardSlot*);
+    void selected(CardSlot*);
 private:
     int limit{7};
     void showButton();

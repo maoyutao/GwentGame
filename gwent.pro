@@ -28,7 +28,6 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
     player.cpp \
-    cards.cpp \
     cardfactory.cpp \
     register.cpp \
     ui_cardbutton.cpp \

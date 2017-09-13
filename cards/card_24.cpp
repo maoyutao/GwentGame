@@ -1,4 +1,6 @@
 #include "card_24.h"
+#include "w_battlefield.h"
+#include "ui_cardslot.h"
 
 Card_24::Card_24(BattleField *battleField, QObject *parent):
     Card(24, 0, "晴空", "移除己方半场所有的天气效果。”。", ":/new/cards/resource/cards/card_24.png", EQuality::Copper,
