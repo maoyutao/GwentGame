@@ -6,12 +6,6 @@
 #include <QPushButton>
 #include <QMouseEvent>
 
-enum class clickEffect
-{
-    showInfo,
-    select,
-};
-
 class CardButton : public QPushButton
 {
     Q_OBJECT
@@ -20,16 +14,17 @@ public:
     ~CardButton();
     Card * card;
     bool exertable{false};
-    void setChooseable(bool mchooseable);
-    clickEffect mclickEffect{clickEffect::select};
     QWidget* infoBox{nullptr};
+    CardSlot * slot;
+
+    void setChooseable(bool mchooseable);
+    void setInfoBox(QWidget* box);
 signals:
     void selected(CardButton* card);
 public slots:
     void stopShowInfo();
-private:
-    void setInfoBox(QWidget* box);
     void showInfo();
+private:
     void paintEvent(QPaintEvent *event) override;
     void mousePressEvent(QMouseEvent* event) override;
     void mouseDoubleClickEvent(QMouseEvent* event) override;

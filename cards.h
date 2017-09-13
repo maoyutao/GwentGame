@@ -40,6 +40,7 @@ public:
     int currentCombatValue;
     int armor{0};
     BattleField * battleField;
+    CardButton * button{nullptr};
     virtual void exertAbility();
 public:
     explicit Card(int id,
@@ -55,7 +56,15 @@ public:
 friend class CardButton;
 };
 
-DECLARE_CARD(0)
+class Card_0 : public Card
+{
+public:
+    explicit Card_0(BattleField * BattleField = nullptr,
+                  QObject *parent = nullptr);
+private:
+    void exertAbility() override;
+};
+
 DECLARE_CARD(1)
 DECLARE_CARD(2)
 DECLARE_CARD(3)

@@ -16,6 +16,8 @@ namespace Ui {
 class MainWindow;
 }
 
+typedef QMap<QString, QString> Msg;
+
 class BattleField : public QWidget
 {
     Q_OBJECT
@@ -27,8 +29,14 @@ public:
 
     void addCardToMDeck(int id);
     void randomlyExertCard();
+    void move(CardSlot* to, CardButton * card, bool sendmsg = true);
+    void move(QString to, CardButton * card, bool sendmsg = true);
+    void changeStrenth(int changeValue, CardButton * target, bool sendmsg = true);
+    void addCardToOhand();
+    void removeCardFromOhand();
+    void drawCardTohand();
 
-private:
+public:
     CardSet* mCardSet; //参赛的卡组
     Ui::MainWindow *ui{nullptr};
     CardSlot* mFront;
@@ -55,7 +63,8 @@ signals:
     void sendMsg(QMap<QString, QString> msg);
 
 public slots:
-    void initForFirst(CardSet* cardset, Ui::MainWindow *aui);
+    void initForFirst(Ui::MainWindow *aui);
+    void setCardSet(CardSet* cardset);
     void init();
 
 private slots:
@@ -63,14 +72,8 @@ private slots:
 private:
     void shuffle();
     void swapInt(int &a, int &b);
-    void move(CardSlot* to, CardButton * card, bool sendmsg = true);
-    void move(QString to, CardButton * card, bool sendmsg = true);
-    void changeStrenth(int changeValue, CardButton * target, bool sendmsg = true);
     void updateStrenthSum();
-    void addCardToOhand();
-    void removeCardFromOhand();
 
-    friend class Card;
     friend class Game;
 };
 

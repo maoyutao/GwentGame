@@ -17,9 +17,8 @@ BattleField::BattleField(QWidget *parent) : QWidget(parent)
 {
 }
 
-void BattleField::initForFirst(CardSet *cardset, Ui::MainWindow *aui)
+void BattleField::initForFirst(Ui::MainWindow *aui)
 {
-    mCardSet = cardset;
     ui = aui;
     mFront = ui->gamingMFront;
     mMiddle = ui->gamingMMiddle;
@@ -35,6 +34,11 @@ void BattleField::initForFirst(CardSet *cardset, Ui::MainWindow *aui)
     cardSlot.append(oFront);
     cardSlot.append(oMiddle);
     cardSlot.append(oBack);
+}
+
+void BattleField::setCardSet(CardSet *cardset)
+{
+    mCardSet = cardset;
     mleader = new CardButton(mCardSet->leader, this, ui->gamingMLeader);
     mDeck = mCardSet->allCards;
     mDeck.removeOne(mCardSet->leader);
@@ -48,7 +52,6 @@ void BattleField::init()
     {
         mHand->addCard(&*it);
         CardButton* p = dynamic_cast<CardButton*>(&*it);
-        p->mclickEffect = clickEffect::showInfo;
         p->exertable = false;
     }
     mHand->setCurrentIndex(0);
@@ -72,6 +75,7 @@ void BattleField::init()
     strenth[oBack] = 0;
     strenth[oMiddle] = 0;
     strenth[oFront] = 0;
+
 }
 void BattleField::randomlyExertCard()
 {
@@ -98,22 +102,25 @@ void BattleField::swapInt(int &a, int &b)
 
 void BattleField::move(CardSlot *to, CardButton *card, bool sendmsg)
 {
-    // from range: 六排 空（敌人的手牌打出来的是空） 我的手牌  to range: 六排 （我自己发动的时候的）我的手牌 敌人发动的时候不会到我的手牌里
+    // from range: 六排 空（敌人的手牌打出来的是空） 我的手牌  to range: 六排 （我自己发动的时候的）空 我的手牌 敌人发动的时候不会到我的手牌里
     // 完成了： 如果原有父亲就拿出 如果需注册但还未注册就注册 如果相关分数就改分数
-    QMap<QString, QString> msg;
+    Msg msg;
     msg["fromEmpty"] = QString::number(0); // fromempty 和fromhand 是没有编号的
     msg["fromhand"] = QString::number(0);
     msg["tohand"] = QString::number(0);
     int mstrenth = card->card->currentCombatValue;
-    if (card->parentWidget())
+    if (card->slot)
     {
-        CardSlot* from = dynamic_cast<CardSlot*>(card->parentWidget());
+        CardSlot* from = card->slot;
+        qDebug() << from;
+        qDebug() << mHand;
+        qDebug() << oHand;
         from->removeCard(card);
         if (strenth.contains(from))
         {
             strenth[from] -= mstrenth;
         }
-        if (card->parentWidget() == mHand)
+        if (card->slot == mHand)
         {
             msg["fromhand"] = QString::number(1);
         }
@@ -121,7 +128,10 @@ void BattleField::move(CardSlot *to, CardButton *card, bool sendmsg)
     } else {
         msg["fromEmpty"] = QString::number(1);
     }
-    to->addCard(card);
+    if (to)
+    {
+        to->addCard(card);
+    }
     if (strenth.contains(to))
     {
         strenth[to] -= mstrenth;
@@ -139,7 +149,7 @@ void BattleField::move(CardSlot *to, CardButton *card, bool sendmsg)
         msg["type"] = "move";
         msg["to"] = QString::number(cardSlot.indexOf(to));
         msg["toslot"] = QString::number(1);
-        msg["card"] = QString::number(card->card->index);
+        msg["index"] = QString::number(card->card->index);
         msg["id"] = QString::number(card->card->id);
         emit sendMsg(msg);
     }
@@ -149,16 +159,16 @@ void BattleField::move(QString to, CardButton *card, bool sendmsg)
 {
     // from range: 六排 空（敌人的手牌分成从手牌取一张（上层做） 和从一张空move两部分） 我的手牌  to range: 墓地 牌组
     // 完成了： 如果原有父亲就拿出 如果相关分数就改分数
-    QMap<QString, QString> msg;
+    Msg msg;
     msg["tohand"] = QString::number(0);
     int mstrenth = card->card->currentCombatValue;
-    if (card->parentWidget())
+    if (card->slot)
     {
-        if (card->parentWidget() == mHand)
+        if (card->slot == mHand)
         {
             msg["fromhand"] = QString::number(1);
         }
-        CardSlot* from = dynamic_cast<CardSlot*>(card->parentWidget());
+        CardSlot* from = dynamic_cast<CardSlot*>(card->slot);
         from->removeCard(card);
         if (strenth.contains(from))
         {
@@ -181,7 +191,7 @@ void BattleField::move(QString to, CardButton *card, bool sendmsg)
         msg["type"] = "move";
         msg["to"] = to;
         msg["toslot"] = QString::number(0);
-        msg["card"] = QString::number(card->card->index);
+        msg["index"] = QString::number(card->card->index);
         msg["id"] = QString::number(card->card->id);
         emit sendMsg(msg);
     }
@@ -190,15 +200,15 @@ void BattleField::move(QString to, CardButton *card, bool sendmsg)
 void BattleField::changeStrenth(int changeValue, CardButton *target, bool sendmsg)
 {
     target->card->currentCombatValue += changeValue;
-    CardSlot* parent = dynamic_cast<CardSlot*>(target->parentWidget());
+    CardSlot* parent = dynamic_cast<CardSlot*>(target->slot);
     strenth[parent] += changeValue;
     updateStrenthSum();
     if (sendmsg)
     {
-        QMap<QString, QString> msg;
+        Msg msg;
         msg["type"] = "changeStrenth";
         msg["value"] = QString::number(changeValue);
-        msg["card"] = QString::number(target->card->index);
+        msg["index"] = QString::number(target->card->index);
         emit sendMsg(msg);
     }
 }
@@ -219,12 +229,23 @@ void BattleField::updateStrenthSum()
 
 void BattleField::addCardToOhand()
 {
-    oHand->addCard(new CardButton(-1, nullptr, oHand));
+    CardButton* c = new CardButton(-1, nullptr, oHand);
+    c->setEnabled(false);
+    oHand->addCard(c);
 }
 
 void BattleField::removeCardFromOhand()
 {
     oHand->removeCard();
+}
+
+void BattleField::drawCardTohand()
+{
+    move(mHand, drawCards(1).first());
+    Msg msg;
+    msg["type"] = "ohandChange";
+    msg["change"] = QString::number(1);
+    sendMsg(msg);
 }
 
 QList<CardButton*> BattleField::drawCards(int count)
@@ -235,7 +256,9 @@ QList<CardButton*> BattleField::drawCards(int count)
         {
             break;
         }
-        drawnCards.append((new CardButton(mDeck.takeFirst(), this, this)));
+        CardButton* c = new CardButton(mDeck.takeFirst(), this, nullptr);
+//        c->setInfoBox(ui->bigBox);
+        drawnCards.append(c);
     }
     return drawnCards;
 }
@@ -249,7 +272,9 @@ QList<CardButton *> BattleField::drawCards(int count, int except)
         {
             break;
         }
-        drawnCards.append((new CardButton(mDeck.takeFirst(), this, this)));
+        CardButton* c = new CardButton(mDeck.takeFirst(), this, nullptr);
+//        c->setInfoBox(ui->bigBox);
+        drawnCards.append(c);
     }
     for (int i = 0; i < num; i++)
     {

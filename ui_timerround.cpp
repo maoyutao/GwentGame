@@ -9,13 +9,13 @@ void TimerRound::start(bool isMyRound)
 {
     if (isMyRound)
     {
-        current = 0;
-    } else {
         current = 1;
+    } else {
+        current = 0;
     }
     this->setStyleSheet(styleSheet[current]);
     timer->start(1000);
-    connect(timer,SIGNAL(timeout()),this,SLOT(updateTime()));
+    connect(timer,SIGNAL(timeout()),this,SLOT(updateTime()), Qt::UniqueConnection);
 }
 
 void TimerRound::change()
@@ -24,6 +24,8 @@ void TimerRound::change()
     this->setStyleSheet(styleSheet[current]);
     record->setHMS(0, 0, 59);
     timer->start(1000);
+
+    qDebug() << "change" << styleSheet[current];
 }
 
 void TimerRound::updateTime()

@@ -3,7 +3,6 @@
 
 void Card::exertAbility()
 {
-
 }
 
 Card::Card(int id,
@@ -40,6 +39,10 @@ Card_0::Card_0(BattleField *battleField, QObject *parent):
 {
     position.append(EPosition::Null);
     property.append(EProperty::Special);
+}
+
+void Card_0::exertAbility(){
+    battleField->move(battleField->mBack, this->button);
 }
 
 Card_1::Card_1(BattleField *battleField, QObject *parent):

@@ -1,4 +1,5 @@
 #include "ui_cardslot.h"
+#include "ui_cardbutton.h"
 #include <QDebug>
 
 CardSlot::CardSlot(QWidget *parent) : QStackedWidget(parent)
@@ -32,6 +33,10 @@ void CardSlot::createLayout()
 
 void CardSlot::addCard(QWidget * widget, int index)
 {
+    if (widget->inherits("CardButton"))
+    {
+        dynamic_cast<CardButton*>(widget)->slot = this;
+    }
     QHBoxLayout * mlayout = static_cast<QHBoxLayout*>(this->currentWidget()->layout());
     if (index == -1)
     {
@@ -56,6 +61,7 @@ void CardSlot::addCard(QWidget * widget, int index)
 
 void CardSlot::removeCard()
 {
+    // remove and delete
     if (cardList.isEmpty())
     {
         return;
@@ -70,6 +76,10 @@ void CardSlot::removeCard()
 
 void CardSlot::removeCard(QWidget *widget)
 {
+    if (widget->inherits("CardButton"))
+    {
+        dynamic_cast<CardButton*>(widget)->slot = nullptr;
+    }
     cardList.removeOne(dynamic_cast<QPushButton*>(widget));
     int count = this->count();
     QHBoxLayout * mlayout;
@@ -156,6 +166,10 @@ void CardSlot::replaceCard(QWidget *toBeReplaced, QWidget *replace)
     QHBoxLayout * mlayout = static_cast<QHBoxLayout*>(this->currentWidget()->layout());
     int index = mlayout->indexOf(toBeReplaced);
     mlayout->insertWidget(index, replace, 0, Qt::AlignCenter);
+    if (replace->inherits("CardButton"))
+    {
+        dynamic_cast<CardButton*>(replace)->slot = this;
+    }
     toBeReplaced->deleteLater();
     cardList.append(dynamic_cast<QPushButton*>(replace));
     cardList.removeOne(dynamic_cast<QPushButton*>(toBeReplaced));

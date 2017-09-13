@@ -4,8 +4,7 @@
 #include <QDebug>
 #include <QTimer>
 
-CardButton::CardButton(int cardID, BattleField * battleField, QWidget *parent) : QPushButton(parent),
-    card(static_cast<Card*>(CardFactory::CreateObject(cardID, battleField, this)))
+CardButton::CardButton(int cardID, BattleField * battleField, QWidget *parent) : QPushButton(parent)
 {
     if (cardID < 0)
     {
@@ -13,6 +12,8 @@ CardButton::CardButton(int cardID, BattleField * battleField, QWidget *parent) :
         this->setStyleSheet("border-image: url(:/new/prefix1/resource/o_deck.png)");
         return;
     }
+    card = static_cast<Card*>(CardFactory::CreateObject(cardID, battleField, this));
+    card->button = this;
     this->setStyleSheet("border-image: url(" % card->iconUrl % ")");
 }
 
@@ -21,11 +22,10 @@ CardButton::~CardButton()
 //    qDebug() << "delete cardButton" << card->id;
 }
 
-void CardButton::setChooseable(bool mchooseable)
+void CardButton::setChooseable(bool chooseable)
 {
-    if (mchooseable)
+    if (chooseable)
     {
-        mclickEffect = clickEffect::select;
         this->setStyleSheet("border: 2px solid rgb(131, 219, 255)");
     } else {
         this->setStyleSheet("border: ");
@@ -52,12 +52,12 @@ void CardButton::showInfo()
     {
         return;
     }
+    qDebug() << "show " << card->iconUrl;
     infoBox->setStyleSheet("border-image: url(" % card->iconUrl % ")");
-    QTimer *timer = new QTimer(this);
-    timer->setSingleShot(true);
-    connect(timer, SIGNAL(timeout()), this, SLOT(stopShowInfo()), Qt::UniqueConnection);
-    connect(timer, SIGNAL(timeout()), timer, SLOT(deleteLater()), Qt::UniqueConnection);
-    timer->start(1200);
+    QTimer *time = new QTimer();
+    connect(time, SIGNAL(timeout()), this, SLOT(stopShowInfo()));
+    connect(time, SIGNAL(timeout()), time, SLOT(deleteLater()));
+    time->start(1200);
 }
 
 void CardButton::paintEvent(QPaintEvent *event)
@@ -73,13 +73,8 @@ void CardButton::paintEvent(QPaintEvent *event)
 
 void CardButton::mousePressEvent(QMouseEvent *event)
 {
-    if (mclickEffect == clickEffect::select)
-    {
-        emit selected(this);
-    } else if (mclickEffect == clickEffect::showInfo)
-    {
-        showInfo();
-    }
+    emit selected(this);
+    showInfo();
 }
 
 void CardButton::mouseDoubleClickEvent(QMouseEvent *event)

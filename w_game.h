@@ -18,7 +18,8 @@ class MainWindow;
 class Game;
 
 typedef void (Game::*standardSlot)(CardButton*);
-typedef void (Game::*msgHandler)(QMap<QString, QString> msgMap);
+typedef QMap<QString, QString> Msg;
+typedef void (Game::*msgHandler)(Msg msgMap);
 
 class Game : public QStackedWidget
 {
@@ -62,15 +63,16 @@ private:
     bool on{false};
 
 private:
-    QMap<QString, QString> parse(QString msg);
-    QString stringify(QMap<QString, QString> msgMap);
-    void msgHandler(QMap<QString, QString> msgMap);
+    Msg parse(QString msg);
+    QString stringify(Msg msgMap);
+    void msgHandler(Msg msgMap);
 
-    void hReady(QMap<QString, QString> msgMap);
-    void hStart(QMap<QString, QString> msgMap);
-    void hChangeRound(QMap<QString, QString> msgMap);
-    void hChangeStrenth(QMap<QString, QString> msgMap);
-    void hMove(QMap<QString, QString> msgMap);
+    void hReady(Msg msgMap);
+    void hStart(Msg msgMap);
+    void hChangeRound(Msg msgMap);
+    void hChangeStrenth(Msg msgMap);
+    void hMove(Msg msgMap);
+    void hohandChange(Msg msgMap);
 };
 
 #endif // W_GAME_H
