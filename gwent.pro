@@ -42,12 +42,38 @@ SOURCES += \
     ui_standarddialog.cpp \
     w_game.cpp \
     w_battlefield.cpp \
-    ui_timerround.cpp
+    ui_timerround.cpp \
+    cards/card_0.cpp \
+    cards/card.cpp \
+    cards/card_1.cpp \
+    cards/card_3.cpp \
+    cards/card_2.cpp \
+    cards/card_4.cpp \
+    cards/card_5.cpp \
+    cards/card_6.cpp \
+    cards/card_7.cpp \
+    cards/card_8.cpp \
+    cards/card_9.cpp \
+    cards/card_10.cpp \
+    cards/card_11.cpp \
+    cards/card_12.cpp \
+    cards/card_13.cpp \
+    cards/card_14.cpp \
+    cards/card_15.cpp \
+    cards/card_16.cpp \
+    cards/card_17.cpp \
+    cards/card_18.cpp \
+    cards/card_19.cpp \
+    cards/card_20.cpp \
+    cards/card_21.cpp \
+    cards/card_22.cpp \
+    cards/card_23.cpp \
+    cards/card_24.cpp \
+    cards/card_25.cpp
 
 HEADERS += \
         mainwindow.h \
     player.h \
-    cards.h \
     cardfactory.h \
     ui_cardbutton.h \
     ui_standardbutton.h \
@@ -61,7 +87,35 @@ HEADERS += \
     ui_standarddialog.h \
     w_game.h \
     w_battlefield.h \
-    ui_timerround.h
+    ui_timerround.h \
+    cards/card_0.h \
+    cards/index.h \
+    cards/card.h \
+    cards/card_1.h \
+    cards/card_3.h \
+    cards/card_2.h \
+    cards/card_4.h \
+    cards/card_5.h \
+    cards/card_6.h \
+    cards/card_7.h \
+    cards/card_8.h \
+    cards/card_9.h \
+    cards/card_10.h \
+    cards/card_11.h \
+    cards/card_12.h \
+    cards/card_13.h \
+    cards/card_14.h \
+    cards/card_15.h \
+    cards/card_16.h \
+    cards/card_17.h \
+    cards/card_18.h \
+    cards/card_19.h \
+    cards/card_20.h \
+    cards/card_21.h \
+    cards/card_22.h \
+    cards/card_23.h \
+    cards/card_24.h \
+    cards/card_25.h
 
 FORMS += \
         mainwindow.ui \

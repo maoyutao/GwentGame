@@ -28,6 +28,7 @@ Game::Game(QWidget *parent) : QStackedWidget(parent)
     handlers["changeStrenth"] = &Game::hChangeStrenth;
     handlers["move"] = &Game::hMove;
     handlers["ohandChange"] = &Game::hohandChange;
+    handlers["specialCard"] = &Game::hSpecialCard;
 }
 
 void Game::init(Player *aPlayer, Ui::MainWindow *aui)
@@ -141,6 +142,8 @@ void Game::start(CardSet *cardSet)
     ui->gamingChooseSlot->clear();
     battleField->setCardSet(cardSet);
     connect(battleField, SIGNAL(sendMsg(QMap<QString,QString>)), this, SLOT(sendMsg(QMap<QString,QString>)));
+    connect(battleField, SIGNAL(showToBechosen(QList<CardButton*> list)), this, SLOT(showToBechosen(QList<CardButton*>,standardSlot)));
+    connect(battleField, SIGNAL(clearChooseSlot()), this, SLOT(clearChooseSlot()));
     signalTimesLimit = 3;
     showToBechosen(battleField->drawCards(10), &Game::dispatchCard);
 }
@@ -176,6 +179,16 @@ void Game::dispatchCard(CardButton * card)
     connect(timer, SIGNAL(timeout()), this, SLOT(changePageToGaming()), Qt::UniqueConnection);
     connect(timer, SIGNAL(timeout()), timer, SLOT(deleteLater()), Qt::UniqueConnection);
     timer->start(1500);
+}
+
+void Game::returnToField()
+{
+    ui->gameStackWidget->setCurrentIndex(PGAMING);
+}
+
+void Game::clearChooseSlot()
+{
+    ui->gamingChooseSlot->clear();
 }
 
 void Game::changePageToGaming()
@@ -277,6 +290,7 @@ void Game::startNewRound()
         }
     }
     sendMsg(msg);
+    battleField->doBeforeARound();
 }
 
 void Game::timeout()
@@ -362,6 +376,7 @@ void Game::hMove(Msg msgMap)
     if (msgMap["fromhand"].toInt())
     {
         battleField->removeCardFromOhand();
+        card->card->belongtome = false;
     }
     if (msgMap["tohand"].toInt())
     {
@@ -395,5 +410,22 @@ void Game::hohandChange(Msg msgMap)
             battleField->removeCardFromOhand();
         }
     }
+}
+
+void Game::hSpecialCard(Msg msgMap)
+{
+    CardButton* card;
+    if (msgMap["way"] == add)
+    {
+        card = new CardButton(msgMap["id"].toInt(), battleField, nullptr);
+    } else {
+        card = battleField->cardsOnBoard[msgMap["index"].toInt()];
+    }
+    battleField->changeSpecialCard(
+            battleField->cardSlot.at(msgMap["slot"].toInt()),
+            msgMap["way"],
+            card,
+            false
+            );
 }
 

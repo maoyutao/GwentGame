@@ -3,20 +3,10 @@
 
 #include "cardEnum.h"
 #include "w_battlefield.h"
-#include "cardfactory.h"
 #include <QObject>
 #include <QString>
-#include <QPixmap>
 #include <QVector>
-
-#define DECLARE_CARD(id)\
-class Card_##id : public Card\
-{\
-public:\
-    explicit Card_##id(BattleField * BattleField = nullptr,\
-                  QObject *parent = nullptr);\
-private:\
-};
+#include <QObject>
 
 class CardButton;
 
@@ -36,12 +26,11 @@ public:
     QVector<EProperty> property;
 
     int index{-1};
-
+    bool belongtome{true};
     int currentCombatValue;
     int armor{0};
     BattleField * battleField;
     CardButton * button{nullptr};
-    virtual void exertAbility();
 public:
     explicit Card(int id,
                   int basisCombatValue,
@@ -52,40 +41,12 @@ public:
                   EClassification classification,
                   BattleField * battleField = nullptr,
                   QObject *parent = nullptr);
+    virtual void exertAbility() = 0;
+    void choosePosition(QList<int> chooseableSlot);
+private slots:
+    virtual void afterChoosePosition(CardSlot* slot);
     ~Card();
 friend class CardButton;
 };
 
-class Card_0 : public Card
-{
-public:
-    explicit Card_0(BattleField * BattleField = nullptr,
-                  QObject *parent = nullptr);
-private:
-    void exertAbility() override;
-};
-
-DECLARE_CARD(1)
-DECLARE_CARD(2)
-DECLARE_CARD(3)
-DECLARE_CARD(4)
-DECLARE_CARD(5)
-DECLARE_CARD(6)
-DECLARE_CARD(7)
-DECLARE_CARD(8)
-DECLARE_CARD(9)
-DECLARE_CARD(10)
-DECLARE_CARD(11)
-DECLARE_CARD(12)
-DECLARE_CARD(13)
-DECLARE_CARD(14)
-DECLARE_CARD(15)
-DECLARE_CARD(16)
-DECLARE_CARD(17)
-DECLARE_CARD(18)
-DECLARE_CARD(19)
-DECLARE_CARD(20)
-DECLARE_CARD(21)
-DECLARE_CARD(22)
-DECLARE_CARD(23)
 #endif // CARD_H

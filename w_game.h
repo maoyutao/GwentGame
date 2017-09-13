@@ -42,8 +42,10 @@ private slots:
     void chooseCardSet();
     void start(CardSet* cardSet);
     void dispatchCard(CardButton* card);
+    void returnToField();
+    void clearChooseSlot();
     void changePageToGaming();
-    void showToBechosen(QList<CardButton*> list, standardSlot slot); // 在choose槽里展示list里的button  并为这些button的selected绑定这个类中的标准槽
+    void showToBechosen(QList<CardButton*> list, standardSlot slot = &Game::returnToField); // 在choose槽里展示list里的button  并为这些button的selected绑定这个类中的标准槽 默认是回战场
     void receiveMsg();
 private:
     QMap<QString, msgHandler> handlers;
@@ -73,6 +75,7 @@ private:
     void hChangeStrenth(Msg msgMap);
     void hMove(Msg msgMap);
     void hohandChange(Msg msgMap);
+    void hSpecialCard(Msg msgMap);
 };
 
 #endif // W_GAME_H

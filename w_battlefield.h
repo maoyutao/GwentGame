@@ -35,6 +35,7 @@ public:
     void addCardToOhand();
     void removeCardFromOhand();
     void drawCardTohand();
+    void changeSpecialCard(CardSlot* slot, QString way, CardButton * card, bool sendmsg = true);
 
 public:
     CardSet* mCardSet; //参赛的卡组
@@ -51,7 +52,6 @@ public:
     CardSlot* oBack;
     CardSlot* oHand;
     QMap<CardSlot*, int> strenth;
-    QMap<EPosition, int> event;
     int mStrenth{0};
     int oStrenth{0};
 
@@ -61,6 +61,8 @@ public:
 signals:
     void finishOneRound();
     void sendMsg(QMap<QString, QString> msg);
+    void showToBechosen(QList<CardButton*> list);
+    void clearChooseSlot();
 
 public slots:
     void initForFirst(Ui::MainWindow *aui);
@@ -73,6 +75,7 @@ private:
     void shuffle();
     void swapInt(int &a, int &b);
     void updateStrenthSum();
+    void doBeforeARound();
 
     friend class Game;
 };

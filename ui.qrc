@@ -56,5 +56,6 @@
         <file>resource/cards/card_2.png</file>
         <file>resource/cards/card_3.png</file>
         <file>resource/cards/card_1.png</file>
+        <file>resource/cards/card_25.png</file>
     </qresource>
 </RCC>

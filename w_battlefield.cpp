@@ -1,5 +1,5 @@
 #include "w_battlefield.h"
-#include "cards.h"
+#include "cards/index.h"
 #include "cardset.h"
 #include "ui_cardbutton.h"
 #include "ui_mainwindow.h"
@@ -157,10 +157,11 @@ void BattleField::move(CardSlot *to, CardButton *card, bool sendmsg)
 
 void BattleField::move(QString to, CardButton *card, bool sendmsg)
 {
-    // from range: 六排 空（敌人的手牌分成从手牌取一张（上层做） 和从一张空move两部分） 我的手牌  to range: 墓地 牌组
+    // from range: 六排 空（敌人的手牌分成从手牌取一张（上层做）和从一张空move两部分） 我的手牌  to range: 墓地 牌组
     // 完成了： 如果原有父亲就拿出 如果相关分数就改分数
     Msg msg;
     msg["tohand"] = QString::number(0);
+    msg["to"] = to;
     int mstrenth = card->card->currentCombatValue;
     if (card->slot)
     {
@@ -178,18 +179,21 @@ void BattleField::move(QString to, CardButton *card, bool sendmsg)
         msg["fromEmpty"] = QString::number(1);
     }
     card->deleteLater();
-    if (to == "cemetery")
+    if (to == "mcemetery")
     {
         mCemetery.append(card->card->id);
-    } else if (to == "deck")
+        msg[to] = "ocemetery";
+
+    } else if (to == "mdeck")
     {
         addCardToMDeck(card->card->id);
+        msg["to"] = "odeck";
     }
+    // 牌放到对方墓地里的暂时还不用 写的话就加在这里
     updateStrenthSum();
     if (sendmsg)
     {
         msg["type"] = "move";
-        msg["to"] = to;
         msg["toslot"] = QString::number(0);
         msg["index"] = QString::number(card->card->index);
         msg["id"] = QString::number(card->card->id);
@@ -199,10 +203,8 @@ void BattleField::move(QString to, CardButton *card, bool sendmsg)
 
 void BattleField::changeStrenth(int changeValue, CardButton *target, bool sendmsg)
 {
+    int now = target->card->currentCombatValue;
     target->card->currentCombatValue += changeValue;
-    CardSlot* parent = dynamic_cast<CardSlot*>(target->slot);
-    strenth[parent] += changeValue;
-    updateStrenthSum();
     if (sendmsg)
     {
         Msg msg;
@@ -211,6 +213,19 @@ void BattleField::changeStrenth(int changeValue, CardButton *target, bool sendms
         msg["index"] = QString::number(target->card->index);
         emit sendMsg(msg);
     }
+    CardSlot* parent = dynamic_cast<CardSlot*>(target->slot);
+    if (target->card->currentCombatValue < 0)
+    {
+        changeValue = now;
+        if (target->card->belongtome)
+        {
+            move("mcemetery", target);
+        } else {
+            move("ocemetery", target);
+        }
+    }
+    strenth[parent] += changeValue;
+    updateStrenthSum();
 }
 
 void BattleField::updateStrenthSum()
@@ -225,6 +240,17 @@ void BattleField::updateStrenthSum()
     ui->gamingOMS->setText(QString::number(strenth[oMiddle]));
     ui->gamingOFS->setText(QString::number(strenth[oFront]));
     ui->gamingOSum->setText(QString::number(oStrenth));
+}
+
+void BattleField::doBeforeARound()
+{
+    for (auto it: cardSlot)
+    {
+        for (auto sc: it->specialCard)
+        {
+            dynamic_cast<CardButton*>(sc)->card->exertAbility();
+        }
+    }
 }
 
 void BattleField::addCardToOhand()
@@ -248,8 +274,32 @@ void BattleField::drawCardTohand()
     sendMsg(msg);
 }
 
+void BattleField::changeSpecialCard(CardSlot *slot, QString way, CardButton *card, bool sendmsg)
+{
+    if (way == "add")
+    {
+        slot->addSpecialCard(card);
+        card->card->index = cardsOnBoard.count();
+    } else if (way == "remove") {
+        slot->removeSpecialCard(card);
+    } else if (way == "clear"){
+        slot->clearSpecialCard();
+    }
+    if (sendmsg)
+    {
+        Msg msg;
+        msg["type"] = "specialCard";
+        msg["way"] = way;
+        msg["to"] = QString::number(cardSlot.indexOf(to));
+        msg["id"] = QString::number(card->card->id);
+        msg["index"] = QString::number(card->card->index);
+        emit sendmsg(msg);
+    }
+}
+
 QList<CardButton*> BattleField::drawCards(int count)
 {
+    shuffle();
     QList<CardButton*> drawnCards;
     for (int i = 0; i< count; i++) {
         if (mDeck.isEmpty())
@@ -266,6 +316,7 @@ QList<CardButton*> BattleField::drawCards(int count)
 QList<CardButton *> BattleField::drawCards(int count, int except)
 {
     int num = mDeck.removeAll(except);
+    shuffle();
     QList<CardButton*> drawnCards;
     for (int i = 0; i< count; i++) {
         if (mDeck.isEmpty())

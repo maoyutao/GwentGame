@@ -1,7 +1,7 @@
 #ifndef CARDBUTTON_H
 #define CARDBUTTON_H
 
-#include "cards.h"
+#include "cards/index.h"
 #include <QWidget>
 #include <QPushButton>
 #include <QMouseEvent>
