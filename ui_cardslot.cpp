@@ -62,10 +62,10 @@ void CardSlot::removeCard()
     }
     cardList.removeFirst();
     QHBoxLayout* mlayout = static_cast<QHBoxLayout*>(this->widget(0)->layout());
-    auto firstcard = mlayout->itemAt(2);
-    auto strenth = mlayout->itemAt(3);
+    auto firstcard = mlayout->itemAt(2)->widget();
+    auto strenth = mlayout->itemAt(3)->spacerItem();
     firstcard->deleteLater();
-    strenth->deleteLater();
+    delete strenth;
 }
 
 void CardSlot::removeCard(QWidget *widget)
@@ -80,7 +80,7 @@ void CardSlot::removeCard(QWidget *widget)
         if (windex != -1)
         {
             auto strenth = mlayout->itemAt(windex + 1);
-            mlayout->removeItem(strenth);
+            delete strenth;
             mlayout->removeWidget(widget);
             break;
         }

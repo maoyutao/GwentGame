@@ -1,7 +1,7 @@
 #include "ui_timerround.h"
 #include <QDebug>
 
-TimerRound::TimerRound(QWidget *parent) : QLabel(parent), timer(new QTimer(this)), record(new QTime(0, 0, 60))
+TimerRound::TimerRound(QWidget *parent) : QLabel(parent), timer(new QTimer(this)), record(new QTime(0, 0, 59))
 {
 }
 
@@ -22,7 +22,7 @@ void TimerRound::change()
 {
     current = (current + 1) % 2;
     this->setStyleSheet(styleSheet[current]);
-    record->setHMS(0, 0, 60);
+    record->setHMS(0, 0, 59);
     timer->start(1000);
 }
 

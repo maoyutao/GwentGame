@@ -3,7 +3,6 @@
 #include "cardset.h"
 #include "ui_cardbutton.h"
 #include "ui_mainwindow.h"
-#include "messagedefine.h"
 #include <QTimer>
 #include <QtGlobal>
 
@@ -30,6 +29,12 @@ void BattleField::initForFirst(CardSet *cardset, Ui::MainWindow *aui)
     oBack = ui->gamingOBack;
     mHand = ui->mHandSlot;
     oHand = ui->oHandSlot;
+    cardSlot.append(mFront);
+    cardSlot.append(mMiddle);
+    cardSlot.append(mBack);
+    cardSlot.append(oFront);
+    cardSlot.append(oMiddle);
+    cardSlot.append(oBack);
     mleader = new CardButton(mCardSet->leader, this, ui->gamingMLeader);
     mDeck = mCardSet->allCards;
     mDeck.removeOne(mCardSet->leader);
@@ -51,7 +56,7 @@ void BattleField::init()
     // init opponent's hand slot
     for (int i = 0; i < 10; i++)
     {
-        oHand->addCard(new CardButton(-1, nullptr, oHand));
+        addCardToOhand();
     }
     oHand->setCurrentIndex(0);
 
@@ -71,8 +76,8 @@ void BattleField::init()
 void BattleField::randomlyExertCard()
 {
     qsrand(QTime(0,0,0).secsTo(QTime::currentTime()));
-    int index = qrand() % mHand.count();
-    mHand.at(index)->card->exertAbility();
+    int index = qrand() % mHand->cardList.count();
+    dynamic_cast<CardButton*>(mHand->cardList.at(index))->card->exertAbility();
 }
 
 void BattleField::shuffle()
@@ -91,75 +96,93 @@ void BattleField::swapInt(int &a, int &b)
     b = temp;
 }
 
-void BattleField::move(CardSlot *from, CardSlot *to, CardButton *card, bool sendmsg)
+void BattleField::move(CardSlot *to, CardButton *card, bool sendmsg)
 {
-//    if (from == oHand)
-//    {
-//        oHand->removeCard();
-//        new
-//    注册索引
-//    } //这块在处理那里写 注意转换一下敌我
-    if (from != oHand)
+    // from range: 六排 空（敌人的手牌打出来的是空） 我的手牌  to range: 六排 （我自己发动的时候的）我的手牌 敌人发动的时候不会到我的手牌里
+    // 完成了： 如果原有父亲就拿出 如果需注册但还未注册就注册 如果相关分数就改分数
+    QMap<QString, QString> msg;
+    msg["fromEmpty"] = QString::number(0); // fromempty 和fromhand 是没有编号的
+    msg["fromhand"] = QString::number(0);
+    msg["tohand"] = QString::number(0);
+    int mstrenth = card->card->currentCombatValue;
+    if (card->parentWidget())
     {
+        CardSlot* from = dynamic_cast<CardSlot*>(card->parentWidget());
         from->removeCard(card);
+        if (strenth.contains(from))
+        {
+            strenth[from] -= mstrenth;
+        }
+        if (card->parentWidget() == mHand)
+        {
+            msg["fromhand"] = QString::number(1);
+        }
+
+    } else {
+        msg["fromEmpty"] = QString::number(1);
     }
     to->addCard(card);
-    int mstrenth = card->card->currentCombatValue;
-    if (strenth.contains(from))
-    {
-        strenth[from] -= mstrenth;
-    }
     if (strenth.contains(to))
     {
-        strenth[to] += mstrenth;
+        strenth[to] -= mstrenth;
+        if (card->card->index == -1)
+        {
+            card->card->index = cardsOnBoard.count();
+            cardsOnBoard.append(card);
+        }
+    } else {
+        msg["tohand"] = QString::number(1);
     }
     updateStrenthSum();
-
-    // 注册索引
-    if (from == mHand)
-    {
-        card->card->index = cardsOnBoard.count();
-        cardsOnBoard.append(card);
-    }
     if (sendmsg)
     {
-        QMap<QString, QString> msg;
-        msg["type"] = QString::number(MMOVE);
-        msg["from"] = from->objectName();
-        msg["fromAs"] = "CardSlot";
-        msg["to"] = to->objectName();
-        msg["toAs"] = "CardSlot";
-        msg["card"] = card->card->index;
+        msg["type"] = "move";
+        msg["to"] = QString::number(cardSlot.indexOf(to));
+        msg["toslot"] = QString::number(1);
+        msg["card"] = QString::number(card->card->index);
+        msg["id"] = QString::number(card->card->id);
         emit sendMsg(msg);
     }
 }
 
-void BattleField::move(CardSlot *from, QString to, CardButton *card, bool sendmsg)
+void BattleField::move(QString to, CardButton *card, bool sendmsg)
 {
-    from->removeCard(card);
-    int strenth = card->card->currentCombatValue;
-    if (strenth.contains(from))
+    // from range: 六排 空（敌人的手牌分成从手牌取一张（上层做） 和从一张空move两部分） 我的手牌  to range: 墓地 牌组
+    // 完成了： 如果原有父亲就拿出 如果相关分数就改分数
+    QMap<QString, QString> msg;
+    msg["tohand"] = QString::number(0);
+    int mstrenth = card->card->currentCombatValue;
+    if (card->parentWidget())
     {
-        strenth[from] -= mstrenth;
+        if (card->parentWidget() == mHand)
+        {
+            msg["fromhand"] = QString::number(1);
+        }
+        CardSlot* from = dynamic_cast<CardSlot*>(card->parentWidget());
+        from->removeCard(card);
+        if (strenth.contains(from))
+        {
+            strenth[from] -= mstrenth;
+        }
+    } else {
+        msg["fromEmpty"] = QString::number(1);
     }
     card->deleteLater();
-    if (to == "deck")
-    {
-        mDeck.append(card->card->id);
-    }
     if (to == "cemetery")
     {
         mCemetery.append(card->card->id);
+    } else if (to == "deck")
+    {
+        addCardToMDeck(card->card->id);
     }
     updateStrenthSum();
     if (sendmsg)
     {
-        msg["type"] = QString::number(MMOVE);
-        msg["from"] = from->objectName();
-        msg["fromAs"] = "CardSlot";
+        msg["type"] = "move";
         msg["to"] = to;
-        msg["toAs"] = "QString";
-        msg["card"] = card->card->index;
+        msg["toslot"] = QString::number(0);
+        msg["card"] = QString::number(card->card->index);
+        msg["id"] = QString::number(card->card->id);
         emit sendMsg(msg);
     }
 }
@@ -173,9 +196,8 @@ void BattleField::changeStrenth(int changeValue, CardButton *target, bool sendms
     if (sendmsg)
     {
         QMap<QString, QString> msg;
-        msg["type"] = QString::number(MCHANGESTRENTH);
+        msg["type"] = "changeStrenth";
         msg["value"] = QString::number(changeValue);
-        msg["parent"] = parent->objectName();
         msg["card"] = QString::number(target->card->index);
         emit sendMsg(msg);
     }
@@ -189,10 +211,20 @@ void BattleField::updateStrenthSum()
     ui->gamingMMS->setText(QString::number(strenth[mMiddle]));
     ui->gamingMFS->setText(QString::number(strenth[mFront]));
     ui->gamingMSum->setText(QString::number(mStrenth));
-    ui->gamingOBS->setText(QString::number(strenth[oBack]);
+    ui->gamingOBS->setText(QString::number(strenth[oBack]));
     ui->gamingOMS->setText(QString::number(strenth[oMiddle]));
     ui->gamingOFS->setText(QString::number(strenth[oFront]));
     ui->gamingOSum->setText(QString::number(oStrenth));
+}
+
+void BattleField::addCardToOhand()
+{
+    oHand->addCard(new CardButton(-1, nullptr, oHand));
+}
+
+void BattleField::removeCardFromOhand()
+{
+    oHand->removeCard();
 }
 
 QList<CardButton*> BattleField::drawCards(int count)
@@ -208,8 +240,29 @@ QList<CardButton*> BattleField::drawCards(int count)
     return drawnCards;
 }
 
+QList<CardButton *> BattleField::drawCards(int count, int except)
+{
+    int num = mDeck.removeAll(except);
+    QList<CardButton*> drawnCards;
+    for (int i = 0; i< count; i++) {
+        if (mDeck.isEmpty())
+        {
+            break;
+        }
+        drawnCards.append((new CardButton(mDeck.takeFirst(), this, this)));
+    }
+    for (int i = 0; i < num; i++)
+    {
+        mDeck.append(except);
+    }
+    shuffle();
+    return drawnCards;
+}
+
 void BattleField::addCardToMDeck(int id)
 {
     mDeck.append(id);
+    shuffle();
 }
+
 

@@ -61,8 +61,7 @@ HEADERS += \
     ui_standarddialog.h \
     w_game.h \
     w_battlefield.h \
-    ui_timerround.h \
-    messagedefine.h
+    ui_timerround.h
 
 FORMS += \
         mainwindow.ui \

@@ -22,6 +22,8 @@ class BattleField : public QWidget
 public:
     explicit BattleField(QWidget *parent = nullptr);
     QList<CardButton*> drawCards(int count = 1);
+    QList<CardButton*> drawCards(int count, int except);
+
 
     void addCardToMDeck(int id);
     void randomlyExertCard();
@@ -45,6 +47,7 @@ private:
     int mStrenth{0};
     int oStrenth{0};
 
+    QList<CardSlot*> cardSlot;
     QList<CardButton*> cardsOnBoard; // 双方共享的索引
 
 signals:
@@ -60,12 +63,15 @@ private slots:
 private:
     void shuffle();
     void swapInt(int &a, int &b);
-    void move(CardSlot* from, CardSlot* to, CardButton * card, bool sendmsg = true);
-    void move(CardSlot* from, QString to, CardButton * card, bool sendmsg = true);
+    void move(CardSlot* to, CardButton * card, bool sendmsg = true);
+    void move(QString to, CardButton * card, bool sendmsg = true);
     void changeStrenth(int changeValue, CardButton * target, bool sendmsg = true);
     void updateStrenthSum();
+    void addCardToOhand();
+    void removeCardFromOhand();
 
     friend class Card;
+    friend class Game;
 };
 
 #endif // W_BATTLEFIELD_H

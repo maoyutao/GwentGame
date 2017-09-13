@@ -3,7 +3,6 @@
 #include "ui_standarddialog.h"
 #include "ui_cardbutton.h"
 #include "cardset.h"
-#include "messagedefine.h"
 #include <QStringList>
 #include <QDialog>
 #include <QDebug>
@@ -20,9 +19,14 @@
 #define PSCORE 4
 #define PFINALSCORE 5
 
+
 Game::Game(QWidget *parent) : QStackedWidget(parent)
 {
-
+    handlers["ready"] = &Game::hReady;
+    handlers["start"] = &Game::hStart;
+    handlers["changeRound"] = &Game::hChangeRound;
+    handlers["changeStrenth"] = &Game::hChangeStrenth;
+    handlers["move"] = &Game::hMove;
 }
 
 void Game::init(Player *aPlayer, Ui::MainWindow *aui)
@@ -152,7 +156,7 @@ void Game::showToBechosen(QList<CardButton *> list, standardSlot slot)
 void Game::dispatchCard(CardButton * card)
 {
     ui->gamingChooseSlot->setAllEnabled(false);
-    auto newCard = battleField->drawCards().first();
+    auto newCard = battleField->drawCards(1, card->card->id).first();
     ui->gamingChooseSlot->replaceCard(card, newCard);
 
 
@@ -175,7 +179,7 @@ void Game::changePageToGaming()
 {
     battleField->init();
     QMap<QString, QString> msg;
-    msg["type"] = QString::number(MREADY);
+    msg["type"] = "ready";
     msg["who"] = "opponent";
     sendMsg(msg);
     msg["who"] = "me";
@@ -203,8 +207,8 @@ void Game::receiveMsg()
     QString str;
     in.startTransaction();
     in >> str;
-    qDebug() << "receive" << str;
     msgHandler(parse(str));
+    qDebug() << "receive" << str;
 }
 
 QMap<QString, QString> Game::parse(QString msg)
@@ -232,39 +236,30 @@ QString Game::stringify(QMap<QString, QString> msgMap)
 
 void Game::msgHandler(QMap<QString, QString> msgMap)
 {
-    int type = msgMap["type"].toInt();
-    switch (type) {
-    case MREADY:
-        hReady(msgMap);
-        break;
-    case MSTART:
-        hStart(msgMap);
-        break;
-    case MFINISHROUND:
-        hFinishRound();
-        break;
-    default:
-        break;
+    QString type = msgMap["type"];
+    if (handlers.contains(type))
+    {
+        (this->*handlers[type])(msgMap);
     }
 }
 
 void Game::startNewRound()
 {
     QMap<QString, QString> msg;
-    msg["type"] = QString::number(MFINISHROUND);
+    msg["type"] = "changeRound";
     myRound = !myRound;
     ui->gamingRound->change();
     if (myRound)
     {
-        for (auto it: battleField->mHand)
+        for (auto it: battleField->mHand->cardList)
         {
-            it->exertable = true;
+            dynamic_cast<CardButton*>(it)->exertable = true;
             msg["myRound"] = "0";
         }
     } else {
-        for (auto it: battleField->allCards)
+        for (auto it: battleField->mHand->cardList)
         {
-            it->exertable = false;
+            dynamic_cast<CardButton*>(it)->exertable = false;
             msg["myRound"] = "1";
         }
     }
@@ -283,28 +278,26 @@ void Game::timeout()
 void Game::hReady(QMap<QString, QString> msgMap)
 {
     ((msgMap["who"] == "me") ? ready[0] : ready[1]) = true;
-    if (ready[0] && ready[1])
+    if (ready[0] && ready[1] && !on)
     {
         // 开始游戏
-        if (server)
+        on = true;
+        qsrand(QTime(0,0,0).secsTo(QTime::currentTime()));
+        QMap<QString, QString> msg;
+        msg["type"] = "start";
+        int first = qrand() % 2;
+        if (first)
         {
-            qsrand(QTime(0,0,0).secsTo(QTime::currentTime()));
-            QMap<QString, QString> msg;
-            msg["type"] = QString::number(MSTART);
-            int first = qrand() % 2;
-            if (first)
-            {
-                myRound = true;
-                msg["first"] = "opponent";
-            } else {
-                myRound = false;
-                msg["first"] = "me";
-            }
-            sendMsg(msg);
-            startNewRound();
-            ui->gamingRound->start(myRound);
-            connect(ui->gamingRound, SIGNAL(timeout()), this, SLOT(timeout()), Qt::UniqueConnection);
+            myRound = true;
+            msg["first"] = "opponent";
+        } else {
+            myRound = false;
+            msg["first"] = "me";
         }
+        sendMsg(msg);
+        startNewRound();
+        ui->gamingRound->start(myRound);
+        connect(ui->gamingRound, SIGNAL(timeout()), this, SLOT(timeout()), Qt::UniqueConnection);
     }
 }
 
@@ -321,13 +314,47 @@ void Game::hStart(QMap<QString, QString> msgMap)
     connect(battleField, SIGNAL(finishOneRound()), this, SLOT(startNewRound()), Qt::UniqueConnection);
 }
 
-void Game::hFinishRound(QMap<QString, QString> msgMap)
+void Game::hChangeRound(QMap<QString, QString> msgMap)
 {
+    // 防止循环提醒
     int i = msgMap["myRound"].toInt();
     if (i && myRound)
         return;
     if (!(i || myRound))
         return;
     startNewRound();
+}
+
+void Game::hChangeStrenth(QMap<QString, QString> msgMap)
+{
+    int value = msgMap["value"].toInt();
+    int index = msgMap["card"].toInt();
+    CardButton * card = battleField->cardsOnBoard.at(index);
+    battleField->changeStrenth(value, card, false);
+}
+
+void Game::hMove(QMap<QString, QString> msgMap)
+{
+    CardButton* card;
+    if (msgMap["fromhand"].toInt())
+    {
+        battleField->removeCardFromOhand();
+    }
+    if (msgMap["tohand"].toInt())
+    {
+        battleField->addCardToOhand();
+    }
+    if (msgMap["fromhand"].toInt() || msgMap["fromEmpty"].toInt())
+    {
+        card = new CardButton(msgMap["id"].toInt(), battleField, nullptr);
+    } else {
+        card = battleField->cardsOnBoard.at(msgMap["card"].toInt());
+    }
+    if (msgMap["toSlot"].toInt())
+    {
+        battleField->move(battleField->cardSlot.at(msgMap["to"].toInt()), card, false);
+    } else {
+        battleField->move(msgMap["to"], card, false);
+    }
 }
 

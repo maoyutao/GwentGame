@@ -2,6 +2,7 @@
 #include <QStringBuilder>
 #include <QSize>
 #include <QDebug>
+#include <QTimer>
 
 CardButton::CardButton(int cardID, BattleField * battleField, QWidget *parent) : QPushButton(parent),
     card(static_cast<Card*>(CardFactory::CreateObject(cardID, battleField, this)))
@@ -33,13 +34,25 @@ void CardButton::setChooseable(bool mchooseable)
 
 void CardButton::stopShowInfo()
 {
-    box->setStyleSheet("border-image: url()");
+    if (!infoBox)
+    {
+        return;
+    }
+    infoBox->setStyleSheet("border-image: url()");
 }
 
-void CardButton::showInfo(QWidget* box)
+void CardButton::setInfoBox(QWidget *box)
 {
     infoBox = box;
-    box->setStyleSheet("border-image: url(" % card->iconUrl % ")");
+}
+
+void CardButton::showInfo()
+{
+    if (!infoBox)
+    {
+        return;
+    }
+    infoBox->setStyleSheet("border-image: url(" % card->iconUrl % ")");
     QTimer *timer = new QTimer(this);
     timer->setSingleShot(true);
     connect(timer, SIGNAL(timeout()), this, SLOT(stopShowInfo()), Qt::UniqueConnection);

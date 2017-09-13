@@ -35,12 +35,12 @@ public:
     const EClassification classification;
     QVector<EProperty> property;
 
-    int index;
+    int index{-1};
 
     int currentCombatValue;
     int armor{0};
     BattleField * battleField;
-//    virtual void exertAbility() = 0;
+    virtual void exertAbility();
 public:
     explicit Card(int id,
                   int basisCombatValue,

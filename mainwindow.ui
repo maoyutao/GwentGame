@@ -1427,7 +1427,7 @@ border-image: url()
                      <string notr="true">border-image:url(:/new/prefix1/resource/o_round_circle.png)</string>
                     </property>
                     <property name="text">
-                     <string>60</string>
+                     <string>59</string>
                     </property>
                     <property name="alignment">
                      <set>Qt::AlignCenter</set>

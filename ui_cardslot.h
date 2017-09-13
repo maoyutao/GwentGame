@@ -18,13 +18,13 @@ public:
     void addCard(QWidget * widget, int index = -1); // 这里的index是牌的index （经过计算的）
     void addPCard(QWidget * widget, int index); // 这里的index是原始的index （算上左右箭头和strenth）
     void removeCard(QWidget * widget);
-    void removeCard();
+    void removeCard(); // 移除第一张卡
     void setLimit(int newLimit);
     void clear();
     void replaceCard(QWidget * toBeReplaced, QWidget * replace);
     void setAllEnabled(bool enabled);
     bool empty{true};
-    QList<QPushButton *> cardList;
+    QList<QPushButton *> cardList; // 用pushbutton而不是cardbutton因为这样卡牌集也可以放 以后可能可以放别的 但是外面用的时候注意动态转换类型
     bool chooseable{false};
     void setChooseable(bool mchooseable);
 signals:

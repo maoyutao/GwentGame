@@ -1,6 +1,11 @@
 #include "cards.h"
 #include <QDebug>
 
+void Card::exertAbility()
+{
+
+}
+
 Card::Card(int id,
            int basisCombatValue,
            QString name,

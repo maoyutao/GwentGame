@@ -28,6 +28,7 @@ signals:
 public slots:
     void stopShowInfo();
 private:
+    void setInfoBox(QWidget* box);
     void showInfo();
     void paintEvent(QPaintEvent *event) override;
     void mousePressEvent(QMouseEvent* event) override;

@@ -18,6 +18,7 @@ class MainWindow;
 class Game;
 
 typedef void (Game::*standardSlot)(CardButton*);
+typedef void (Game::*msgHandler)(QMap<QString, QString> msgMap);
 
 class Game : public QStackedWidget
 {
@@ -44,6 +45,7 @@ private slots:
     void showToBechosen(QList<CardButton*> list, standardSlot slot); // 在choose槽里展示list里的button  并为这些button的selected绑定这个类中的标准槽
     void receiveMsg();
 private:
+    QMap<QString, msgHandler> handlers;
     Ui::MainWindow *ui{nullptr};
     BattleField* battleField;
     Player* player{nullptr};
@@ -57,6 +59,7 @@ private:
 
     bool myRound{false};
     bool ready[2]{false, false}; // 0是我 1是对方
+    bool on{false};
 
 private:
     QMap<QString, QString> parse(QString msg);
@@ -65,7 +68,9 @@ private:
 
     void hReady(QMap<QString, QString> msgMap);
     void hStart(QMap<QString, QString> msgMap);
-    void hFinishRound(QMap<QString, QString> msgMap);
+    void hChangeRound(QMap<QString, QString> msgMap);
+    void hChangeStrenth(QMap<QString, QString> msgMap);
+    void hMove(QMap<QString, QString> msgMap);
 };
 
 #endif // W_GAME_H
