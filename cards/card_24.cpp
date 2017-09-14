@@ -16,7 +16,7 @@ void Card_24::exertAbility()
 {
     for (int i = 3; i < 6; i++)
     {
-        battleField->cardSlot[i]->clearSpecialCard();
+        battleField->cardSlot[i]->removeSpecialCard();
     }
     if (first)
     {

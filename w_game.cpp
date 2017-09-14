@@ -11,6 +11,7 @@
 #include <QByteArray>
 #include <QDataStream>
 #include <QtGlobal>
+#include <QPropertyAnimation>
 
 #define PGAMEREADY 0
 #define PWAITING 1
@@ -20,7 +21,7 @@
 #define PFINALSCORE 5
 
 
-Game::Game(QWidget *parent) : QStackedWidget(parent)
+Game::Game(QWidget *parent) : QStackedWidget(parent), tip(new QLabel(nullptr))
 {
     handlers["ready"] = &Game::hReady;
     handlers["start"] = &Game::hStart;
@@ -29,6 +30,7 @@ Game::Game(QWidget *parent) : QStackedWidget(parent)
     handlers["move"] = &Game::hMove;
     handlers["ohandChange"] = &Game::hohandChange;
     handlers["specialCard"] = &Game::hSpecialCard;
+    handlers["giveup"] = &Game::hoGiveup;
 }
 
 void Game::init(Player *aPlayer, Ui::MainWindow *aui)
@@ -111,6 +113,8 @@ void Game::onConnect()
     connect(socket, SIGNAL(disconnected()), socket, SLOT(deleteLater()));
     connect(socket, SIGNAL(readyRead()), this, SLOT(receiveMsg()));
     ui->msg->setText(QApplication::translate("MainWindow", "<html><head/><body><p align=\"center\"><span style=\" font-size:24pt; color:#b7b7b7;\">Connect successfully!</span></p></body></html>", Q_NULLPTR));
+
+
     QTimer *timer = new QTimer(this);
     timer->setSingleShot(true);
     connect(timer, SIGNAL(timeout()), this, SLOT(chooseCardSet()), Qt::UniqueConnection);
@@ -144,6 +148,7 @@ void Game::start(CardSet *cardSet)
     connect(battleField, SIGNAL(sendMsg(QMap<QString,QString>)), this, SLOT(sendMsg(QMap<QString,QString>)));
     connect(battleField, SIGNAL(showToBechosen(QList<CardButton*>)), this, SLOT(showToBechosen(QList<CardButton*>)));
     connect(battleField, SIGNAL(clearChooseSlot()), this, SLOT(clearChooseSlot()));
+    connect(ui->gamingRound, SIGNAL(giveup()), this, SLOT(mgiveup()));
     signalTimesLimit = 3;
     showToBechosen(battleField->drawCards(10), &Game::dispatchCard);
 }
@@ -161,7 +166,6 @@ void Game::showToBechosen(QList<CardButton *> list, standardSlot slot)
 void Game::dispatchCard(CardButton * card)
 {
     ui->gamingChooseSlot->setAllEnabled(false);
-    qDebug() << battleField->drawCards(1, card->card->id);
     auto newCard = battleField->drawCards(1, card->card->id).first();
     ui->gamingChooseSlot->replaceCard(card, newCard);
     battleField->addCardToMDeck(card->card->id);
@@ -196,7 +200,7 @@ void Game::clearChooseSlot()
 
 void Game::changePageToGaming()
 {
-    battleField->init();
+    battleField->init(now);
     Msg msg;
     msg["type"] = "ready";
     msg["who"] = "opponent";
@@ -222,14 +226,6 @@ void Game::sendMsg(QMap<QString, QString> msg)
 
 void Game::receiveMsg()
 {
-//    QDataStream in;
-//    in.setDevice(socket);
-//    in.setVersion(QDataStream::Qt_5_9);
-//    QString str;
-//    in.startTransaction();
-//    in >> str;
-//    msgHandler(parse(str));
-//    qDebug() << "receive" << str;
     QString str;
     QByteArray block = socket->readAll();
     QDataStream in(&block, QIODevice::ReadOnly);
@@ -271,6 +267,79 @@ void Game::msgHandler(Msg msgMap)
     }
 }
 
+void Game::myRoundAnimation()
+{
+    tip->setStyleSheet("border-image: url(:/new/prefix1/resource/m_round");
+    QPropertyAnimation animation(tip, "geometry");
+    animation.setDuration(3000);
+    animation.setStartValue(QRect(100, 30, -100, 200));
+    animation.setEndValue(QRect(100, 30, 100, 200));
+    animation.start();
+}
+
+void Game::score()
+{
+    mScore[now] = battleField->mStrenth;
+    oScore[now] = battleField->oStrenth;
+    if (mScore[now] > oScore[now])
+    {
+        win[now] = 1;
+    } else if (mScore[now] < oScore[now]) {
+        win[now] = -1;
+    }
+    if (win.count(1) == 2)
+    {
+        this->setCurrentIndex(PFINALSCORE);
+        ui->finalScore->setStyleSheet("#finalScore {border-image: url(:/new/prefix1/resource/final_score_win.png)}#finalScore * {border-image: url()}");
+        ui->mscore1->setText(QString::number(mScore.at(0)));
+        ui->mscore2->setText(QString::number(mScore.at(1)));
+        ui->mscore3->setText(QString::number(mScore.at(2)));
+        ui->oscore1->setText(QString::number(oScore.at(0)));
+        ui->oscore2->setText(QString::number(oScore.at(1)));
+        ui->oscore3->setText(QString::number(oScore.at(2)));
+        return;
+    }
+    if (win.count(-1) == 2)
+    {
+        this->setCurrentIndex(PFINALSCORE);
+        ui->finalScore->setStyleSheet("#finalScore {border-image: url(:/new/prefix1/resource/final_score_lose.png)}#finalScore * {border-image: url()}");
+        ui->mscore1->setText(QString::number(mScore.at(0)));
+        ui->mscore2->setText(QString::number(mScore.at(1)));
+        ui->mscore3->setText(QString::number(mScore.at(2)));
+        ui->oscore1->setText(QString::number(oScore.at(0)));
+        ui->oscore2->setText(QString::number(oScore.at(1)));
+        ui->oscore3->setText(QString::number(oScore.at(2)));
+        return;
+    }
+    this->setCurrentIndex(PSCORE);
+    ui->mscore->setText(QString::number(mScore.at(now)));
+    ui->oscore->setText(QString::number(oScore.at(now)));
+    now++;
+    QTimer *timer = new QTimer(this);
+    timer->setSingleShot(true);
+    connect(timer, SIGNAL(timeout()), this, SLOT(newMatch()), Qt::UniqueConnection);
+    connect(timer, SIGNAL(timeout()), timer, SLOT(deleteLater()), Qt::UniqueConnection);
+    timer->start(1200);
+}
+
+void Game::newMatch()
+{
+    int draw;
+    switch (now) {
+    case 1:
+        draw = 2;
+        break;
+    case 2:
+        draw = 1;
+    default:
+        return;
+        break;
+    }
+    ui->gamingChooseSlot->clear();
+    signalTimesLimit = 1; // 换几张
+    showToBechosen(battleField->drawCards(draw), &Game::dispatchCard);
+}
+
 void Game::startNewRound()
 {
     Msg msg;
@@ -280,9 +349,20 @@ void Game::startNewRound()
     ui->gamingRound->change();
     if (myRound)
     {
+        if (giveup[0])
+        {
+            startNewRound();
+            return;
+        }
         msg["myRound"] = "0";
         battleField->setAllHandCardExertable(true);
+        myRoundAnimation();
     } else {
+        if (giveup[1])
+        {
+            startNewRound();
+            return;
+        }
         msg["myRound"] = "1";
         // 理论上在牌的双击槽函数里就要有下面这句 但是以防漏了
         battleField->setAllHandCardExertable(false);
@@ -295,7 +375,24 @@ void Game::timeout()
 {
     if (myRound)
     {
+        if (battleField->mHand->cardList.count() <= 0)
+        {
+            giveup[0] = true;
+            return;
+        }
         battleField->randomlyExertCard();
+    }
+}
+
+void Game::mgiveup()
+{
+    giveup[0] = true;
+    Msg msg;
+    msg["type"] = "giveup";
+    sendMsg(msg);
+    if (giveup[0] && giveup[1])
+    {
+        score();
     }
 }
 
@@ -424,5 +521,14 @@ void Game::hSpecialCard(Msg msgMap)
             card,
             false
             );
+}
+
+void Game::hoGiveup(Msg msgMap)
+{
+    giveup[1] = true;
+    if (giveup[0] && giveup[1])
+    {
+        score();
+    }
 }
 

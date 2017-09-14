@@ -48,18 +48,9 @@ void CardSlot::addCard(QPushButton * widget, int index)
         }
          index = (mlayout->count() - 4) / 2;
     }
-    mlayout->insertWidget(index * 2 + 2, widget, 0, Qt::AlignCenter);
+    mlayout->insertWidget((index * 2 + 2), widget, 0, Qt::AlignCenter);
     mlayout->insertStretch(index * 2 + 3);
     cardList.append(widget);
-
-//    qDebug() << "add";
-//    for (int i = 0; i < mlayout->count(); i++)
-//    {
-//        qDebug() << mlayout->itemAt(i)->widget();
-//        qDebug() << mlayout->itemAt(i)->geometry();
-//    }
-//    qDebug() << "finish add";
-
 }
 
 void CardSlot::removeCard()
@@ -84,11 +75,18 @@ void CardSlot::removeCard(QPushButton *widget)
         dynamic_cast<CardButton*>(widget)->slot = nullptr;
     }
     cardList.removeOne(widget);
+    int index = this->currentIndex();
     int count = this->count();
     QHBoxLayout * mlayout;
     for (int i = 0; i < count; i++)
     {
-        mlayout = static_cast<QHBoxLayout*>(this->widget(i)->layout());
+        this->setCurrentIndex(i);
+        mlayout = static_cast<QHBoxLayout*>(this->currentWidget()->layout());
+        qDebug() << mlayout;
+        if (!mlayout)
+        {
+            break;
+        }
         int windex = mlayout->indexOf(widget);
         if (windex != -1)
         {
@@ -98,6 +96,7 @@ void CardSlot::removeCard(QPushButton *widget)
             break;
         }
     }
+    this->setCurrentIndex(index);
     // 如果一页里没有了就删除这页
     if (mlayout->count() == 4)
     {
@@ -214,25 +213,20 @@ void CardSlot::setChooseable(bool mchooseable)
 
 void CardSlot::addSpecialCard(CardButton *widget)
 {
-    specialCard.append(widget);
+    if (specialCard)
+    {
+        delete specialCard;
+    }
+    specialCard = widget;
     widget->setParent(this);
     float h = this->height() / 2;
     float w = h * 0.6;
-    float x = specialCard.count() * w;
-    widget->setGeometry(x, 0, w, h);
-    qDebug() << "addSpecialCard" << widget->geometry();
+    widget->setGeometry(0, 0, w, h);
 }
 
-void CardSlot::removeSpecialCard(CardButton *widget)
+void CardSlot::removeSpecialCard()
 {
-    specialCard.removeOne(widget);
-    widget->deleteLater();
-}
-
-void CardSlot::clearSpecialCard()
-{
-    qDeleteAll(specialCard);
-    specialCard.clear();
+    specialCard->deleteLater();
 }
 
 void CardSlot::hideButtonIfNeeded()

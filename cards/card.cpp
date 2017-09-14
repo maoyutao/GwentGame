@@ -26,7 +26,7 @@ Card::Card(int id,
 
 void Card::dyingWish()
 {
-    this->deleteLater();
+    button->deleteLater();
 }
 
 void Card::choosePosition(QList<int> chooseableSlot)

@@ -10,6 +10,8 @@
 #include <QTcpServer>
 #include <QTcpSocket>
 #include <QMap>
+#include <QLabel>
+#include <QVector>
 
 namespace Ui {
 class MainWindow;
@@ -32,6 +34,7 @@ signals:
 public slots:
     void startNewRound();
     void timeout();
+    void mgiveup();
     void sendMsg(QMap<QString, QString> msgMap);
 
 private slots:
@@ -54,8 +57,10 @@ private:
     Player* player{nullptr};
     QTcpSocket* socket{nullptr};
     QTcpServer* server{nullptr};
-    int mScore[3];
-    int oScore[3];
+    QVector<int> mScore{QVector<int>(3, 0)};
+    QVector<int> oScore{QVector<int>(3, 0)};
+    QVector<int> win{QVector<int>(3, 0)};
+    int now{0};
 
     int signalTimes{0};
     int signalTimesLimit{0};
@@ -63,11 +68,16 @@ private:
     bool myRound{false};
     bool ready[2]{false, false}; // 0是我 1是对方
     bool on{false};
+    bool giveup[2]{false, false}; // 0是我 1是对方
 
 private:
+    QLabel* tip;
     Msg parse(QString msg);
     QString stringify(Msg msgMap);
     void msgHandler(Msg msgMap);
+    void myRoundAnimation();
+    void score();
+    void newMatch();
 
     void hReady(Msg msgMap);
     void hStart(Msg msgMap);
@@ -76,6 +86,7 @@ private:
     void hMove(Msg msgMap);
     void hohandChange(Msg msgMap);
     void hSpecialCard(Msg msgMap);
+    void hoGiveup(Msg msgMap);
 };
 
 #endif // W_GAME_H

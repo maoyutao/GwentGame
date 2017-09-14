@@ -20,7 +20,6 @@ CardButton::CardButton(int cardID, BattleField * battleField, QWidget *parent) :
 
 CardButton::~CardButton()
 {
-//    qDebug() << "delete cardButton" << card->id;
 }
 
 void CardButton::setChooseable(bool chooseable)

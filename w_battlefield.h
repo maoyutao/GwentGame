@@ -67,7 +67,7 @@ signals:
 public slots:
     void initForFirst(Ui::MainWindow *aui);
     void setCardSet(CardSet* cardset);
-    void init();
+    void init(int now);
     void setAllHandCardExertable(bool exertable);
 
 private slots:

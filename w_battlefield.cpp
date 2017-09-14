@@ -46,7 +46,7 @@ void BattleField::setCardSet(CardSet *cardset)
     shuffle();
 }
 
-void BattleField::init()
+void BattleField::init(int now)
 {
     // init my hand slot
     for (auto it: ui->gamingChooseSlot->cardList)
@@ -61,7 +61,20 @@ void BattleField::init()
     mHand->setCurrentIndex(0);
 
     // init opponent's hand slot
-    for (int i = 0; i < 10; i++)
+    int add;
+    switch (now) {
+    case 0:
+        add = 10;
+        break;
+    case 1:
+        add = 2;
+        break;
+    case 2:
+        add = 3;
+    default:
+        break;
+    }
+    for (int i = 0; i < add; i++)
     {
         addCardToOhand();
     }
@@ -265,10 +278,7 @@ void BattleField::doBeforeARound()
 {
     for (auto it: cardSlot)
     {
-        for (auto sc: it->specialCard)
-        {
-            dynamic_cast<CardButton*>(sc)->card->exertAbility();
-        }
+        it->specialCard->card->exertAbility();
     }
 }
 
@@ -306,9 +316,7 @@ void BattleField::changeSpecialCard(CardSlot *slot, QString way, CardButton *car
         slot->addSpecialCard(card);
         card->card->index = cardsOnBoard.count();
     } else if (way == "remove") {
-        slot->removeSpecialCard(card);
-    } else if (way == "clear"){
-        slot->clearSpecialCard();
+        slot->removeSpecialCard();
     }
     if (sendmsg)
     {
@@ -332,7 +340,7 @@ QList<CardButton*> BattleField::drawCards(int count)
             break;
         }
         CardButton* c = new CardButton(mDeck.takeFirst(), this, nullptr);
-//        c->setInfoBox(ui->bigBox);
+//        c->setInfoBox(ui->bigBox); 信息显示  还没做完
         drawnCards.append(c);
     }
     return drawnCards;
@@ -349,7 +357,7 @@ QList<CardButton *> BattleField::drawCards(int count, int except)
             break;
         }
         CardButton* c = new CardButton(mDeck.takeFirst(), this, nullptr);
-//        c->setInfoBox(ui->bigBox);
+//        c->setInfoBox(ui->bigBox);   信息显示  还没做完
         drawnCards.append(c);
     }
     for (int i = 0; i < num; i++)

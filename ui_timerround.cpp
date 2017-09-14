@@ -38,3 +38,8 @@ void TimerRound::updateTime()
         timer->stop();
     }
 }
+
+void TimerRound::mouseDoubleClickEvent(QMouseEvent *)
+{
+    emit giveup();
+}
