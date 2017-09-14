@@ -17,5 +17,40 @@ Card_18::Card_18(BattleField *battleField, QObject *parent):
 
 void Card_18::exertAbility()
 {
-
+    battleField->setAllHandCardExertable(false);
+    QList<int> pos;
+    pos << SLOTMBACK << SLOTMFRONT << SLOTMMMIDLE;
+    choosePosition(pos);
 }
+
+void Card_18::afterChoosePosition(CardSlot *slot)
+{
+    mslot = slot;
+    QList<int> cards;
+    for (auto it: battleField->oBack->cardList)
+    {
+        cards.append(dynamic_cast<CardButton*>(it)->card->id);
+    }
+    for (auto it: battleField->oMiddle->cardList)
+    {
+        cards.append(dynamic_cast<CardButton*>(it)->card->id);
+    }
+    for (auto it: battleField->oFront->cardList)
+    {
+        cards.append(dynamic_cast<CardButton*>(it)->card->id);
+    }
+    chooseCardOnBoard(cards);
+}
+
+
+void Card_18::afterChooseCard(CardButton *card)
+{
+    int i = battleField->cardSlot.indexOf(mslot);
+    battleField->move(battleField->cardSlot[5 - i], card);
+    CardButton* frost = new CardButton(1, battleField, nullptr);
+    frost->card->first = false;
+    battleField->changeSpecialCard(mslot, "add", frost);
+    emit battleField->finishOneRound();
+}
+
+

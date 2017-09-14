@@ -350,40 +350,60 @@ void BattleField::changeSpecialCard(CardSlot *slot, QString way, CardButton *car
 
 QList<CardButton*> BattleField::drawCards(int count)
 {
-    shuffle();
+
+    CardButton* c;
     QList<CardButton*> drawnCards;
-    for (int i = 0; i< count; i++) {
-        if (mDeck.isEmpty())
-        {
-            break;
-        }
-        CardButton* c = new CardButton(mDeck.takeFirst(), this, nullptr);
-//        c->setInfoBox(ui->bigBox); 信息显示  还没做完
+    for (int i = 0; i < count; i++)
+    {
+        c = new CardButton(7, this, nullptr);
         drawnCards.append(c);
     }
     return drawnCards;
+
+//    shuffle();
+//    QList<CardButton*> drawnCards;
+//    for (int i = 0; i< count; i++) {
+//        if (mDeck.isEmpty())
+//        {
+//            break;
+//        }
+//        CardButton* c = new CardButton(mDeck.takeFirst(), this, nullptr);
+////        c->setInfoBox(ui->bigBox); 信息显示  还没做完
+//        drawnCards.append(c);
+//    }
+//    return drawnCards;
 }
 
 QList<CardButton *> BattleField::drawCards(int count, int except)
 {
-    int num = mDeck.removeAll(except);
-    shuffle();
+    CardButton* c;
     QList<CardButton*> drawnCards;
-    for (int i = 0; i< count; i++) {
-        if (mDeck.isEmpty())
-        {
-            break;
-        }
-        CardButton* c = new CardButton(mDeck.takeFirst(), this, nullptr);
-//        c->setInfoBox(ui->bigBox);   信息显示  还没做完
+    for (int i = 0; i < count; i++)
+    {
+        c = new CardButton(7, this, nullptr);
         drawnCards.append(c);
     }
-    for (int i = 0; i < num; i++)
-    {
-        mDeck.append(except);
-    }
-    shuffle();
     return drawnCards;
+
+
+//    int num = mDeck.removeAll(except);
+//    shuffle();
+//    QList<CardButton*> drawnCards;
+//    for (int i = 0; i< count; i++) {
+//        if (mDeck.isEmpty())
+//        {
+//            break;
+//        }
+//        CardButton* c = new CardButton(mDeck.takeFirst(), this, nullptr);
+////        c->setInfoBox(ui->bigBox);   信息显示  还没做完
+//        drawnCards.append(c);
+//    }
+//    for (int i = 0; i < num; i++)
+//    {
+//        mDeck.append(except);
+//    }
+//    shuffle();
+//    return drawnCards;
 }
 
 void BattleField::addCardToMDeck(int id)

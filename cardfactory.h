@@ -13,7 +13,7 @@ public:
     CardFactory();
     static void* CreateObject(int cardId, BattleField * BattleField = nullptr, QObject *parent = nullptr);
     static void RegisterClass(int cardId, newCardFunctionPtr np);
-//private:
+private:
     static QMap<int, newCardFunctionPtr> cardMap;
 };
 
