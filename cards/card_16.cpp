@@ -14,5 +14,20 @@ Card_16::Card_16(BattleField *battleField, QObject *parent):
 
 void Card_16::exertAbility()
 {
-
+    battleField->setAllHandCardExertable(false);
+    battleField->move(battleField->mBack, button);
+    for (int it: battleField->mDeck)
+    {
+        if (it == 15 || it == 14)
+        {
+            battleField->mDeck.removeOne(it);
+            CardButton * card = new CardButton(it, battleField, nullptr);
+            card->card->first = false;
+            card->card->exertAbility();
+        }
+    }
+    if (first)
+    {
+        battleField->finishOneRound();
+    }
 }

@@ -182,6 +182,7 @@ void CardSlot::setChooseable(bool mchooseable)
 
 void CardSlot::addSpecialCard(CardButton *widget)
 {
+    qDebug() << "addSpecialCard";
     if (specialCard)
     {
         delete specialCard;

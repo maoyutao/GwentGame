@@ -56,7 +56,6 @@ void BattleField::init(int now)
         p->raise();
         p->exertable = false;
         p->selectable = false;
-        qDebug() << "enable" << p->isEnabled();
     }
     mHand->setCurrentIndex(0);
 
