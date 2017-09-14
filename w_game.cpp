@@ -319,7 +319,7 @@ void Game::score()
     timer->setSingleShot(true);
     connect(timer, SIGNAL(timeout()), this, SLOT(newMatch()), Qt::UniqueConnection);
     connect(timer, SIGNAL(timeout()), timer, SLOT(deleteLater()), Qt::UniqueConnection);
-    timer->start(1200);
+    timer->start(3000);
 }
 
 void Game::newMatch()
