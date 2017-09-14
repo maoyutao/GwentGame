@@ -220,6 +220,7 @@ void Game::changePageToGaming()
     ui->gamingOBack->clear();
     ui->gamingOFront->clear();
     ui->gamingOMiddle->clear();
+    battleField->end();
     battleField->updateStrenthSum();
     ui->gameStackWidget->setCurrentIndex(PGAMING);
 }
@@ -310,6 +311,7 @@ void Game::score()
         ui->oscore1->setText(QString::number(oScore.at(0)));
         ui->oscore2->setText(QString::number(oScore.at(1)));
         ui->oscore3->setText(QString::number(oScore.at(2)));
+        end();
         return;
     }
     if (win.count(-1) == 2)
@@ -322,6 +324,7 @@ void Game::score()
         ui->oscore1->setText(QString::number(oScore.at(0)));
         ui->oscore2->setText(QString::number(oScore.at(1)));
         ui->oscore3->setText(QString::number(oScore.at(2)));
+        end();
         return;
     }
     if (now == 3)
@@ -334,6 +337,7 @@ void Game::score()
         ui->oscore1->setText(QString::number(oScore.at(0)));
         ui->oscore2->setText(QString::number(oScore.at(1)));
         ui->oscore3->setText(QString::number(oScore.at(2)));
+        end();
         return;
     }
     this->setCurrentIndex(PSCORE);
@@ -345,6 +349,17 @@ void Game::score()
     connect(timer, SIGNAL(timeout()), this, SLOT(newMatch()));
     connect(timer, SIGNAL(timeout()), timer, SLOT(deleteLater()));
     timer->start(3000);
+}
+
+void Game::end()
+{
+    socket->close();
+    socket = nullptr;
+    if (server)
+    {
+        server->close();
+        server = nullptr;
+    }
 }
 
 void Game::newMatch()
@@ -549,6 +564,7 @@ void Game::hSpecialCard(Msg msgMap)
     if (msgMap["way"] == "add")
     {
         card = new CardButton(msgMap["id"].toInt(), battleField, nullptr);
+        card->card->first = false;
     } else {
         card = battleField->cardsOnBoard[msgMap["index"].toInt()];
     }

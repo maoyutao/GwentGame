@@ -28,10 +28,7 @@ public:
 
     void addCardToMDeck(int id);
     void randomlyExertCard();
-//    void mmove(CardSlot* to, CardButton * card);
-
-
-
+    void end();
     void move(CardSlot* to, CardButton * card, bool sendmsg = true);
     void move(QString to, CardButton * card, bool sendmsg = true);
     void changeStrenth(int changeValue, CardButton * target, bool sendmsg = true, bool anmror = true);
@@ -41,19 +38,19 @@ public:
     void changeSpecialCard(CardSlot* slot, QString way, CardButton * card, bool sendmsg = true);
 
 public:
-    CardSet* mCardSet; //参赛的卡组
+    CardSet* mCardSet{nullptr}; //参赛的卡组
     Ui::MainWindow *ui{nullptr};
-    CardSlot* mFront;
-    CardSlot* mMiddle;
-    CardSlot* mBack;
-    CardSlot* mHand;
+    CardSlot* mFront{nullptr};
+    CardSlot* mMiddle{nullptr};
+    CardSlot* mBack{nullptr};
+    CardSlot* mHand{nullptr};
     CardButton* mleader{nullptr};
     QList<int> mCemetery;
     QList<int> mDeck;
-    CardSlot* oFront;
-    CardSlot* oMiddle;
-    CardSlot* oBack;
-    CardSlot* oHand;
+    CardSlot* oFront{nullptr};
+    CardSlot* oMiddle{nullptr};
+    CardSlot* oBack{nullptr};
+    CardSlot* oHand{nullptr};
     QMap<CardSlot*, int> strenth;
     int mStrenth{0};
     int oStrenth{0};

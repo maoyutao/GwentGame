@@ -11,7 +11,6 @@ public:
                   QObject *parent = nullptr);
     void exertAbility() override;
 private:
-    bool first = true;
 };
 
 #endif // CARD_24_H

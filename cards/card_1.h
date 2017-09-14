@@ -11,7 +11,6 @@ public:
                   QObject *parent = nullptr);
     void exertAbility() override;
 private:
-    bool first{true};
     int flag = 0;
     CardSlot* mslot;
 private slots:

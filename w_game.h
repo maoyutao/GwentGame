@@ -78,6 +78,7 @@ private:
     void msgHandler(Msg msgMap);
     void myRoundAnimation();
     void score();
+    void end();
 
     void hReady(Msg msgMap);
     void hStart(Msg msgMap);

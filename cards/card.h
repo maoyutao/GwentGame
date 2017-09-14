@@ -37,6 +37,7 @@ public:
     bool belongtome{true};
     int currentCombatValue;
     int armor{0};
+    bool first{true};
     BattleField * battleField;
     CardButton * button{nullptr};
 public:
