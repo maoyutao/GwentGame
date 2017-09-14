@@ -16,13 +16,12 @@ class CardSlot : public QStackedWidget
 public:
     explicit CardSlot(QWidget *parent = nullptr);
 
-    void addCard(QPushButton * widget, int index = -1); // 这里的index是牌的index （经过计算的）
-    void addPCard(QPushButton * widget, int index); // 这里的index是原始的index （算上左右箭头和strenth）
-    void removeCard(QPushButton * widget);
+    void addCard(QPushButton * widget);
+    void removeCard(QPushButton * widget); // 不会delete
     void removeCard(); // 移除第一张卡
     void setLimit(int newLimit);
     void clear();
-    void replaceCard(QPushButton * toBeReplaced, QPushButton * replace);
+    void replaceCard(QPushButton * toBeReplaced, QPushButton * replace); // will delete toBeReplaced
     void setAllEnabled(bool enabled);
     void setChooseable(bool mchooseable);
     void addSpecialCard(CardButton * widget);

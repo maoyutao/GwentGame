@@ -278,7 +278,10 @@ void BattleField::doBeforeARound()
 {
     for (auto it: cardSlot)
     {
-        it->specialCard->card->exertAbility();
+        if (it->specialCard)
+        {
+            it->specialCard->card->exertAbility();
+        }
     }
 }
 
