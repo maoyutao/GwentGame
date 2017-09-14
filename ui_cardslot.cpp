@@ -143,6 +143,8 @@ void CardSlot::clear()
     }
     addPage();
     cardList.clear();
+    specialCard->deleteLater();
+    specialCard = nullptr;
 }
 
 void CardSlot::replaceCard(QPushButton *toBeReplaced, QPushButton *replace)

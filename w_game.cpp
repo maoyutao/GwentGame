@@ -208,6 +208,13 @@ void Game::changePageToGaming()
     msg["who"] = "me";
     hReady(msg);
     ui->gamingChooseSlot->clear();
+    ui->gamingMBcak->clear();
+    ui->gamingMFront->clear();
+    ui->gamingMMiddle->clear();
+    ui->gamingOBack->clear();
+    ui->gamingOFront->clear();
+    ui->gamingOMiddle->clear();
+    battleField->updateStrenthSum();
     ui->gameStackWidget->setCurrentIndex(PGAMING);
 }
 
@@ -407,14 +414,19 @@ void Game::hReady(Msg msgMap)
         qsrand(QTime(0,0,0).secsTo(QTime::currentTime()));
         Msg msg;
         msg["type"] = "start";
-        int first = qrand() % 2;
-        if (first)
+        if (!now)
         {
-            myRound = true;
-            msg["first"] = "opponent";
+            int first = qrand() % 2;
+            if (first)
+            {
+                myRound = true;
+                msg["first"] = "opponent";
+            } else {
+                myRound = false;
+                msg["first"] = "me";
+            }
         } else {
-            myRound = false;
-            msg["first"] = "me";
+            msg["first"] = (win[now - 1] == 1) ? "me" : "opponent";
         }
         sendMsg(msg);
         startNewRound();

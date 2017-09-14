@@ -5,6 +5,7 @@ TimerRound::TimerRound(QWidget *parent) : QLabel(parent), timer(new QTimer(this)
 {
 }
 
+
 void TimerRound::start(bool isMyRound)
 {
     if (isMyRound)
@@ -15,6 +16,7 @@ void TimerRound::start(bool isMyRound)
     }
     this->setStyleSheet(styleSheet[current]);
     timer->start(1000);
+    record->setHMS(0, 0, 59);
     connect(timer,SIGNAL(timeout()),this,SLOT(updateTime()), Qt::UniqueConnection);
 }
 
