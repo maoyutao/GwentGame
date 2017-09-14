@@ -200,6 +200,12 @@ void Game::clearChooseSlot()
 
 void Game::changePageToGaming()
 {
+    giveup[0] = false;
+    giveup[1] = false;
+    on = false;
+    ready[0] = false;
+    ready[1] = false;
+    myRound = false;
     battleField->init(now);
     Msg msg;
     msg["type"] = "ready";
@@ -215,12 +221,6 @@ void Game::changePageToGaming()
     ui->gamingOFront->clear();
     ui->gamingOMiddle->clear();
     battleField->updateStrenthSum();
-    giveup[0] = false;
-    giveup[1] = false;
-    on = false;
-    ready[0] = false;
-    ready[1] = false;
-    myRound = false;
     ui->gameStackWidget->setCurrentIndex(PGAMING);
 }
 
