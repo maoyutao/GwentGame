@@ -26,7 +26,6 @@ void TimerRound::change()
     this->setStyleSheet(styleSheet[current]);
     record->setHMS(0, 0, 59);
     timer->start(1000);
-
     qDebug() << "change" << styleSheet[current];
 }
 

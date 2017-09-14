@@ -30,6 +30,7 @@
         <file>resource/cardSet.png</file>
         <file>resource/battle.png</file>
         <file>resource/gaming_backgound.png</file>
+        <file>resource/final_score_macth.png</file>
     </qresource>
     <qresource prefix="/new/cards">
         <file>resource/cards/card_23.png</file>

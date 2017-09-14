@@ -215,6 +215,12 @@ void Game::changePageToGaming()
     ui->gamingOFront->clear();
     ui->gamingOMiddle->clear();
     battleField->updateStrenthSum();
+    giveup[0] = false;
+    giveup[1] = false;
+    on = false;
+    ready[0] = false;
+    ready[1] = false;
+    myRound = false;
     ui->gameStackWidget->setCurrentIndex(PGAMING);
 }
 
@@ -318,20 +324,33 @@ void Game::score()
         ui->oscore3->setText(QString::number(oScore.at(2)));
         return;
     }
+    if (now == 3)
+    {
+        this->setCurrentIndex(PFINALSCORE);
+        ui->finalScore->setStyleSheet("#finalScore {border-image: url(:/new/prefix1/resource/final_score_match.png)}#finalScore * {border-image: url()}");
+        ui->mscore1->setText(QString::number(mScore.at(0)));
+        ui->mscore2->setText(QString::number(mScore.at(1)));
+        ui->mscore3->setText(QString::number(mScore.at(2)));
+        ui->oscore1->setText(QString::number(oScore.at(0)));
+        ui->oscore2->setText(QString::number(oScore.at(1)));
+        ui->oscore3->setText(QString::number(oScore.at(2)));
+        return;
+    }
     this->setCurrentIndex(PSCORE);
     ui->mscore->setText(QString::number(mScore.at(now)));
     ui->oscore->setText(QString::number(oScore.at(now)));
     now++;
     QTimer *timer = new QTimer(this);
     timer->setSingleShot(true);
-    connect(timer, SIGNAL(timeout()), this, SLOT(newMatch()), Qt::UniqueConnection);
-    connect(timer, SIGNAL(timeout()), timer, SLOT(deleteLater()), Qt::UniqueConnection);
+    connect(timer, SIGNAL(timeout()), this, SLOT(newMatch()));
+    connect(timer, SIGNAL(timeout()), timer, SLOT(deleteLater()));
     timer->start(3000);
 }
 
 void Game::newMatch()
 {
     int draw;
+    qDebug() << now;
     switch (now) {
     case 1:
         draw = 2;
