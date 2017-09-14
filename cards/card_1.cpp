@@ -1,6 +1,7 @@
 #include "card_1.h"
 #include "ui_cardslot.h"
 #include "w_battlefield.h"
+#include <QDebug>
 
 Card_1::Card_1(BattleField *battleField, QObject *parent):
     Card(1, 0, "Biting Frost", "在对方单排降下“刺骨冰霜”。刺骨冰霜：每当己方回合开始时，对所在排最弱的单位造成 2 点伤害。", ":/new/cards/resource/cards/card_1.png",
@@ -51,6 +52,7 @@ void Card_1::exertAbility()
 
 void Card_1::afterChoosePosition(CardSlot* slot)
 {
+    qDebug() << "afterChoosePosition";
     basicAfterChoosePosition();
     battleField->changeSpecialCard(slot, "add", button);
     mslot = slot;

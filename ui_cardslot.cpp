@@ -186,9 +186,9 @@ void CardSlot::addSpecialCard(CardButton *widget)
     }
     specialCard = widget;
     widget->setParent(this);
-    float h = this->height() / 2;
-    float w = h * 0.6;
-    widget->setGeometry(0, 0, w, h);
+    widget->setGeometry(0, 0, 10, 10);
+    widget->show();
+    widget->raise();
 }
 
 void CardSlot::removeSpecialCard()

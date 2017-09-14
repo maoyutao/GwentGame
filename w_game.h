@@ -50,6 +50,7 @@ private slots:
     void changePageToGaming();
     void showToBechosen(QList<CardButton*> list, standardSlot slot = &Game::returnToField); // 在choose槽里展示list里的button  并为这些button的selected绑定这个类中的标准槽 默认是回战场
     void receiveMsg();
+    void newMatch();
 private:
     QMap<QString, msgHandler> handlers;
     Ui::MainWindow *ui{nullptr};
@@ -77,7 +78,6 @@ private:
     void msgHandler(Msg msgMap);
     void myRoundAnimation();
     void score();
-    void newMatch();
 
     void hReady(Msg msgMap);
     void hStart(Msg msgMap);

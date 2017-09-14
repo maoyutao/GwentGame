@@ -26,9 +26,12 @@ public:
     QList<CardButton*> drawCards(int count = 1);
     QList<CardButton*> drawCards(int count, int except);
 
-
     void addCardToMDeck(int id);
     void randomlyExertCard();
+//    void mmove(CardSlot* to, CardButton * card);
+
+
+
     void move(CardSlot* to, CardButton * card, bool sendmsg = true);
     void move(QString to, CardButton * card, bool sendmsg = true);
     void changeStrenth(int changeValue, CardButton * target, bool sendmsg = true, bool anmror = true);

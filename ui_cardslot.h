@@ -30,7 +30,7 @@ public:
     bool empty{true};
     QList<QPushButton *> cardList; // 用pushbutton而不是cardbutton因为这样卡牌集也可以放 以后可能可以放别的 但是外面用的时候注意动态转换类型
     bool chooseable{false};
-    CardButton* specialCard;
+    CardButton* specialCard{nullptr};
 signals:
     void selected(CardSlot*);
 private:

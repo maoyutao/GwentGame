@@ -214,14 +214,14 @@ void Game::changePageToGaming()
 void Game::sendMsg(QMap<QString, QString> msg)
 {
     QString str = stringify(msg);
-    qDebug() << "send" << msg;
+    qDebug() << "send" << str;
 
     QByteArray block;
     QDataStream out(&block, QIODevice::WriteOnly);
     out.setVersion(QDataStream::Qt_5_9);
     out << str;
     socket->write(block);
-//    socket->waitForBytesWritten();
+    socket->flush();
 }
 
 void Game::receiveMsg()
@@ -231,8 +231,8 @@ void Game::receiveMsg()
     QDataStream in(&block, QIODevice::ReadOnly);
     in.setVersion(QDataStream::Qt_5_9);
     in >> str;
-    msgHandler(parse(str));
     qDebug() << "receive" << str;
+    msgHandler(parse(str));
 }
 
 Msg Game::parse(QString msg)
@@ -342,6 +342,7 @@ void Game::newMatch()
 
 void Game::startNewRound()
 {
+    qDebug() << "startNewRound" << myRound;
     Msg msg;
     msg["type"] = "changeRound";
     myRound = !myRound;
@@ -354,7 +355,7 @@ void Game::startNewRound()
             startNewRound();
             return;
         }
-        msg["myRound"] = "0";
+        msg["round"] = "op";
         battleField->setAllHandCardExertable(true);
         myRoundAnimation();
     } else {
@@ -363,7 +364,7 @@ void Game::startNewRound()
             startNewRound();
             return;
         }
-        msg["myRound"] = "1";
+        msg["round"] = "my";
         // 理论上在牌的双击槽函数里就要有下面这句 但是以防漏了
         battleField->setAllHandCardExertable(false);
     }
@@ -439,11 +440,11 @@ void Game::hStart(Msg msgMap)
 void Game::hChangeRound(Msg msgMap)
 {
     // 防止循环提醒
-    int i = msgMap["myRound"].toInt();
-    if (i && myRound)
+    bool i = msgMap["round"] == "my";
+    if (i == myRound)
+    {
         return;
-    if (!(i || myRound))
-        return;
+    }
     startNewRound();
 }
 
@@ -461,29 +462,34 @@ void Game::hMove(Msg msgMap)
     // 产生新牌
     if (msgMap["fromhand"].toInt() || msgMap["fromEmpty"].toInt())
     {
+        qDebug() << "new";
         card = new CardButton(msgMap["id"].toInt(), battleField, nullptr);
     } else {
+        qDebug() << "index" << msgMap["index"].toInt();
         card = battleField->cardsOnBoard.at(msgMap["index"].toInt());
     }
-
     // 改变对方手牌数量
     if (msgMap["fromhand"].toInt())
     {
+        qDebug() << "removefromhand";
         battleField->removeCardFromOhand();
         card->card->belongtome = false;
     }
     if (msgMap["tohand"].toInt())
     {
+        qDebug() << "addtohand";
         battleField->addCardToOhand();
         battleField->move(nullptr, card, false);
         return;
     }
 
     // 移动
-    if (msgMap["toSlot"].toInt())
+    if (msgMap["toslot"].toInt())
     {
+        qDebug() << "toslot";
         battleField->move(battleField->cardSlot.at(msgMap["to"].toInt()), card, false);
     } else {
+        qDebug() << "tostring";
         battleField->move(msgMap["to"], card, false);
     }
 }

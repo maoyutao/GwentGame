@@ -32,9 +32,9 @@ void BattleField::initForFirst(Ui::MainWindow *aui)
     cardSlot.append(mFront);
     cardSlot.append(mMiddle);
     cardSlot.append(mBack);
-    cardSlot.append(oFront);
-    cardSlot.append(oMiddle);
     cardSlot.append(oBack);
+    cardSlot.append(oMiddle);
+    cardSlot.append(oFront);
 }
 
 void BattleField::setCardSet(CardSet *cardset)
@@ -110,6 +110,52 @@ void BattleField::randomlyExertCard()
     dynamic_cast<CardButton*>(mHand->cardList.at(index))->card->exertAbility();
 }
 
+//void BattleField::mmove(CardSlot *to, CardButton *card)
+//{
+//    Msg msg;
+//    msg["fromhand"] = QString::number(0);
+//    msg["tohand"] = QString::number(0);
+//    int mstrenth = card->card->currentCombatValue;
+//    if (card->slot)
+//    {
+//        CardSlot* from = card->slot;
+//        from->removeCard(card);
+//        if (strenth.contains(from))
+//        {
+//            strenth[from] -= mstrenth;
+//        }
+//        if (card->slot == mHand)
+//        {
+//            msg["fromhand"] = QString::number(1);
+//        }
+//    }
+//    if (to)
+//    {
+//        to->addCard(card);
+//        if (to == mHand)
+//        {
+//            msg["tohand"] = QString::number(1);
+//        }
+//    }
+//    if (strenth.contains(to))
+//    {
+//        strenth[to] -= mstrenth;
+//        if (card->card->index == -1)
+//        {
+//            card->card->index = cardsOnBoard.count();
+//            cardsOnBoard.append(card);
+//        }
+//    }
+//    updateStrenthSum();
+//    msg["type"] = "move";
+//    msg["to"] = QString::number(5- cardSlot.indexOf(to));
+//    msg["toslot"] = QString::number(1);
+//    msg["index"] = QString::number(card->card->index);
+//    msg["id"] = QString::number(card->card->id);
+//    emit sendMsg(msg);
+
+//}
+
 void BattleField::shuffle()
 {
     int n = mDeck.count();
@@ -134,11 +180,12 @@ void BattleField::move(CardSlot *to, CardButton *card, bool sendmsg)
     msg["fromEmpty"] = QString::number(0); // fromempty 和fromhand 是没有编号的
     msg["fromhand"] = QString::number(0);
     msg["tohand"] = QString::number(0);
+    msg["to"] = "null";
     int mstrenth = card->card->currentCombatValue;
     if (card->slot)
     {
+        qDebug() << "slot is not null";
         CardSlot* from = card->slot;
-        from->removeCard(card);
         if (strenth.contains(from))
         {
             strenth[from] -= mstrenth;
@@ -147,6 +194,7 @@ void BattleField::move(CardSlot *to, CardButton *card, bool sendmsg)
         {
             msg["fromhand"] = QString::number(1);
         }
+        from->removeCard(card);
 
     } else {
         msg["fromEmpty"] = QString::number(1);
@@ -154,34 +202,36 @@ void BattleField::move(CardSlot *to, CardButton *card, bool sendmsg)
     if (to)
     {
         to->addCard(card);
-    }
-    if (strenth.contains(to))
-    {
-        strenth[to] -= mstrenth;
-        if (card->card->index == -1)
+        if (strenth.contains(to))
         {
-            card->card->index = cardsOnBoard.count();
-            cardsOnBoard.append(card);
+            strenth[to] += mstrenth;
+            if (card->card->index == -1)
+            {
+                card->card->index = cardsOnBoard.count();
+                cardsOnBoard.append(card);
+            }
+            msg["to"] = QString::number(5- cardSlot.indexOf(to));
+        } else {
+            msg["tohand"] = QString::number(1);
         }
-    } else {
-        msg["tohand"] = QString::number(1);
     }
     updateStrenthSum();
     if (sendmsg)
     {
         msg["type"] = "move";
-        msg["to"] = QString::number(cardSlot.indexOf(to));
         msg["toslot"] = QString::number(1);
         msg["index"] = QString::number(card->card->index);
         msg["id"] = QString::number(card->card->id);
         emit sendMsg(msg);
     }
+    qDebug() << msg;
 }
 
 void BattleField::move(QString to, CardButton *card, bool sendmsg)
 {
     // from range: 六排 空（敌人的手牌分成从手牌取一张（上层做）和从一张空move两部分） 我的手牌  to range: 墓地 牌组
     // 完成了： 如果原有父亲就拿出 如果相关分数就改分数
+
     Msg msg;
     msg["tohand"] = QString::number(0);
     msg["to"] = to;
@@ -326,7 +376,7 @@ void BattleField::changeSpecialCard(CardSlot *slot, QString way, CardButton *car
         Msg msg;
         msg["type"] = "specialCard";
         msg["way"] = way;
-        msg["slot"] = QString::number(cardSlot.indexOf(slot));
+        msg["slot"] = QString::number(5 - cardSlot.indexOf(slot));
         msg["id"] = QString::number(card->card->id);
         msg["index"] = QString::number(card->card->index);
         emit sendMsg(msg);
@@ -351,24 +401,30 @@ QList<CardButton*> BattleField::drawCards(int count)
 
 QList<CardButton *> BattleField::drawCards(int count, int except)
 {
-    int num = mDeck.removeAll(except);
-    shuffle();
+    CardButton* c = new CardButton(7, this, nullptr);
     QList<CardButton*> drawnCards;
-    for (int i = 0; i< count; i++) {
-        if (mDeck.isEmpty())
-        {
-            break;
-        }
-        CardButton* c = new CardButton(mDeck.takeFirst(), this, nullptr);
-//        c->setInfoBox(ui->bigBox);   信息显示  还没做完
-        drawnCards.append(c);
-    }
-    for (int i = 0; i < num; i++)
-    {
-        mDeck.append(except);
-    }
-    shuffle();
+    drawnCards.append(c);
     return drawnCards;
+
+
+//    int num = mDeck.removeAll(except);
+//    shuffle();
+//    QList<CardButton*> drawnCards;
+//    for (int i = 0; i< count; i++) {
+//        if (mDeck.isEmpty())
+//        {
+//            break;
+//        }
+//        CardButton* c = new CardButton(mDeck.takeFirst(), this, nullptr);
+////        c->setInfoBox(ui->bigBox);   信息显示  还没做完
+//        drawnCards.append(c);
+//    }
+//    for (int i = 0; i < num; i++)
+//    {
+//        mDeck.append(except);
+//    }
+//    shuffle();
+//    return drawnCards;
 }
 
 void BattleField::addCardToMDeck(int id)

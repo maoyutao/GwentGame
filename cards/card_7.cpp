@@ -25,7 +25,7 @@ void Card_7::afterChoosePosition(CardSlot *slot)
     basicAfterChoosePosition();
     battleField->move(slot, button);
     int sindex = battleField->cardSlot.indexOf(slot);
-    sindex += 3;
+    sindex = 5 - sindex;
     CardSlot* oslot = battleField->cardSlot.at(sindex);
     if (battleField->strenth[oslot] >= 25)
     {

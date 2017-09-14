@@ -15,7 +15,7 @@ public:
     Card * card;
     bool exertable{false};
     QWidget* infoBox{nullptr};
-    CardSlot * slot;
+    CardSlot * slot{nullptr};
 
 
     bool selectable{true};
